@@ -1,7 +1,7 @@
 package com.dreamteam.marchapp
 
 //coś dopisałem
-//konflikt
+//dopisuję coś innego
 
 class MyFunc {
     fun myFun(): Int {
