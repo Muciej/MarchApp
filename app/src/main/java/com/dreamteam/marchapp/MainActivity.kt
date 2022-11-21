@@ -12,7 +12,7 @@ import android.view.MenuItem
 import com.dreamteam.marchapp.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
-
+    //asdfasdfasdf
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
