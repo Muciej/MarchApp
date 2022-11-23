@@ -16,6 +16,12 @@ class LoginActivity : AppCompatActivity() {
         val username = findViewById<TextView>(R.id.username)
         val password = findViewById<TextView>(R.id.password)
         val btnSign = findViewById<Button>(R.id.signbtn)
+        val backBtn = findViewById<Button>(R.id.btnBack)
+
+        backBtn.setOnClickListener{
+            val Intent = Intent(this, MainActivity::class.java)
+            startActivity(Intent)
+        }
 
         btnSign.setOnClickListener{
             if (username.text.isNullOrBlank() || password.text.isNullOrBlank())
@@ -25,6 +31,13 @@ class LoginActivity : AppCompatActivity() {
             else
             {
                 var isCorrect = true
+
+                //tu leci zapyutanie do bazy
+                //W zależności od roli jaką zwróciło zapytanie, przełączamy na inny ekran
+                //Gdy nie zwróciło nic - niepoprawne dane
+                //przykładowe zapytanie
+                //SELECT rola_id FROM konta WHERE login = 'admin' AND hasło = 'admin'
+
                 if (username.text.toString().equals("admin") && password.text.toString().equals("admin"))
                 {
                     Toast.makeText(this, "Zalogowano jako admin!", Toast.LENGTH_SHORT).show()

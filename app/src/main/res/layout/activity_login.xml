@@ -6,15 +6,26 @@
     android:layout_height="match_parent"
     tools:context=".logic.LoginActivity">
 
+    <Button
+        android:id="@+id/btnBack"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/ic_baseline_arrow_back_24"
+        tools:ignore="SpeakableTextPresentCheck" />
+
     <TextView
+        android:id="@+id/signInText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/signInText"
+        android:layout_margin="50dp"
+        android:gravity="center"
         android:text="Logowanie"
         android:textSize="40dp"
-        android:textStyle="bold"
-        android:layout_margin="50dp"
-        android:gravity="center" />
+        android:textStyle="bold" />
 
     <ImageView
         android:id="@+id/imageSignUp"
@@ -44,7 +55,6 @@
         android:textColorHint="@color/black" />
 
 
-
     <EditText
         android:id="@+id/password"
         android:layout_width="match_parent"
@@ -62,17 +72,15 @@
         android:padding="20dp"
         android:textColor="@color/black"
         android:textColorHint="@color/black"
-        app:passwordToggleEnabled="true"
-        />
+        app:passwordToggleEnabled="true" />
 
     <Button
+        android:id="@+id/signbtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/signbtn"
         android:layout_below="@+id/password"
-        android:text="Zaloguj"
-        android:background = "@drawable/edit_text_background"
         android:layout_centerHorizontal="true"
         android:layout_margin="20dp"
-        />
+        android:background="@drawable/edit_text_background"
+        android:text="Zaloguj" />
 </RelativeLayout>
