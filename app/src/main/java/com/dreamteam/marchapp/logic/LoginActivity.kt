@@ -31,6 +31,7 @@ class LoginActivity : AppCompatActivity() {
             else
             {
                 var isCorrect = true
+                var isAdministrator = false
 
                 //tu leci zapyutanie do bazy
                 //W zależności od roli jaką zwróciło zapytanie, przełączamy na inny ekran
@@ -40,7 +41,9 @@ class LoginActivity : AppCompatActivity() {
 
                 if (username.text.toString().equals("admin") && password.text.toString().equals("admin"))
                 {
-                    Toast.makeText(this, "Zalogowano jako admin!", Toast.LENGTH_SHORT).show()
+                    isAdministrator = true
+                    val Intent = Intent(this, AdministratorMain::class.java)
+                    startActivity(Intent)
                 }
 
                 else if (username.text.toString().equals("organizator") && password.text.toString().equals("organizator"))
@@ -60,7 +63,7 @@ class LoginActivity : AppCompatActivity() {
 
 
                 //Jak narazie przenosi spowrotem do Main Activity - czekam na resztę ekranów
-                if (isCorrect)
+                if (isCorrect && !isAdministrator)
                 {
                     val Intent = Intent(this, MainActivity::class.java)
                     startActivity(Intent)
