@@ -41,6 +41,13 @@
                 android:value="" />
         </activity>
         <activity
+            android:name=".logic.CreateUserActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".logic.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
