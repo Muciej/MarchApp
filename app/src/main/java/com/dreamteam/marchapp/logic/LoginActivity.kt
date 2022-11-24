@@ -19,7 +19,7 @@ class LoginActivity : AppCompatActivity() {
         val backBtn = findViewById<Button>(R.id.btnBack)
 
         backBtn.setOnClickListener{
-            val Intent = Intent(this, MainActivity::class.java)
+            val Intent = Intent(this, ChooseMarchActivity::class.java)
             startActivity(Intent)
         }
 
