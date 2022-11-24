@@ -4,7 +4,6 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
 import com.dreamteam.marchapp.R
 
@@ -21,12 +20,13 @@ class AdministratorMain : AppCompatActivity() {
         val logoutBtn = findViewById<Button>(R.id.logOut)
 
         crtVolBtn.setOnClickListener{
-            val Intent = Intent(this, CreateVolunteerActivity::class.java)
-            startActivity(Intent)
+            val intent = Intent(this, CreateVolunteerActivity::class.java)
+            startActivity(intent)
         }
 
         crtParBtn.setOnClickListener{
-            Toast.makeText(this, "Tu będzie ekran tworzenia konta uczestnika", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, CreateUserActivity::class.java)
+            startActivity(intent)
         }
 
         updVolBtn.setOnClickListener{
