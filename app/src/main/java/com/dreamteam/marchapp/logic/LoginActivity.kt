@@ -32,6 +32,7 @@ class LoginActivity : AppCompatActivity() {
             {
                 var isCorrect = true
                 var isAdministrator = false
+                var isWolontariusz = false
 
                 //tu leci zapyutanie do bazy
                 //W zależności od roli jaką zwróciło zapytanie, przełączamy na inny ekran
@@ -55,6 +56,12 @@ class LoginActivity : AppCompatActivity() {
                 {
                     Toast.makeText(this, "Zalogowano jako uczestnik!", Toast.LENGTH_SHORT).show()
                 }
+                else if (username.text.toString().equals("wolontariusz") && password.text.toString().equals("wolontariusz"))
+                {
+                    isWolontariusz = true
+                    val Intent = Intent(this, VolunteerMain::class.java)
+                    startActivity(Intent)
+                }
                 else
                 {
                     Toast.makeText(this, "Niepoprawne dane, spróbuj ponownie!", Toast.LENGTH_SHORT).show()
@@ -63,7 +70,7 @@ class LoginActivity : AppCompatActivity() {
 
 
                 //Jak narazie przenosi spowrotem do Main Activity - czekam na resztę ekranów
-                if (isCorrect && !isAdministrator)
+                if (isCorrect && !isAdministrator && !isWolontariusz)
                 {
                     val Intent = Intent(this, MainActivity::class.java)
                     startActivity(Intent)
