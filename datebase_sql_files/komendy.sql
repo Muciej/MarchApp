@@ -1,4 +1,4 @@
-CREATE DATABASE `beskida`
+CREATE DATABASE `beskida`;
 
 CREATE TABLE `beskida`.`punkty_kontrolne` (
   `id` INT NOT NULL AUTO_INCREMENT,
@@ -8,7 +8,8 @@ CREATE TABLE `beskida`.`punkty_kontrolne` (
   `kilometr` INT NULL,
   `współrzędne_geograficzne` VARCHAR(100) NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `kolejność_UNIQUE` (`kolejność` ASC) VISIBLE);
+  UNIQUE INDEX kolejność_UNIQUE (kolejność ASC) VISIBLE );
+
 
 CREATE TABLE `beskida`.`uczestnicy` (
   `nr_startowy` INT NOT NULL,
@@ -17,7 +18,7 @@ CREATE TABLE `beskida`.`uczestnicy` (
   `nazwisko` VARCHAR(60) NULL,
   `pseudonim` VARCHAR(45) NULL,
   PRIMARY KEY (`nr_startowy`),
-  UNIQUE INDEX `id_konta_UNIQUE` (`id_konta` ASC) 
+  UNIQUE INDEX `id_konta_UNIQUE` (`id_konta` ASC));
 
 
 CREATE TABLE `beskida`.`uczestnicy_do_akceptacji` (
@@ -174,7 +175,7 @@ ALTER TABLE `beskida`.`punkty_online`
 CHANGE COLUMN `ostatnia_aktywność` `data_ost_aktywności` VARCHAR(45) NOT NULL ;
 
 
-
+use beskida;
 DELIMITER $$
 CREATE TRIGGER `after_deleting_participant` AFTER DELETE ON`uczestnicy` FOR EACH ROW BEGIN
 	 #jeśli usuwamy uczestnika to powinniśmy usunąć jego konto
