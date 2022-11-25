@@ -20,6 +20,20 @@
                 android:value="" />
         </activity>
         <activity
+            android:name=".logic.CreateAdminInMarchAccount"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".logic.MakeBackupOfMarchDatabase"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".logic.ModifyParticipantsData"
             android:exported="false">
             <meta-data
