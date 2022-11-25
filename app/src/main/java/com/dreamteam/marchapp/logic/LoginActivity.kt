@@ -42,7 +42,9 @@ class LoginActivity : AppCompatActivity() {
 
                 if (username.text.toString().equals("admin") && password.text.toString().equals("admin"))
                 {
-                    Toast.makeText(this, "Zalogowano jako admin!", Toast.LENGTH_SHORT).show()
+                    isAdministrator = true
+                    val Intent = Intent(this, AdministratorMain::class.java)
+                    startActivity(Intent)
                 }
 
                 else if (username.text.toString().equals("organizator") && password.text.toString().equals("organizator"))
@@ -56,7 +58,9 @@ class LoginActivity : AppCompatActivity() {
                 }
                 else if (username.text.toString().equals("wolontariusz") && password.text.toString().equals("wolontariusz"))
                 {
-                    Toast.makeText(this, "Zalogowano jako wolontariusz!", Toast.LENGTH_SHORT).show()
+                    isWolontariusz = true
+                    val Intent = Intent(this, VolunteerMain::class.java)
+                    startActivity(Intent)
                 }
                 else
                 {
@@ -66,7 +70,7 @@ class LoginActivity : AppCompatActivity() {
 
 
                 //Jak narazie przenosi spowrotem do Main Activity - czekam na resztę ekranów
-                if (isCorrect)
+                if (isCorrect && !isAdministrator && !isWolontariusz)
                 {
                     val Intent = Intent(this, MainActivity::class.java)
                     startActivity(Intent)
