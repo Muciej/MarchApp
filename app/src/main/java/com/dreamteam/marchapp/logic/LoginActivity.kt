@@ -31,6 +31,8 @@ class LoginActivity : AppCompatActivity() {
             else
             {
                 var isCorrect = true
+                var isAdministrator = false
+                var isWolontariusz = false
 
                 //tu leci zapyutanie do bazy
                 //W zależności od roli jaką zwróciło zapytanie, przełączamy na inny ekran
@@ -51,6 +53,10 @@ class LoginActivity : AppCompatActivity() {
                 else if (username.text.toString().equals("uczestnik") && password.text.toString().equals("uczestnik"))
                 {
                     Toast.makeText(this, "Zalogowano jako uczestnik!", Toast.LENGTH_SHORT).show()
+                }
+                else if (username.text.toString().equals("wolontariusz") && password.text.toString().equals("wolontariusz"))
+                {
+                    Toast.makeText(this, "Zalogowano jako wolontariusz!", Toast.LENGTH_SHORT).show()
                 }
                 else
                 {
