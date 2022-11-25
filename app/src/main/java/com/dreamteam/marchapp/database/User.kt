@@ -11,13 +11,13 @@ class User{
 
     constructor(_defUsr: String){
         when (_defUsr){
-            "login" -> {
-                this.name = "login"
-                this.pass = "login"
-            }
             "register" -> {
                 this.name = "register"
                 this.pass = "register"
+            }
+            else -> {
+                this.name = "login"
+                this.pass = "login"
             }
         }
     }
