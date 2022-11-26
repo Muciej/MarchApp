@@ -22,8 +22,36 @@ class OrganisatorMain : AppCompatActivity() {
         val log_out_from_org_account = findViewById<Button>(R.id.log_out_from_org_account)
 
 
+        btn_back.setOnClickListener{
+            val Intent = Intent(this, MainActivity::class.java)
+            startActivity(Intent)
+        }
+
         modify_event_btn.setOnClickListener {
             val Intent = Intent(this, Organisatormain2::class.java)
+            startActivity(Intent)
+        }
+
+        create_adm_acc.setOnClickListener {
+            val Intent = Intent(this, CreateAdminInMarchAccount::class.java)
+            startActivity(Intent)
+        }
+
+        view_statistics.setOnClickListener {
+            val Intent = Intent(this, ViewStAsOrganiser::class.java)
+            startActivity(Intent)
+        }
+
+        volunteers.setOnClickListener{
+            Toast.makeText(this, "Tu będzie ekran podglądu wolontariuszy", Toast.LENGTH_SHORT).show()
+        }
+
+        change_org_Pass.setOnClickListener{
+            Toast.makeText(this, "Tu będzie ekran zmiany hasła", Toast.LENGTH_SHORT).show()
+        }
+
+        log_out_from_org_account.setOnClickListener{
+            val Intent = Intent(this, MainActivity::class.java)
             startActivity(Intent)
         }
 

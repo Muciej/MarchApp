@@ -88,7 +88,7 @@ class CreateVolunteerActivity : AppCompatActivity() {
                     val Intent = Intent(this, AdministratorMain::class.java)
                     startActivity(Intent)
 
-                    //Tutaj będzie leciało zapytanie do bazy, które stworzy nam administratora,
+                    //Tutaj będzie leciało zapytanie do bazy, które stworzy nam wolontariusza,
                     //z podanych danych, czyli username, password, email i phoneNr
                 }
 
