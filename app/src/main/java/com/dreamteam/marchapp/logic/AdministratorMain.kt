@@ -30,11 +30,13 @@ class AdministratorMain : AppCompatActivity() {
         }
 
         updVolBtn.setOnClickListener{
-            Toast.makeText(this, "Tu będzie ekran modyfikacji konta wolontariusza", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, UpdateVolunteerData::class.java)
+            startActivity(intent)
         }
 
         updParBtn.setOnClickListener{
-            Toast.makeText(this, "Tu będzie ekran modyfikacji konta uczestnika", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, UpdateParticipantData::class.java)
+            startActivity(intent)
         }
 
         changeBtn.setOnClickListener{
