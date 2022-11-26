@@ -8,10 +8,10 @@ import android.widget.TextView
 import android.widget.Toast
 import com.dreamteam.marchapp.R
 
-class CreateVolunteerActivity : AppCompatActivity() {
+class CreateAdminInMarchAccount : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_create_volunteer)
+        setContentView(R.layout.activity_create_admin_in_march_account)
 
         val username = findViewById<TextView>(R.id.username)
         val password = findViewById<TextView>(R.id.password)
@@ -22,7 +22,7 @@ class CreateVolunteerActivity : AppCompatActivity() {
         val backBtn = findViewById<Button>(R.id.btnBack)
 
         backBtn.setOnClickListener{
-            val Intent = Intent(this, AdministratorMain::class.java)
+            val Intent = Intent(this, OrganisatorMain::class.java)
             startActivity(Intent)
         }
 
@@ -38,10 +38,10 @@ class CreateVolunteerActivity : AppCompatActivity() {
             {
                 var isCorrect = true
 
-                //Tu lecą zapytania do bazy
-                //1. Zapytanie o to czy dana nazwa użytkownika jest zajęta,
-                //2. Ewentualne zapytania o format email i numeru telefonu
-                //(zależy od tego jak będziemy to sprawdzać).
+                //TODO:Tu lecą zapytania do bazy
+                //TODO:1. Zapytanie o to czy dana nazwa użytkownika jest zajęta,
+                //TODO:2. Ewentualne zapytania o format email i numeru telefonu
+                //TODO:(zależy od tego jak będziemy to sprawdzać).
 
 
                 if (username.text.toString().equals("login")) {
@@ -85,19 +85,14 @@ class CreateVolunteerActivity : AppCompatActivity() {
                         "Rejestracja przebiegła poprawnie!",
                         Toast.LENGTH_SHORT
                     ).show()
-                    val Intent = Intent(this, AdministratorMain::class.java)
+                    val Intent = Intent(this, OrganisatorMain::class.java)
                     startActivity(Intent)
 
-                    //Tutaj będzie leciało zapytanie do bazy, które stworzy nam wolontariusza,
-                    //z podanych danych, czyli username, password, email i phoneNr
+                    //TODO:Tutaj będzie leciało zapytanie do bazy, które stworzy nam administratora,
+                    //TODO:z podanych danych, czyli username, password, email i phoneNr
                 }
 
             }
         }
-
-
-
-
     }
-
 }

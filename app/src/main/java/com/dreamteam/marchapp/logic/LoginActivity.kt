@@ -19,7 +19,7 @@ class LoginActivity : AppCompatActivity() {
         val backBtn = findViewById<Button>(R.id.btnBack)
 
         backBtn.setOnClickListener{
-            val Intent = Intent(this, MainActivity::class.java)
+            val Intent = Intent(this, ChooseMarchActivity::class.java)
             startActivity(Intent)
         }
 
@@ -33,6 +33,7 @@ class LoginActivity : AppCompatActivity() {
                 var isCorrect = true
                 var isAdministrator = false
                 var isWolontariusz = false
+                var isOrganizator = false
 
                 //tu leci zapyutanie do bazy
                 //W zależności od roli jaką zwróciło zapytanie, przełączamy na inny ekran
@@ -49,7 +50,10 @@ class LoginActivity : AppCompatActivity() {
 
                 else if (username.text.toString().equals("organizator") && password.text.toString().equals("organizator"))
                 {
-                    Toast.makeText(this, "Zalogowano jako organizator!", Toast.LENGTH_SHORT).show()
+                    isOrganizator = true
+                    val Intent = Intent(this, OrganisatorMain::class.java)
+                    startActivity(Intent)
+
                 }
 
                 else if (username.text.toString().equals("uczestnik") && password.text.toString().equals("uczestnik"))
@@ -70,7 +74,7 @@ class LoginActivity : AppCompatActivity() {
 
 
                 //Jak narazie przenosi spowrotem do Main Activity - czekam na resztę ekranów
-                if (isCorrect && !isAdministrator && !isWolontariusz)
+                if (isCorrect && !isAdministrator && !isWolontariusz && !isOrganizator)
                 {
                     val Intent = Intent(this, MainActivity::class.java)
                     startActivity(Intent)

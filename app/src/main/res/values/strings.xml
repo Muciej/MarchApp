@@ -13,4 +13,9 @@
     <string name="login">Login</string>
     <string name="haslo">Hasło</string>
     <string name="zaloguj">Zaloguj</string>
+    <string name="title_activity_make_backup">MakeBackup</string>
+    <string name="next">Next</string>
+    <string name="title_activity_make_admin_account">MakeAdminAccount</string>
+    <string name="title_activity_view_march_statistics">ViewMarchStatistics</string>
+    <string name="title_activity_have_aview_in_statistics">HaveAViewInStatistics</string>
 </resources>
