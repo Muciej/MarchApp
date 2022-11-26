@@ -28,7 +28,11 @@ class ChooseMarchActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
         val btnChoose = findViewById<Button>(R.id.chooseBtn)
         val backBtn = findViewById<Button>(R.id.btnBack)
 
-//        connector.startConnection(User())
+        connector.startConnection(User("viewer"))
+        connector.setDBName("baza_biegow_przelajowych")
+        connector.prepareQuery("SELECT * FROM eventy")
+        connector.executeQuery()
+        marches = connector.getCol(2)
 
         var aa = ArrayAdapter(this, android.R.layout.simple_spinner_item, marches)
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)

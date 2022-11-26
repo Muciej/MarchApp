@@ -1,7 +1,7 @@
 use beskida;
 
-drop role if exists 'organiser', 'admin', 'volounteer', 'register', 'participant', 'login';
-create role 'organiser', 'admin', 'volounteer', 'register', 'participant', 'login';
+drop role if exists 'organiser', 'admin', 'volounteer', 'register', 'participant', 'login', 'march_viewer';
+create role 'organiser', 'admin', 'volounteer', 'register', 'participant', 'login', 'march_viewer';
 
 /*
 Setting organiser role privileges
@@ -57,6 +57,13 @@ grant all on uczestnicy_do_akceptacji to register;
 
 grant select on konta to login;
 
+
+/*
+ Setting march_viewer role privileges
+ */
+
+use baza_biegow_przelajowych;
+grant select on eventy to 'march_viewer';
 
 insert into role (id_roli, nazwa, poziom_uprawnień) values
 (1, 'Organizator', 'organiser'),

@@ -9,6 +9,9 @@ grant login to 'login'@;
 create user 'register'@ identified by 'register';
 grant register to register@;
 
+create user 'viewer'@ identified by 'viewer';
+grant march_viewer to 'viewer'@;
+
 insert into konta (id_konta, login, hasło, rola_id) value
 (1, 'Organizator', 'examplepass', 1);
 

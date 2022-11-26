@@ -15,10 +15,15 @@ class User{
                 this.name = "register"
                 this.pass = "register"
             }
+            "viewer" -> {
+                this.name = "viewer"
+                this.pass = "viewer"
+            }
             else -> {
                 this.name = "login"
                 this.pass = "login"
             }
+
         }
     }
 }
