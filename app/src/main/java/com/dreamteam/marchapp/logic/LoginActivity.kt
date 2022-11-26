@@ -40,6 +40,7 @@ class LoginActivity : AppCompatActivity() {
                 //przykładowe zapytanie
                 //SELECT rola_id FROM konta WHERE login = 'admin' AND hasło = 'admin'
 
+
                 if (username.text.toString().equals("admin") && password.text.toString().equals("admin"))
                 {
                     isAdministrator = true
