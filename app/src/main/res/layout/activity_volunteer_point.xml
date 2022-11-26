@@ -37,6 +37,7 @@
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
         android:background="@drawable/edit_text_background"
+        android:drawableLeft="@drawable/ic_baseline_place_24"
         android:drawablePadding="20dp"
         android:hint="Wpisz nazwę punktu"
         android:padding="20dp"
