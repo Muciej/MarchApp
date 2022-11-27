@@ -33,6 +33,7 @@ class ChooseMarchActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
         connector.prepareQuery("SELECT * FROM eventy")
         connector.executeQuery()
         marches = connector.getCol(2)
+        connector.closeConnection()
 
         var aa = ArrayAdapter(this, android.R.layout.simple_spinner_item, marches)
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
