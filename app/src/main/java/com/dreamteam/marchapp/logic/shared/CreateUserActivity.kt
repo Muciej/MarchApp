@@ -1,4 +1,4 @@
-package com.dreamteam.marchapp.logic
+package com.dreamteam.marchapp.logic.shared
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -7,11 +7,12 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import com.dreamteam.marchapp.R
+import com.dreamteam.marchapp.logic.admin.AdministratorMain
 
-class CreateAdminInMarchAccount : AppCompatActivity() {
+class CreateUserActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_create_admin_in_march_account)
+        setContentView(R.layout.activity_create_user)
 
         val username = findViewById<TextView>(R.id.username)
         val password = findViewById<TextView>(R.id.password)
@@ -21,28 +22,24 @@ class CreateAdminInMarchAccount : AppCompatActivity() {
         val registerBtn = findViewById<Button>(R.id.registerBtn)
         val backBtn = findViewById<Button>(R.id.btnBack)
 
-        backBtn.setOnClickListener{
-            val Intent = Intent(this, OrganisatorMain::class.java)
+        backBtn.setOnClickListener {
+            val Intent = Intent(this, AdministratorMain::class.java)
             startActivity(Intent)
         }
 
-        registerBtn.setOnClickListener{
+        registerBtn.setOnClickListener {
             if (username.text.isNullOrBlank() || password.text.isNullOrBlank() ||
                 repPassword.text.isNullOrBlank() || email.text.isNullOrBlank() ||
                 phoneNr.text.isNullOrBlank()
-            )
-            {
+            ) {
                 Toast.makeText(this, "Żadne z pól nie może być puste", Toast.LENGTH_SHORT).show()
-            }
-            else
-            {
+            } else {
                 var isCorrect = true
 
-                //TODO:Tu lecą zapytania do bazy
-                //TODO:1. Zapytanie o to czy dana nazwa użytkownika jest zajęta,
-                //TODO:2. Ewentualne zapytania o format email i numeru telefonu
-                //TODO:(zależy od tego jak będziemy to sprawdzać).
-
+                //Tu lecą zapytania do bazy
+                //1. Zapytanie o to czy dana nazwa użytkownika jest zajęta,
+                //2. Ewentualne zapytania o format email i numeru telefonu
+                //(zależy od tego jak będziemy to sprawdzać).
 
                 if (username.text.toString().equals("login")) {
                     Toast.makeText(
@@ -51,24 +48,21 @@ class CreateAdminInMarchAccount : AppCompatActivity() {
                         Toast.LENGTH_SHORT
                     ).show()
                     isCorrect = false
-                }
-                else if (password.text.toString() != repPassword.text.toString()) {
+                } else if (password.text.toString() != repPassword.text.toString()) {
                     Toast.makeText(
                         this,
                         "Wprowadzone hasła muszą być identyczne!",
                         Toast.LENGTH_SHORT
                     ).show()
                     isCorrect = false
-                }
-                else if (email.text.toString().equals("123")) {
+                } else if (email.text.toString().equals("123")) {
                     Toast.makeText(
                         this,
                         "Nieprawidłowy format email!",
                         Toast.LENGTH_SHORT
                     ).show()
                     isCorrect = false
-                }
-                else if (phoneNr.text.toString().equals("abc")) {
+                } else if (phoneNr.text.toString().equals("abc")) {
                     Toast.makeText(
                         this,
                         "Nieprawidłowy format numeru!",
@@ -78,18 +72,17 @@ class CreateAdminInMarchAccount : AppCompatActivity() {
                 }
 
                 //Po rejestracji wracam do ekranu głównego administratora.
-                if (isCorrect)
-                {
+                if (isCorrect) {
                     Toast.makeText(
                         this,
                         "Rejestracja przebiegła poprawnie!",
                         Toast.LENGTH_SHORT
                     ).show()
-                    val Intent = Intent(this, OrganisatorMain::class.java)
-                    startActivity(Intent)
+                    val intent = Intent(this, AdministratorMain::class.java)
+                    startActivity(intent)
 
-                    //TODO:Tutaj będzie leciało zapytanie do bazy, które stworzy nam administratora,
-                    //TODO:z podanych danych, czyli username, password, email i phoneNr
+                    //Tutaj będzie leciało zapytanie do bazy, które stworzy nam administratora,
+                    //z podanych danych, czyli username, password, email i phoneNr
                 }
 
             }
