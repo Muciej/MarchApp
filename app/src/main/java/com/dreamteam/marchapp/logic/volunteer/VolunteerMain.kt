@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.Toast
 import com.dreamteam.marchapp.R
-import com.dreamteam.marchapp.logic.shared.MainActivity
+import com.dreamteam.marchapp.logic.shared.ChooseMarchActivity
 
 class VolunteerMain : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,7 +38,7 @@ class VolunteerMain : AppCompatActivity() {
         }
 
         logoutBtn.setOnClickListener{
-            val Intent = Intent(this, MainActivity::class.java)
+            val Intent = Intent(this, ChooseMarchActivity::class.java)
             startActivity(Intent)
         }
     }

@@ -38,10 +38,12 @@ class ChooseMarchActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
         }
 
         //przycisk powrotu
+        /*
         backBtn.setOnClickListener{
             val Intent = Intent(this, MainActivity::class.java)
             startActivity(Intent)
         }
+         */
 
         // przycisk zatwierdzenia wybranego marszu
         btnChoose.setOnClickListener{
