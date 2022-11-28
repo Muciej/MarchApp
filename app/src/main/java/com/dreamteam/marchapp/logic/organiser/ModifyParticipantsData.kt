@@ -1,11 +1,10 @@
-package com.dreamteam.marchapp.logic.admin
+package com.dreamteam.marchapp.logic.organiser
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import com.dreamteam.marchapp.R
-import com.dreamteam.marchapp.logic.organiser.Organisatormain2
 
 class ModifyParticipantsData : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

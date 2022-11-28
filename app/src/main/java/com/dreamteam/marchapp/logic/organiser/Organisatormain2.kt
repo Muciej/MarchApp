@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import com.dreamteam.marchapp.R
-import com.dreamteam.marchapp.logic.admin.ModifyParticipantsData
 
 class Organisatormain2 : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

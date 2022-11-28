@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.Toast
 import com.dreamteam.marchapp.R
-import com.dreamteam.marchapp.logic.shared.CreateUserActivity
 import com.dreamteam.marchapp.logic.shared.MainActivity
 
 class AdministratorMain : AppCompatActivity() {

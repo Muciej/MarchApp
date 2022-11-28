@@ -48,7 +48,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".logic.admin.ModifyParticipantsData"
+            android:name=".logic.organiser.ModifyParticipantsData"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -121,11 +121,10 @@
             android:name=".logic.admin.CreateVolunteerActivity"
             android:exported="false">
             <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
+                android:name="android.app.lib_name" android:value="" />
         </activity>
         <activity
-            android:name=".logic.shared.CreateUserActivity"
+            android:name=".logic.admin.CreateUserActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
