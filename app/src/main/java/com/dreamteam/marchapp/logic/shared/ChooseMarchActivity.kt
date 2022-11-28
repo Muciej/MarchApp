@@ -1,4 +1,4 @@
-package com.dreamteam.marchapp.logic
+package com.dreamteam.marchapp.logic.shared
 
 import android.content.Context
 import android.content.Intent

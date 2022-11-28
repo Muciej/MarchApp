@@ -1,4 +1,4 @@
-package com.dreamteam.marchapp.logic
+package com.dreamteam.marchapp.logic.admin
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -8,14 +8,14 @@ import android.widget.TextView
 import android.widget.Toast
 import com.dreamteam.marchapp.R
 
-class UpdateVolunteerData : AppCompatActivity() {
+class UpdateParticipantData : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_update_volunteer_data)
+        setContentView(R.layout.activity_update_participant_data)
 
         val username = findViewById<TextView>(R.id.username)
-        val email = findViewById<TextView>(R.id.email)
-        val phone = findViewById<TextView>(R.id.phone)
+        val email = findViewById<TextView>(R.id.name)
+        val phone = findViewById<TextView>(R.id.lastname)
         val updateBtn = findViewById<Button>(R.id.updateBtn)
         val backBtn = findViewById<Button>(R.id.btnBack)
 
@@ -70,7 +70,7 @@ class UpdateVolunteerData : AppCompatActivity() {
                     val intent = Intent(this, AdministratorMain::class.java)
                     startActivity(intent)
 
-                    //TODO:Tutaj będzie leciało zapytanie do bazy, które zaktualizuje nam wolontariusza,
+                    //TODO:Tutaj będzie leciało zapytanie do bazy, które zaktualizuje nam uczestnika,
                     //TODO: podanych danych, czyli username, email i phone
                 }
 
