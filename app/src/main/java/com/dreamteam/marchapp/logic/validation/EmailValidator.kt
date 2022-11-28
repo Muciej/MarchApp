@@ -1,12 +1,12 @@
 package com.dreamteam.marchapp.logic.validation
 
-import android.util.Patterns
+import androidx.core.util.PatternsCompat
 
 class EmailValidator {
 
     companion object {
         fun validate(email: String): Boolean {
-            return Patterns.EMAIL_ADDRESS.matcher(email).matches()
+            return PatternsCompat.EMAIL_ADDRESS.matcher(email).matches()
         }
     }
 }
