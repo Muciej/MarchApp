@@ -7,6 +7,8 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import com.dreamteam.marchapp.R
+import com.dreamteam.marchapp.logic.validation.EmailValidator
+import com.dreamteam.marchapp.logic.validation.PhoneValidator
 
 class UpdateVolunteerData : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,14 +46,14 @@ class UpdateVolunteerData : AppCompatActivity() {
                         Toast.LENGTH_SHORT
                     ).show()
                     isCorrect = false
-                } else if (email.text.toString().equals("123")) {
+                } else if (!EmailValidator.validate(email.text.toString())) {
                     Toast.makeText(
                         this,
                         "Nieprawidłowy format email!",
                         Toast.LENGTH_SHORT
                     ).show()
                     isCorrect = false
-                } else if (phone.text.toString().equals("abc")) {
+                } else if (!PhoneValidator.validate(phone.text.toString())) {
                     Toast.makeText(
                         this,
                         "Nieprawidłowy format numeru!",
