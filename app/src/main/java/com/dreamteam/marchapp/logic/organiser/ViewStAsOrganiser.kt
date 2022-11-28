@@ -1,4 +1,4 @@
-package com.dreamteam.marchapp.logic
+package com.dreamteam.marchapp.logic.organiser
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity

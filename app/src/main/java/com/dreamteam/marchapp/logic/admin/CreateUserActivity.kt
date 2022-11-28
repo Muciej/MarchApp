@@ -1,4 +1,4 @@
-package com.dreamteam.marchapp.logic
+package com.dreamteam.marchapp.logic.admin
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -20,8 +20,8 @@ class CreateUserActivity : AppCompatActivity() {
         val username = findViewById<TextView>(R.id.username)
         val password = findViewById<TextView>(R.id.password)
         val repPassword = findViewById<TextView>(R.id.repeatPassword)
-        val email = findViewById<TextView>(R.id.email)
-        val phoneNr = findViewById<TextView>(R.id.number)
+        val email = findViewById<TextView>(R.id.name)
+        val phoneNr = findViewById<TextView>(R.id.lastname)
         val registerBtn = findViewById<Button>(R.id.registerBtn)
         val backBtn = findViewById<Button>(R.id.btnBack)
 

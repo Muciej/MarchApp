@@ -1,4 +1,4 @@
-package com.dreamteam.marchapp.logic
+package com.dreamteam.marchapp.logic.admin
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -16,8 +16,8 @@ class UpdateParticipantData : AppCompatActivity() {
         setContentView(R.layout.activity_update_participant_data)
 
         val username = findViewById<TextView>(R.id.username)
-        val email = findViewById<TextView>(R.id.email)
-        val phone = findViewById<TextView>(R.id.phone)
+        val email = findViewById<TextView>(R.id.name)
+        val phone = findViewById<TextView>(R.id.lastname)
         val updateBtn = findViewById<Button>(R.id.updateBtn)
         val backBtn = findViewById<Button>(R.id.btnBack)
 

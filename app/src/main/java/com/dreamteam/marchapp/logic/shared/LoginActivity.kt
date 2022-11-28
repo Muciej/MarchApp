@@ -1,4 +1,4 @@
-package com.dreamteam.marchapp.logic
+package com.dreamteam.marchapp.logic.shared
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,6 +8,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import at.favre.lib.crypto.bcrypt.BCrypt
 import com.dreamteam.marchapp.R
+import com.dreamteam.marchapp.logic.organiser.OrganisatorMain
+import com.dreamteam.marchapp.logic.volunteer.VolunteerMain
+import com.dreamteam.marchapp.logic.admin.AdministratorMain
 
 class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
