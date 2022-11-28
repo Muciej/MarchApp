@@ -6,6 +6,7 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import at.favre.lib.crypto.bcrypt.BCrypt
 import com.dreamteam.marchapp.R
 import com.dreamteam.marchapp.logic.organiser.OrganisatorMain
 import com.dreamteam.marchapp.logic.volunteer.VolunteerMain
@@ -26,13 +27,13 @@ class LoginActivity : AppCompatActivity() {
             startActivity(Intent)
         }
 
-        btnSign.setOnClickListener{
-            if (username.text.isNullOrBlank() || password.text.isNullOrBlank())
-            {
+        btnSign.setOnClickListener {
+            if (username.text.isNullOrBlank() || password.text.isNullOrBlank()) {
                 Toast.makeText(this, "Żadne z pól nie może być puste", Toast.LENGTH_SHORT).show()
-            }
-            else
-            {
+            } else {
+                //TODO: Po stworzeniu bazy danych pobrane haslo z bazy porownujemy z zahashowanym
+                val hashedPassword: String =
+                    BCrypt.withDefaults().hashToString(12,password.text.toString().toCharArray())
                 var isCorrect = true
                 var isAdministrator = false
                 var isWolontariusz = false
