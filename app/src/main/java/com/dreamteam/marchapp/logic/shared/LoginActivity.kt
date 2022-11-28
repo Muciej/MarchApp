@@ -80,7 +80,7 @@ class LoginActivity : AppCompatActivity() {
                 //Jak narazie przenosi spowrotem do Main Activity - czekam na resztę ekranów
                 if (isCorrect && !isAdministrator && !isWolontariusz && !isOrganizator)
                 {
-                    val Intent = Intent(this, MainActivity::class.java)
+                    val Intent = Intent(this, ChooseMarchActivity::class.java)
                     startActivity(Intent)
                 }
 

@@ -90,13 +90,6 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".logic.shared.ChooseMarchActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
             android:name=".logic.volunteer.VolunteerScannerActivity"
             android:exported="false">
             <meta-data
@@ -131,7 +124,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".logic.shared.MainActivity"
+            android:name=".logic.shared.ChooseMarchActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.MarchApp.NoActionBar">

@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.Toast
 import com.dreamteam.marchapp.R
-import com.dreamteam.marchapp.logic.shared.MainActivity
+import com.dreamteam.marchapp.logic.shared.ChooseMarchActivity
 
 class OrganisatorMain : AppCompatActivity() {
 
@@ -24,7 +24,7 @@ class OrganisatorMain : AppCompatActivity() {
 
 
         btn_back.setOnClickListener{
-            val Intent = Intent(this, MainActivity::class.java)
+            val Intent = Intent(this, ChooseMarchActivity::class.java)
             startActivity(Intent)
         }
 
@@ -52,7 +52,7 @@ class OrganisatorMain : AppCompatActivity() {
         }
 
         log_out_from_org_account.setOnClickListener{
-            val Intent = Intent(this, MainActivity::class.java)
+            val Intent = Intent(this, ChooseMarchActivity::class.java)
             startActivity(Intent)
         }
 
