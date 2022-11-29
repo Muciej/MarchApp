@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="30dp"
         android:gravity="center"
-        android:text="Rejestracja wolontariusza"
+        android:text="Rejestracja administratora"
         android:textSize="20dp"
         android:textStyle="bold" />
 
@@ -90,7 +90,6 @@
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/edit_text_background"
-        android:drawableLeft="@drawable/ic_baseline_alternate_email_24"
         android:drawablePadding="20dp"
         android:hint="Email"
         android:padding="20dp"
@@ -107,7 +106,6 @@
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/edit_text_background"
-        android:drawableLeft="@drawable/ic_baseline_local_phone_24"
         android:drawablePadding="20dp"
         android:hint="Numer kontaktowy"
         android:padding="20dp"
@@ -125,5 +123,5 @@
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/edit_text_background"
-        android:text="Zarejestruj wolontariusza" />
+        android:text="Zarejestruj administratora" />
 </RelativeLayout>

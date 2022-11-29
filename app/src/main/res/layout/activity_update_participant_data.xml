@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".logic.CreateVolunteerActivity">
+    tools:context=".logic.UpdateParticipantData">
 
     <TextView
         android:id="@+id/signInText"
@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="30dp"
         android:gravity="center"
-        android:text="Rejestracja wolontariusza"
+        android:text="Aktualizacja danych uczestnika"
         android:textSize="20dp"
         android:textStyle="bold" />
 
@@ -39,43 +39,7 @@
         android:background="@drawable/edit_text_background"
         android:drawableLeft="@drawable/ic_baseline_person_24"
         android:drawablePadding="20dp"
-        android:hint="Login"
-        android:padding="20dp"
-        android:textColor="@color/black"
-        android:textColorHint="@color/black" />
-
-    <EditText
-        android:id="@+id/password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/username"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/edit_text_background"
-        android:drawableLeft="@drawable/ic_baseline_lock_person_24"
-        android:drawablePadding="20dp"
-        android:hint="Hasło"
-        android:inputType="textPassword"
-        android:padding="20dp"
-        android:textColor="@color/black"
-        android:textColorHint="@color/black" />
-
-    <EditText
-        android:id="@+id/repeatPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/password"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/edit_text_background"
-        android:drawableLeft="@drawable/ic_baseline_lock_person_24"
-        android:drawablePadding="20dp"
-        android:hint="Powtórz hasło"
-        android:inputType="textPassword"
+        android:hint="Nazwa użytkownika"
         android:padding="20dp"
         android:textColor="@color/black"
         android:textColorHint="@color/black" />
@@ -84,7 +48,7 @@
         android:id="@+id/email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/repeatPassword"
+        android:layout_below="@+id/username"
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
@@ -98,7 +62,7 @@
         android:textColorHint="@color/black" />
 
     <EditText
-        android:id="@+id/number"
+        android:id="@+id/phone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/email"
@@ -115,15 +79,16 @@
         android:textColorHint="@color/black" />
 
     <Button
-        android:id="@+id/registerBtn"
+        android:id="@+id/updateBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/number"
+        android:layout_below="@+id/phone"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="40dp"
         android:layout_marginTop="40dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/edit_text_background"
-        android:text="Zarejestruj wolontariusza" />
+        android:text="Zaktualizuj dane" />
+
 </RelativeLayout>

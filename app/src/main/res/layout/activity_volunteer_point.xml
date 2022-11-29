@@ -37,6 +37,7 @@
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
         android:background="@drawable/edit_text_background"
+        android:drawableLeft="@drawable/ic_baseline_place_24"
         android:drawablePadding="20dp"
         android:hint="Wpisz nazwę punktu"
         android:padding="20dp"
@@ -49,7 +50,12 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/pointName"
         android:layout_centerHorizontal="true"
-        android:layout_margin="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/edit_text_background"
         android:text="Wybierz ten punkt" />
+
+
 </RelativeLayout>
