@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".logic.VolunteerScannerActivity">
+    tools:context=".logic.volunteer.VolunteerScannerActivity">
 
     <Button
         android:id="@+id/btnBack"

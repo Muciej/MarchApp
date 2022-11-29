@@ -1,4 +1,4 @@
-package com.dreamteam.marchapp.logic
+package com.dreamteam.marchapp.logic.admin
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -7,11 +7,13 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import com.dreamteam.marchapp.R
+import com.dreamteam.marchapp.logic.validation.EmailValidator
+import com.dreamteam.marchapp.logic.validation.PhoneValidator
 
-class UpdateParticipantData : AppCompatActivity() {
+class UpdateVolunteerData : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_update_participant_data)
+        setContentView(R.layout.activity_update_volunteer_data)
 
         val username = findViewById<TextView>(R.id.username)
         val email = findViewById<TextView>(R.id.email)
@@ -44,14 +46,14 @@ class UpdateParticipantData : AppCompatActivity() {
                         Toast.LENGTH_SHORT
                     ).show()
                     isCorrect = false
-                } else if (email.text.toString().equals("123")) {
+                } else if (!EmailValidator.validate(email.text.toString())) {
                     Toast.makeText(
                         this,
                         "Nieprawidłowy format email!",
                         Toast.LENGTH_SHORT
                     ).show()
                     isCorrect = false
-                } else if (phone.text.toString().equals("abc")) {
+                } else if (!PhoneValidator.validate(phone.text.toString())) {
                     Toast.makeText(
                         this,
                         "Nieprawidłowy format numeru!",
@@ -70,7 +72,7 @@ class UpdateParticipantData : AppCompatActivity() {
                     val intent = Intent(this, AdministratorMain::class.java)
                     startActivity(intent)
 
-                    //TODO:Tutaj będzie leciało zapytanie do bazy, które zaktualizuje nam uczestnika,
+                    //TODO:Tutaj będzie leciało zapytanie do bazy, które zaktualizuje nam wolontariusza,
                     //TODO: podanych danych, czyli username, email i phone
                 }
 

@@ -1,4 +1,4 @@
-package com.dreamteam.marchapp.logic
+package com.dreamteam.marchapp.logic.admin
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -7,6 +7,10 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import com.dreamteam.marchapp.R
+import com.dreamteam.marchapp.logic.validation.EmailValidator
+import com.dreamteam.marchapp.logic.validation.PasswordValidator
+import com.dreamteam.marchapp.logic.validation.PhoneValidator
+import com.dreamteam.marchapp.logic.validation.UsernameValidator
 
 class CreateUserActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -16,8 +20,8 @@ class CreateUserActivity : AppCompatActivity() {
         val username = findViewById<TextView>(R.id.username)
         val password = findViewById<TextView>(R.id.password)
         val repPassword = findViewById<TextView>(R.id.repeatPassword)
-        val email = findViewById<TextView>(R.id.email)
-        val phoneNr = findViewById<TextView>(R.id.number)
+        val email = findViewById<TextView>(R.id.name)
+        val phoneNr = findViewById<TextView>(R.id.lastname)
         val registerBtn = findViewById<Button>(R.id.registerBtn)
         val backBtn = findViewById<Button>(R.id.btnBack)
 
@@ -37,7 +41,6 @@ class CreateUserActivity : AppCompatActivity() {
 
                 //Tu lecą zapytania do bazy
                 //1. Zapytanie o to czy dana nazwa użytkownika jest zajęta,
-                //2. Ewentualne zapytania o format email i numeru telefonu
                 //(zależy od tego jak będziemy to sprawdzać).
 
                 if (username.text.toString().equals("login")) {
@@ -47,21 +50,38 @@ class CreateUserActivity : AppCompatActivity() {
                         Toast.LENGTH_SHORT
                     ).show()
                     isCorrect = false
-                } else if (password.text.toString() != repPassword.text.toString()) {
+                }
+                else if(!UsernameValidator.validate(username.text.toString())) {
+                    Toast.makeText(
+                        this,
+                        "Nieprawidlowy format nazwy uzytkownika (5-15 znakow, tylko litery i cyfry)",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    isCorrect = false
+
+                } else if (!PasswordValidator.validate(password.text.toString())) {
+                    Toast.makeText(
+                        this,
+                        "Nienprawidlowa dlugosc hasla (8-64 znaki)",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    isCorrect = false
+                }
+                else if (password.text.toString() != repPassword.text.toString()) {
                     Toast.makeText(
                         this,
                         "Wprowadzone hasła muszą być identyczne!",
                         Toast.LENGTH_SHORT
                     ).show()
                     isCorrect = false
-                } else if (email.text.toString().equals("123")) {
+                } else if (!EmailValidator.validate(email.text.toString())) {
                     Toast.makeText(
                         this,
                         "Nieprawidłowy format email!",
                         Toast.LENGTH_SHORT
                     ).show()
                     isCorrect = false
-                } else if (phoneNr.text.toString().equals("abc")) {
+                } else if (!PhoneValidator.validate(phoneNr.text.toString())) {
                     Toast.makeText(
                         this,
                         "Nieprawidłowy format numeru!",
@@ -82,8 +102,9 @@ class CreateUserActivity : AppCompatActivity() {
 
                     //Tutaj będzie leciało zapytanie do bazy, które stworzy nam administratora,
                     //z podanych danych, czyli username, password, email i phoneNr
+                    //tutaj hashujemy tez haslo: val hashedPassword: String =
+                    //                    BCrypt.withDefaults().hashToString(12,password.text.toString().toCharArray())
                 }
-
             }
         }
     }

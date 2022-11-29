@@ -13,126 +13,118 @@
         android:theme="@style/Theme.MarchApp"
         tools:targetApi="31">
         <activity
-            android:name=".logic.UpdateParticipantData"
+            android:name=".logic.admin.UpdateParticipantData"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".logic.UpdateVolunteerData"
+            android:name=".logic.admin.UpdateVolunteerData"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".logic.ViewStAsOrganiser"
+            android:name=".logic.organiser.ViewStAsOrganiser"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".logic.CreateAdminInMarchAccount"
+            android:name=".logic.organiser.CreateAdminInMarchAccount"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".logic.MakeBackupOfMarchDatabase"
+            android:name=".logic.organiser.MakeBackupOfMarchDatabase"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".logic.ModifyParticipantsData"
+            android:name=".logic.organiser.ModifyParticipantsData"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".logic.ModifyTracks"
+            android:name=".logic.organiser.ModifyTracks"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".logic.DeletePoint"
+            android:name=".logic.organiser.DeletePoint"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".logic.ModifyPoints"
+            android:name=".logic.organiser.ModifyPoints"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".logic.Organisatormain2"
+            android:name=".logic.organiser.Organisatormain2"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".logic.OrganisatorMain"
+            android:name=".logic.organiser.OrganisatorMain"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".logic.ChooseMarchActivity"
+            android:name=".logic.volunteer.VolunteerScannerActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".logic.VolunteerScannerActivity"
+            android:name=".logic.volunteer.VolunteerPointActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".logic.VolunteerPointActivity"
+            android:name=".logic.volunteer.VolunteerMain"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".logic.VolunteerMain"
+            android:name=".logic.admin.CreateVolunteerActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name" android:value="" />
+        </activity>
+        <activity
+            android:name=".logic.admin.CreateUserActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".logic.CreateVolunteerActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".logic.CreateUserActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".logic.MainActivity"
+            android:name=".logic.shared.ChooseMarchActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.MarchApp.NoActionBar">
@@ -147,14 +139,14 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".logic.LoginActivity"
+            android:name=".logic.shared.LoginActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".logic.AdministratorMain"
+            android:name=".logic.admin.AdministratorMain"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

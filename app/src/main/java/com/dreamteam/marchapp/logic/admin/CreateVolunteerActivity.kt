@@ -1,4 +1,4 @@
-package com.dreamteam.marchapp.logic
+package com.dreamteam.marchapp.logic.admin
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -7,6 +7,10 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import com.dreamteam.marchapp.R
+import com.dreamteam.marchapp.logic.validation.EmailValidator
+import com.dreamteam.marchapp.logic.validation.PasswordValidator
+import com.dreamteam.marchapp.logic.validation.PhoneValidator
+import com.dreamteam.marchapp.logic.validation.UsernameValidator
 
 class CreateVolunteerActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,14 +44,27 @@ class CreateVolunteerActivity : AppCompatActivity() {
 
                 //Tu lecą zapytania do bazy
                 //1. Zapytanie o to czy dana nazwa użytkownika jest zajęta,
-                //2. Ewentualne zapytania o format email i numeru telefonu
-                //(zależy od tego jak będziemy to sprawdzać).
-
 
                 if (username.text.toString().equals("login")) {
                     Toast.makeText(
                         this,
                         "Użytkownik o tej nazwie już istnieje!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    isCorrect = false
+                }
+                else if(!UsernameValidator.validate(username.text.toString())) {
+                    Toast.makeText(
+                        this,
+                        "Nieprawidlowy format nazwy uzytkownika (5-15 znakow, tylko litery i cyfry)",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    isCorrect = false
+
+                } else if (!PasswordValidator.validate(password.text.toString())) {
+                    Toast.makeText(
+                        this,
+                        "Nienprawidlowa dlugosc hasla (8-64 znaki)",
                         Toast.LENGTH_SHORT
                     ).show()
                     isCorrect = false
@@ -59,16 +76,14 @@ class CreateVolunteerActivity : AppCompatActivity() {
                         Toast.LENGTH_SHORT
                     ).show()
                     isCorrect = false
-                }
-                else if (email.text.toString().equals("123")) {
+                } else if (!EmailValidator.validate(email.text.toString())) {
                     Toast.makeText(
                         this,
                         "Nieprawidłowy format email!",
                         Toast.LENGTH_SHORT
                     ).show()
                     isCorrect = false
-                }
-                else if (phoneNr.text.toString().equals("abc")) {
+                } else if (!PhoneValidator.validate(phoneNr.text.toString())) {
                     Toast.makeText(
                         this,
                         "Nieprawidłowy format numeru!",
@@ -85,19 +100,15 @@ class CreateVolunteerActivity : AppCompatActivity() {
                         "Rejestracja przebiegła poprawnie!",
                         Toast.LENGTH_SHORT
                     ).show()
-                    val Intent = Intent(this, AdministratorMain::class.java)
-                    startActivity(Intent)
+                    val intent = Intent(this, AdministratorMain::class.java)
+                    startActivity(intent)
 
                     //Tutaj będzie leciało zapytanie do bazy, które stworzy nam wolontariusza,
                     //z podanych danych, czyli username, password, email i phoneNr
+                    //tutaj hashujemy tez haslo: val hashedPassword: String =
+                    //                    BCrypt.withDefaults().hashToString(12,password.text.toString().toCharArray())
                 }
-
             }
         }
-
-
-
-
     }
-
 }
