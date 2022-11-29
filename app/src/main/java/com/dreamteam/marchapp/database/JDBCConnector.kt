@@ -1,23 +1,28 @@
 package com.dreamteam.marchapp.database
 
-import java.util.*
+import android.os.StrictMode
+import android.os.StrictMode.ThreadPolicy
 import java.sql.*
-import javax.sql.StatementEvent
+import java.util.*
+
 
 class JDBCConnector() : DBConnector {
 
     private var databaseName = ""
-    private val dbUrl: String = "jdbc:mysql://localhost:3306/";
+//    private val dbUrl: String = "jdbc:jtds:mysql://localhost:3306/"
+    private var port: String = "3306"
+    private var ip: String = "localhost"
     private var dbConnection: Connection? = null
     private var currQuery: PreparedStatement? = null
     private var currentRes: ResultSet? = null
     private var varNo: Int = 0
 
-    override fun setDBName(name: String) {
-        this.databaseName = name
-        prepareQuery("use $databaseName;")
-        executeQuery()
-    }
+//    override fun setDBName(name: String) {
+//        this.databaseName = name
+//        prepareQuery("use $databaseName;")
+//        executeQuery()
+//        println("DB name set to $name")
+//    }
 
     override fun prepareQuery(query: String, varNo: Int) {
         currQuery?.close()
@@ -93,10 +98,17 @@ class JDBCConnector() : DBConnector {
         return answer
     }
 
-    override fun startConnection(user: User) {
+    override fun startConnection(user: User, dbName: String) {
+        val policy = ThreadPolicy.Builder().permitAll().build()
+        StrictMode.setThreadPolicy(policy)
+        Class.forName("com.mysql.cj.jdbc.Driver").newInstance()
         closeConnection()
         try {
-            dbConnection = DriverManager.getConnection(dbUrl, user.name, user.pass)
+            val connUrl = "jdbc:mysql://$ip:$port/"
+            val props = Properties()
+            props["user"] = user.name
+            props["password"] = user.pass
+            dbConnection = DriverManager.getConnection(connUrl, user.name, user.pass)
             println("Connection established as " + user.name)
         } catch (e: SQLException){
             e.printStackTrace()
@@ -105,7 +117,8 @@ class JDBCConnector() : DBConnector {
     }
 
     override fun closeConnection() {
-        dbConnection?.close()
+        if(dbConnection != null)
+            dbConnection?.close()
         dbConnection = null
         currQuery = null
         currentRes = null

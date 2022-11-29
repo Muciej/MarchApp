@@ -15,7 +15,6 @@ import java.util.Vector
 
 //TODO Zrobić ekran strtowy, z którego idzieĶy do ekranu zapisanego w tej klasie
 class ChooseMarchActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
-    //TODO tu będą nazwy marszów z bazy danych
     var connector: DBConnector = JDBCConnector()
 //    var marches = arrayOf( "1", "2", "3", "4", "5", "6")
     var marches = Vector<String>()
@@ -28,12 +27,12 @@ class ChooseMarchActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
         val btnChoose = findViewById<Button>(R.id.chooseBtn)
         val backBtn = findViewById<Button>(R.id.btnBack)
 
-        connector.startConnection(User("viewer"))
-        connector.setDBName("baza_biegow_przelajowych")
-        connector.prepareQuery("SELECT * FROM eventy")
-        connector.executeQuery()
-        marches = connector.getCol(2)
-        connector.closeConnection()
+        connector.startConnection(User("viewer"), "baza_biegow_przelajowych")
+//        connector.setDBName("baza_biegow_przelajowych")
+//        connector.prepareQuery("SELECT * FROM eventy")
+//        connector.executeQuery()
+//        marches = connector.getCol(2)
+//        connector.closeConnection()
 
         var aa = ArrayAdapter(this, android.R.layout.simple_spinner_item, marches)
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
