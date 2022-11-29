@@ -11,7 +11,8 @@ class JDBCConnector() : DBConnector {
     private var databaseName = ""
 //    private val dbUrl: String = "jdbc:jtds:mysql://localhost:3306/"
     private var port: String = "3306"
-    private var ip: String = "localhost"
+    private var ip: String = "10.182.205.135"
+//    private var ip: String = "localhost"
     private var dbConnection: Connection? = null
     private var currQuery: PreparedStatement? = null
     private var currentRes: ResultSet? = null
@@ -101,10 +102,10 @@ class JDBCConnector() : DBConnector {
     override fun startConnection(user: User, dbName: String) {
         val policy = ThreadPolicy.Builder().permitAll().build()
         StrictMode.setThreadPolicy(policy)
-        Class.forName("com.mysql.cj.jdbc.Driver").newInstance()
+        Class.forName("com.mysql.jdbc.Driver").newInstance()
         closeConnection()
         try {
-            val connUrl = "jdbc:mysql://$ip:$port/"
+            val connUrl = "jdbc:mysql://$ip:$port/$dbName"
             val props = Properties()
             props["user"] = user.name
             props["password"] = user.pass
