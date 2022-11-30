@@ -7,16 +7,6 @@
     tools:context=".logic.admin.AdministratorMain">
 
 
-    <Button
-        android:id="@+id/btnBack"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="20dp"
-        android:background="@drawable/ic_baseline_arrow_back_24"
-        tools:ignore="SpeakableTextPresentCheck" />
     <TextView
         android:id="@+id/screenTitle"
         android:layout_width="match_parent"
