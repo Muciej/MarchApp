@@ -25,7 +25,7 @@ class ChooseMarchActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
 
         val myspinner= findViewById<Spinner>(R.id.spinner2)
         val btnChoose = findViewById<Button>(R.id.chooseBtn)
-        val backBtn = findViewById<Button>(R.id.btnBack)
+//        val backBtn = findViewById<Button>(R.id.btnBack)
 
         connector.startConnection(User("viewer"), "baza_biegow_przelajowych")
 //        connector.setDBName("baza_biegow_przelajowych")
