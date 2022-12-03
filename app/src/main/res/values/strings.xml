@@ -18,4 +18,6 @@
     <string name="title_activity_make_admin_account">MakeAdminAccount</string>
     <string name="title_activity_view_march_statistics">ViewMarchStatistics</string>
     <string name="title_activity_have_aview_in_statistics">HaveAViewInStatistics</string>
+    <string name="wolontariusze">Wolontariusze</string>
+    <string name="wybierz_wolontariusza">Dane wolontariuszy</string>
 </resources>

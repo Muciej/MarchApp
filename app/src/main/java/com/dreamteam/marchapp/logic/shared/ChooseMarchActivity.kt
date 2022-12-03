@@ -21,7 +21,6 @@ class ChooseMarchActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
 
         val myspinner= findViewById<Spinner>(R.id.spinner2)
         val btnChoose = findViewById<Button>(R.id.chooseBtn)
-        val backBtn = findViewById<Button>(R.id.btnBack)
 
         var aa = ArrayAdapter(this, android.R.layout.simple_spinner_item, marches)
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -37,13 +36,6 @@ class ChooseMarchActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
 
         }
 
-        //przycisk powrotu
-        /*
-        backBtn.setOnClickListener{
-            val Intent = Intent(this, MainActivity::class.java)
-            startActivity(Intent)
-        }
-         */
 
         // przycisk zatwierdzenia wybranego marszu
         btnChoose.setOnClickListener{
