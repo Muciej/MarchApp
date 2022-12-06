@@ -12,10 +12,10 @@ class ViewStAsOrganiser : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view_st_as_organiser)
 
-        var btnForward = findViewById<Button>(R.id.btnForward)
-        var Stat_by_point = findViewById<Button>(R.id.Stat_by_point)
-        var overall_stats = findViewById<Button>(R.id.overall_stats)
-        var participantsStatistics = findViewById<Button>(R.id.participantsStatistics)
+        val btnForward = findViewById<Button>(R.id.btnForward)
+        val Stat_by_point = findViewById<Button>(R.id.Stat_by_point)
+        val overall_stats = findViewById<Button>(R.id.overall_stats)
+        val participantsStatistics = findViewById<Button>(R.id.participantsStatistics)
 
         btnForward.setOnClickListener {
             val Intent = Intent(this, OrganisatorMain::class.java)
@@ -27,11 +27,8 @@ class ViewStAsOrganiser : AppCompatActivity() {
         //TODO: za pomocą odpowiednich kwerend.
 
         Stat_by_point.setOnClickListener {
-            Toast.makeText(
-                this,
-                "To będzie podgląd statystyk dla punktu!",
-                Toast.LENGTH_SHORT
-            ).show()
+            val intent = Intent(this, SelectPointToFollow::class.java)
+            startActivity(intent)
         }
 
         overall_stats.setOnClickListener {

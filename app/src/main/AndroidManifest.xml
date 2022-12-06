@@ -34,6 +34,20 @@
                 android:value="" />
         </activity>
         <activity
+            android:name=".logic.organiser.SelectPointToFollow"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".logic.organiser.FollowPointStatus"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".logic.organiser.CreateAdminInMarchAccount"
             android:exported="false">
             <meta-data
@@ -126,7 +140,6 @@
         <activity
             android:name=".logic.shared.ChooseMarchActivity"
             android:exported="true"
-            android:label="@string/app_name"
             android:theme="@style/Theme.MarchApp.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
