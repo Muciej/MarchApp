@@ -16,11 +16,17 @@ class OrganisatorMain : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_organisator_main)
 
+        /*
+
+        Jeśli chcemy gradientowe tło to wystarczy odkomentować
+
         val l = findViewById<RelativeLayout>(R.id.orgLayout)
         val ll = l.background as AnimationDrawable
         ll.setEnterFadeDuration(2500)
         ll.setExitFadeDuration(2500)
         ll.start()
+
+         */
 
         val modify_event_btn = findViewById<Button>(R.id.modify_event)
         val create_adm_acc = findViewById<Button>(R.id.create_adm_acc)

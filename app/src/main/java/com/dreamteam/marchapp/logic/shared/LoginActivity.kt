@@ -52,7 +52,7 @@ class LoginActivity : AppCompatActivity() {
                     startActivity(Intent)
                 }
 
-                else if (username.text.toString().equals("o") && password.text.toString().equals("o"))
+                else if (username.text.toString().equals("organizator") && password.text.toString().equals("organizator"))
                 {
                     isOrganizator = true
                     val Intent = Intent(this, OrganisatorMain::class.java)
