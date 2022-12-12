@@ -18,7 +18,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
 
         println("tu powinno byc")
-        println(CodeQr.createCode())
+        CodeQr.createCode()
 
         val username = findViewById<TextView>(R.id.username)
         val password = findViewById<TextView>(R.id.password)
