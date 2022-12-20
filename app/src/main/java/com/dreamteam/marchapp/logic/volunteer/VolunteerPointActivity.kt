@@ -33,7 +33,6 @@ class VolunteerPointActivity : AppCompatActivity() {
             }
         }
 
-
     }
 
 

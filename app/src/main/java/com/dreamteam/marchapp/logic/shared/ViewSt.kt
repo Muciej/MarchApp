@@ -37,6 +37,7 @@ class ViewSt : AppCompatActivity() {
             ).show()
             val Intent = Intent(this, ChoosePointToViewStat::class.java)
             startActivity(Intent)
+//            val intent = Intent(this, SelectPointToFollow::class.java)
         }
 
         overall_stats.setOnClickListener {

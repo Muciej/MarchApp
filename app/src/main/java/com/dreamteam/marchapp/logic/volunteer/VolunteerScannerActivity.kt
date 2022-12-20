@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import com.dreamteam.marchapp.R
+import com.dreamteam.marchapp.logic.shared.ScanQr
 
 class VolunteerScannerActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
