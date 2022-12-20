@@ -54,7 +54,7 @@
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="15dp"
         android:background="@drawable/edit_text_background"
-        android:text="Zaktualizuj konto wolontariusza" />
+        android:text="Wolontariusze" />
 
     <Button
         android:id="@+id/updateParticipant"
@@ -67,7 +67,7 @@
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/edit_text_background"
-        android:text="Zaktualizuj konto uczestnika" />
+        android:text="Uczestnicy" />
 
     <Button
         android:id="@+id/changePass"

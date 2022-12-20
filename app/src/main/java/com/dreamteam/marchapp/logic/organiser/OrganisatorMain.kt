@@ -1,9 +1,11 @@
 package com.dreamteam.marchapp.logic.organiser
 
 import android.content.Intent
+import android.graphics.drawable.AnimationDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.RelativeLayout
 import android.widget.Toast
 import com.dreamteam.marchapp.R
 import com.dreamteam.marchapp.logic.shared.ChooseMarchActivity
@@ -14,6 +16,17 @@ class OrganisatorMain : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_organisator_main)
 
+        /*
+
+        Jeśli chcemy gradientowe tło to wystarczy odkomentować
+
+        val l = findViewById<RelativeLayout>(R.id.orgLayout)
+        val ll = l.background as AnimationDrawable
+        ll.setEnterFadeDuration(2500)
+        ll.setExitFadeDuration(2500)
+        ll.start()
+
+         */
 
         val modify_event_btn = findViewById<Button>(R.id.modify_event)
         val create_adm_acc = findViewById<Button>(R.id.create_adm_acc)
@@ -39,7 +52,9 @@ class OrganisatorMain : AppCompatActivity() {
         }
 
         volunteers.setOnClickListener{
-            Toast.makeText(this, "Tu będzie ekran podglądu wolontariuszy", Toast.LENGTH_SHORT).show()
+            val Intent = Intent(this, ShowVolunteers::class.java)
+            Intent.putExtra("accessLevel", "Organiser")
+            startActivity(Intent)
         }
 
         change_org_Pass.setOnClickListener{

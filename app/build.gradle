@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-android'
+    id 'kotlin-android-extensions'
 }
 
 android {
@@ -51,5 +53,9 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     implementation 'com.google.android.material:material:1.1.0-alpha09'
     implementation 'at.favre.lib:bcrypt:0.9.0'
-
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
+    implementation 'com.github.ISchwarz23:SortableTableView:2.8.1'
+    implementation 'com.github.androidmads:QRGenerator:Tag'
+    implementation 'com.google.zxing:core:3.3.2'
+    implementation 'com.github.androidmads:QRGenerator:1.0.1'
 }

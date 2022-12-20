@@ -6,7 +6,9 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.Toast
 import com.dreamteam.marchapp.R
+import com.dreamteam.marchapp.logic.organiser.ShowVolunteers
 import com.dreamteam.marchapp.logic.shared.ChooseMarchActivity
+import com.dreamteam.marchapp.logic.shared.ShowAndEditParticipant
 
 class AdministratorMain : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,12 +33,15 @@ class AdministratorMain : AppCompatActivity() {
         }
 
         updVolBtn.setOnClickListener{
-            val intent = Intent(this, UpdateVolunteerData::class.java)
+            val intent = Intent(this, ShowVolunteers::class.java)
+            intent.putExtra("accessLevel", "Admin")
             startActivity(intent)
         }
 
         updParBtn.setOnClickListener{
-            val intent = Intent(this, UpdateParticipantData::class.java)
+            //val intent = Intent(this, UpdateParticipantData::class.java)
+            val intent = Intent(this, ShowAndEditParticipant::class.java)
+            intent.putExtra("accessLevel", "Admin")
             startActivity(intent)
         }
 

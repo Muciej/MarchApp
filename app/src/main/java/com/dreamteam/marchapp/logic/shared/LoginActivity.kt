@@ -18,6 +18,9 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+        println("tu powinno byc")
+        //CodeQr.createCode()
+
         val connector = JDBCConnector
         val username = findViewById<TextView>(R.id.username)
         val password = findViewById<TextView>(R.id.password)
