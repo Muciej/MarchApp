@@ -134,6 +134,13 @@
                 android:value="" />
         </activity>
         <activity
+            android:name=".logic.shared.ScanQr"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".logic.admin.CreateVolunteerActivity"
             android:exported="false">
             <meta-data

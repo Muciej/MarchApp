@@ -18,7 +18,6 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
 
         println("tu powinno byc")
-        CodeQr.createCode()
 
         val username = findViewById<TextView>(R.id.username)
         val password = findViewById<TextView>(R.id.password)
@@ -26,7 +25,11 @@ class LoginActivity : AppCompatActivity() {
         val backBtn = findViewById<Button>(R.id.btnBack)
 
         backBtn.setOnClickListener{
-            val Intent = Intent(this, ChooseMarchActivity::class.java)
+            //TODO w celach testowych ustawilem wlaczanie sie skanowania kodu QR
+//            val Intent = Intent(this, ChooseMarchActivity::class.java)
+//            startActivity(Intent)
+
+            val Intent = Intent(this, ScanQr::class.java)
             startActivity(Intent)
         }
 
