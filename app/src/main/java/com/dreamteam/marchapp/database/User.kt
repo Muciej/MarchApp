@@ -16,8 +16,8 @@ class User{
                 this.pass = "register"
             }
             "viewer" -> {
-                this.name = "viewer"
-                this.pass = "viewer"
+                this.name = "march_viewer"
+                this.pass = "V*Yy\$5Zgpm\$fj\$@s"
             }
             else -> {
                 this.name = "login"

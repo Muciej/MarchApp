@@ -29,10 +29,11 @@ class ChooseMarchActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
 
         connector.startConnection(User("viewer"), "baza_biegow_przelajowych")
 //        connector.setDBName("baza_biegow_przelajowych")
-//        connector.prepareQuery("SELECT * FROM eventy")
-//        connector.executeQuery()
-//        marches = connector.getCol(2)
-//        connector.closeConnection()
+        connector.prepareQuery("SELECT * FROM eventy;")
+        connector.executeQuery()
+        marches = connector.getCol(2)
+        connector.closeQuery()
+        connector.closeConnection()
 
         var aa = ArrayAdapter(this, android.R.layout.simple_spinner_item, marches)
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)

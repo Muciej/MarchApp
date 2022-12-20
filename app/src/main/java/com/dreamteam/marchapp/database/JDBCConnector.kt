@@ -8,22 +8,17 @@ import java.util.*
 
 class JDBCConnector() : DBConnector {
 
-    private var databaseName = ""
-//    private val dbUrl: String = "jdbc:jtds:mysql://localhost:3306/"
     private var port: String = "3306"
-    private var ip: String = "10.182.205.135"
-//    private var ip: String = "localhost"
+    private var ip: String = "marchapp.sytes.net"
     private var dbConnection: Connection? = null
     private var currQuery: PreparedStatement? = null
     private var currentRes: ResultSet? = null
-    private var varNo: Int = 0
 
-//    override fun setDBName(name: String) {
-//        this.databaseName = name
-//        prepareQuery("use $databaseName;")
-//        executeQuery()
-//        println("DB name set to $name")
-//    }
+    fun setDBName(db_name: String) {
+        prepareQuery("use $db_name;")
+        executeQuery()
+        println("DB name set to $db_name")
+    }
 
     override fun prepareQuery(query: String, varNo: Int) {
         currQuery?.close()
@@ -53,8 +48,6 @@ class JDBCConnector() : DBConnector {
         while(currentRes!!.next()){
             answer.add(getCurrRow(colNo))
         }
-        currentRes!!.close()
-        currentRes = null
         return answer
     }
 
@@ -64,24 +57,23 @@ class JDBCConnector() : DBConnector {
             row.add(currentRes?.getString(i))
         }
         return row
-
     }
 
-    override fun getRow(rowNo: Int): Vector<String> {
-        for(i in 1 until rowNo){
+    override fun getRow(rowNo: Int, colNo: Int): Vector<String> {
+        for(i in 0 until rowNo){
             currentRes?.next()
         }
-        val answer = getCurrRow(currentRes!!.metaData.columnCount)
-        currentRes?.close()
-        currentRes = null
-        return answer
+        val row = Vector<String>()
+        for (i: Int in 1..colNo){
+            row.add(currentRes?.getString(i))
+        }
+        return row
     }
 
     override fun getCol(colName: String): Vector<String> {
         val answer = Vector<String>()
-        answer.add(currentRes!!.getString(colName))
         while(currentRes?.next() == true){
-            answer.add(currentRes!!.getString(colName))
+            answer.add(currentRes?.getString(colName))
         }
         currentRes?.close()
         currentRes = null
@@ -90,9 +82,31 @@ class JDBCConnector() : DBConnector {
 
     override fun getCol(colNo: Int): Vector<String> {
         val answer = Vector<String>()
-        answer.add(currentRes?.getString(colNo))
         while(currentRes?.next() == true){
-            answer.add(currentRes!!.getString(colNo))
+            println(currentRes?.getString(colNo))
+            answer.add(currentRes?.getString(colNo))
+        }
+        currentRes?.close()
+        currentRes = null
+        return answer
+    }
+
+    override fun getColInts(colNo: Int): Vector<Int> {
+        val answer = Vector<Int>()
+        while(currentRes?.next() == true){
+            println(currentRes?.getString(colNo))
+            answer.add(currentRes?.getInt(colNo))
+        }
+        currentRes?.close()
+        currentRes = null
+        return answer
+    }
+
+    override fun getColBools(colNo: Int): Vector<Boolean> {
+        val answer = Vector<Boolean>()
+        while(currentRes?.next() == true){
+            println(currentRes?.getString(colNo))
+            answer.add(currentRes?.getBoolean(colNo))
         }
         currentRes?.close()
         currentRes = null
@@ -126,16 +140,52 @@ class JDBCConnector() : DBConnector {
     }
 
     override fun executeQuery() {
-        if(currQuery == null)
-            return
         try {
-            if(currQuery!!.execute())
-                currentRes = currQuery!!.resultSet
-            currQuery?.close()
-            currQuery = null
+            println("Executing query")
+            if(currQuery?.execute() == true){
+                currentRes = currQuery?.resultSet
+            }
         } catch (e: SQLException){
             e.printStackTrace()
             println("Could not execute query")
         }
+        if(currentRes == null){
+            println("Query with no result");
+        }
     }
+
+    override fun closeQuery() {
+        currQuery?.close()
+        currQuery = null
+    }
+
+//    override fun executeQuery() {
+//        var stmt: Statement? = null
+//        var resultset: ResultSet? = null
+//
+//        try {
+//            stmt = dbConnection!!.createStatement()
+//            resultset = stmt!!.executeQuery("SELECT * FROM eventy;")
+//
+//            if (stmt.execute("SELECT * FROM eventy;")) {
+//                resultset = stmt.resultSet
+//            }
+//
+//            while (resultset!!.next()) {
+//                println(resultset.getString("nazwa"))
+//            }
+//        } catch (ex: SQLException) {
+//            // handle any errors
+//            ex.printStackTrace()
+//        }
+//    }
+
+//    override fun executeQuery() {
+//        var query = "select * from eventy;"
+//        try {
+//            currQuery = dbConnection!!.prepareStatement(query)
+//            currentRes = currQuery!!.executeQuery()
+//
+//        }
+//    }
 }

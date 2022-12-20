@@ -8,10 +8,13 @@ interface DBConnector {
     fun setStrVar(v: String, varNo: Int)
     fun setIntVar(v: Int, varNo: Int)
     fun getAnswer(): Vector<Vector<String>>
-    fun getRow(rowNo: Int) : Vector<String>
+    fun getRow(rowNo: Int, colNo: Int) : Vector<String>
     fun getCol(colName: String): Vector<String>
     fun getCol(colNo: Int): Vector<String>
+    fun getColInts(colNo: Int): Vector<Int>
+    fun getColBools(colNo: Int): Vector<Boolean>
     fun startConnection(user: User, dbName: String)
     fun closeConnection()
     fun executeQuery()
+    fun closeQuery()
 }
