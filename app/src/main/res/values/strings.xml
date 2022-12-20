@@ -20,4 +20,6 @@
     <string name="title_activity_have_aview_in_statistics">HaveAViewInStatistics</string>
     <string name="wolontariusze">Wolontariusze</string>
     <string name="wybierz_wolontariusza">Dane wolontariuszy</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -53,6 +53,7 @@ class OrganisatorMain : AppCompatActivity() {
 
         volunteers.setOnClickListener{
             val Intent = Intent(this, ShowVolunteers::class.java)
+            Intent.putExtra("accessLevel", "Organiser")
             startActivity(Intent)
         }
 

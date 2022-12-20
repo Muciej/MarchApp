@@ -1,4 +1,4 @@
-package com.dreamteam.marchapp.logic.organiser
+package com.dreamteam.marchapp.logic.shared
 
 
 import android.app.Dialog
@@ -20,6 +20,7 @@ import androidx.fragment.app.DialogFragment
 import com.dreamteam.marchapp.R
 import com.dreamteam.marchapp.R.id.*
 import com.dreamteam.marchapp.logic.admin.AdministratorMain
+import com.dreamteam.marchapp.logic.organiser.OrganisatorMain
 import com.dreamteam.marchapp.logic.validation.EmailValidator
 import com.dreamteam.marchapp.logic.validation.PhoneValidator
 import com.dreamteam.marchapp.logic.volunteer.VolunteerMain
@@ -35,7 +36,7 @@ import kotlinx.android.synthetic.main.dialog_zoom_data.view.backb
 
 
 //doodać oba scrolle
-class ShowVolunteers : AppCompatActivity(), TableDataClickListener<Array<String>> {
+class ShowAndEditParticipant : AppCompatActivity(), TableDataClickListener<Array<String>> {
     var lastClickedRow = -1
     lateinit var data : Array<Array<String>>
     lateinit var adapterData: SimpleTableDataAdapter
@@ -49,7 +50,7 @@ class ShowVolunteers : AppCompatActivity(), TableDataClickListener<Array<String>
         val backBtn = findViewById<Button>(btnBack)
         tableView = findViewById<View>(volunteersTable) as TableView<Array<String>>
         val customSpinner = findViewById<TextView>(textView)
-        val adapterHead = SimpleTableHeaderAdapter(this@ShowVolunteers, "Id", "Imie", "Nazwisko", "telefon", "Email")
+        val adapterHead = SimpleTableHeaderAdapter(this@ShowAndEditParticipant, "Id", "Imie", "Nazwisko", "telefon", "Email")
         tableView.addDataClickListener(this)
         tableView.setHeaderBackgroundColor(Color.rgb(		98, 0, 238))
         val colorEvenRows = Color.rgb(224,224,224)
@@ -61,12 +62,17 @@ class ShowVolunteers : AppCompatActivity(), TableDataClickListener<Array<String>
             )
         )
         editModeCheckbox = findViewById<CheckBox>(editCheckbox)
-        if (accessLevel == "Organiser")
+        if (accessLevel == "Organiser" || accessLevel == "Volunteer")
         {
             editModeCheckbox.isClickable=false
             editModeCheckbox.visibility=View.INVISIBLE
         }
 
+        val title = findViewById<TextView>(R.id.ChooseVolonteersTextView)
+        title.text = "Wybierz uczestnika"
+
+        val hint = findViewById<TextView>(R.id.textView)
+        hint.text = "Wybierz uczestnika"
 
         //tu będzie leciało zapytanie do bazy zby pobrać dane wolontariuszy
         val volunteersList = arrayOf("Nie wybrano", "Nowak Tomasz", "Jakiś Andrzej", "Kowalska Anna", "Wszyscy")
@@ -100,6 +106,7 @@ class ShowVolunteers : AppCompatActivity(), TableDataClickListener<Array<String>
             lateinit var intent : Intent
             if (accessLevel == "Organiser") intent = Intent(this, OrganisatorMain::class.java)
             else if (accessLevel == "Admin") intent = Intent(this, AdministratorMain::class.java)
+            else if (accessLevel == "Volunteer") intent = Intent(this, VolunteerMain::class.java)
             startActivity(intent)
         }
 
@@ -119,7 +126,7 @@ class ShowVolunteers : AppCompatActivity(), TableDataClickListener<Array<String>
         tableView.columnModel = columnModel
 
         customSpinner.setOnClickListener{
-            val dialog = Dialog(this@ShowVolunteers)
+            val dialog = Dialog(this@ShowAndEditParticipant)
             dialog.setContentView(R.layout.dialog_searchable_spinner)
             dialog.window?.setLayout(650,800)
             dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -127,7 +134,7 @@ class ShowVolunteers : AppCompatActivity(), TableDataClickListener<Array<String>
 
             val edittext = dialog.findViewById<EditText>(edit_text)
             val listview = dialog.findViewById<ListView>(listView)
-            val adapter = ArrayAdapter(this@ShowVolunteers, android.R.layout.simple_list_item_1, volunteersList)
+            val adapter = ArrayAdapter(this@ShowAndEditParticipant, android.R.layout.simple_list_item_1, volunteersList)
 
             listview.adapter = adapter
 
@@ -144,9 +151,9 @@ class ShowVolunteers : AppCompatActivity(), TableDataClickListener<Array<String>
                 AdapterView.OnItemClickListener { p0, p1, p2, p3 ->
                     customSpinner.text = adapter.getItem(p2)
 
-                    adapterData = if (listview.getItemAtPosition(p2).toString().lowercase() == "wszyscy") SimpleTableDataAdapter(this@ShowVolunteers, data)
-                    else if (listview.getItemAtPosition(p2).toString().lowercase()!="nie wybrano") SimpleTableDataAdapter(this@ShowVolunteers, arrayOf(getData(data, listview.getItemAtPosition(p2) as String)))
-                    else SimpleTableDataAdapter(this@ShowVolunteers, arrayOf())
+                    adapterData = if (listview.getItemAtPosition(p2).toString().lowercase() == "wszyscy") SimpleTableDataAdapter(this@ShowAndEditParticipant, data)
+                    else if (listview.getItemAtPosition(p2).toString().lowercase()!="nie wybrano") SimpleTableDataAdapter(this@ShowAndEditParticipant, arrayOf(getData(data, listview.getItemAtPosition(p2) as String)))
+                    else SimpleTableDataAdapter(this@ShowAndEditParticipant, arrayOf())
                     adapterData.setTextSize(12)
                     adapterData.setTextColor(Color.BLACK)
                     tableView.dataAdapter = adapterData
@@ -261,7 +268,7 @@ class ShowVolunteers : AppCompatActivity(), TableDataClickListener<Array<String>
                         if (editedName.isNullOrBlank() || editedLastName.isNullOrBlank() ||
                             editedMail.isNullOrBlank() || editedPhone.isNullOrBlank()
                         ) {
-                            Toast.makeText(this@ShowVolunteers, "Żadne z pól nie może być puste", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this@ShowAndEditParticipant, "Żadne z pól nie może być puste", Toast.LENGTH_SHORT).show()
                         } else {
                             var isCorrect = true
 
@@ -272,14 +279,14 @@ class ShowVolunteers : AppCompatActivity(), TableDataClickListener<Array<String>
 
                             if (!EmailValidator.validate(editedMail)) {
                                 Toast.makeText(
-                                    this@ShowVolunteers,
+                                    this@ShowAndEditParticipant,
                                     "Nieprawidłowy format email!",
                                     Toast.LENGTH_SHORT
                                 ).show()
                                 isCorrect = false
                             } else if (!PhoneValidator.validate(editedPhone)) {
                                 Toast.makeText(
-                                    this@ShowVolunteers,
+                                    this@ShowAndEditParticipant,
                                     "Nieprawidłowy format numeru!",
                                     Toast.LENGTH_SHORT
                                 ).show()
@@ -304,7 +311,7 @@ class ShowVolunteers : AppCompatActivity(), TableDataClickListener<Array<String>
                                     }
                                 }
 
-                                adapterData = SimpleTableDataAdapter(this@ShowVolunteers, data)
+                                adapterData = SimpleTableDataAdapter(this@ShowAndEditParticipant, data)
                                 adapterData.setTextSize(12)
                                 adapterData.setTextColor(Color.BLACK)
                                 tableView.dataAdapter = adapterData
