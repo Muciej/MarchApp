@@ -68,3 +68,4 @@ insert into test_event.role (id_roli, nazwa, poziom_uprawnień) values
 (3, 'Uczestnik', 'participant'),
 (4, 'Administrator', 'admin'),
 (5, 'Rejestracja', 'register');
+

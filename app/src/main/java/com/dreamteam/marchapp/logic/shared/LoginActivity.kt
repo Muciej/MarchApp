@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import at.favre.lib.crypto.bcrypt.BCrypt
 import com.dreamteam.marchapp.R
+import com.dreamteam.marchapp.database.JDBCConnector
 import com.dreamteam.marchapp.logic.organiser.OrganisatorMain
 import com.dreamteam.marchapp.logic.volunteer.VolunteerMain
 import com.dreamteam.marchapp.logic.admin.AdministratorMain
@@ -17,12 +18,14 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+        val connector = JDBCConnector
         val username = findViewById<TextView>(R.id.username)
         val password = findViewById<TextView>(R.id.password)
         val btnSign = findViewById<Button>(R.id.signbtn)
         val backBtn = findViewById<Button>(R.id.btnBack)
 
         backBtn.setOnClickListener{
+            connector.closeConnection()
             val Intent = Intent(this, ChooseMarchActivity::class.java)
             startActivity(Intent)
         }
@@ -31,60 +34,39 @@ class LoginActivity : AppCompatActivity() {
             if (username.text.isNullOrBlank() || password.text.isNullOrBlank()) {
                 Toast.makeText(this, "Żadne z pól nie może być puste", Toast.LENGTH_SHORT).show()
             } else {
+                var isCorrect = false
                 //TODO: Po stworzeniu bazy danych pobrane haslo z bazy porownujemy z zahashowanym
-                val hashedPassword: String =
-                    BCrypt.withDefaults().hashToString(12,password.text.toString().toCharArray())
-                var isCorrect = true
-                var isAdministrator = false
-                var isWolontariusz = false
-                var isOrganizator = false
+                //na razie wyłączyłem hashowanie, bo jeszcze go nie ma w bazie
+//                val hashedPassword: String =
+//                    BCrypt.withDefaults().hashToString(12,password.text.toString().toCharArray())
 
-                //tu leci zapyutanie do bazy
-                //W zależności od roli jaką zwróciło zapytanie, przełączamy na inny ekran
-                //Gdy nie zwróciło nic - niepoprawne dane
-                //przykładowe zapytanie
-                //SELECT rola_id FROM konta WHERE login = 'admin' AND hasło = 'admin'
-
-
-                if (username.text.toString().equals("admin") && password.text.toString().equals("admin"))
-                {
-                    isAdministrator = true
-                    val Intent = Intent(this, AdministratorMain::class.java)
-                    startActivity(Intent)
-                }
-
-                else if (username.text.toString().equals("organizator") && password.text.toString().equals("organizator"))
-                {
-                    isOrganizator = true
-                    val Intent = Intent(this, OrganisatorMain::class.java)
-                    startActivity(Intent)
-
-                }
-
-                else if (username.text.toString().equals("uczestnik") && password.text.toString().equals("uczestnik"))
-                {
-                    Toast.makeText(this, "Zalogowano jako uczestnik!", Toast.LENGTH_SHORT).show()
-                }
-                else if (username.text.toString().equals("wolontariusz") && password.text.toString().equals("wolontariusz"))
-                {
-                    isWolontariusz = true
-                    val Intent = Intent(this, VolunteerMain::class.java)
-                    startActivity(Intent)
-                }
-                else
+                connector.startConnection()
+                connector.prepareQuery("select r.poziom_uprawnień from konta k\n" +
+                        "join role r on k.rola_id = r.id_roli\n" +
+                        "where login = ? and hasło = ?;")
+                connector.setStrVar(username.text.toString(), 1)
+                connector.setStrVar(password.text.toString(), 2)
+                connector.executeQuery()
+                val ans = connector.getRow(1, 1)
+                var intent: Intent? = null
+                if(ans.size == 0)
                 {
                     Toast.makeText(this, "Niepoprawne dane, spróbuj ponownie!", Toast.LENGTH_SHORT).show()
                     isCorrect = false
                 }
-
-
-                //Jak narazie przenosi spowrotem do Main Activity - czekam na resztę ekranów
-                if (isCorrect && !isAdministrator && !isWolontariusz && !isOrganizator)
-                {
-                    val Intent = Intent(this, ChooseMarchActivity::class.java)
-                    startActivity(Intent)
+                else{
+                    when(ans[0]){
+                        "organiser" -> intent = Intent(this, OrganisatorMain::class.java)
+                        "volounteer"-> intent = Intent(this, VolunteerMain::class.java)
+                        "participant" -> Toast.makeText(this, "Zalogowano jako uczestnik!", Toast.LENGTH_SHORT).show()
+                        "admin" -> intent = Intent(this, AdministratorMain::class.java)
+                        "register" -> {
+                            //Todo jakiś panel rejestracji?
+                        }
+                    }
                 }
-
+                if(intent != null)
+                    startActivity(intent)
             }
         }
     }
