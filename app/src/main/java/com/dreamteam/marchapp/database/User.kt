@@ -9,19 +9,15 @@ class User{
         this.pass = _pass
     }
 
-    constructor(_defUsr: String){
-        when (_defUsr){
-            "register" -> {
-                this.name = "register"
-                this.pass = "register"
-            }
+    constructor(evName: String){
+        when (evName){
             "viewer" -> {
                 this.name = "march_viewer"
                 this.pass = "V*Yy\$5Zgpm\$fj\$@s"
             }
             else -> {
-                this.name = "login"
-                this.pass = "login"
+                this.name = "admin_$evName"
+                this.pass = "admin_$evName"
             }
 
         }

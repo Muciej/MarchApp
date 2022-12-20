@@ -6,18 +6,18 @@ import java.sql.*
 import java.util.*
 
 
-class JDBCConnector() : DBConnector {
+object JDBCConnector : DBConnector {
 
     private var port: String = "3306"
     private var ip: String = "marchapp.sytes.net"
     private var dbConnection: Connection? = null
     private var currQuery: PreparedStatement? = null
     private var currentRes: ResultSet? = null
+    private var dbName = "viewer"
 
-    fun setDBName(db_name: String) {
-        prepareQuery("use $db_name;")
-        executeQuery()
-        println("DB name set to $db_name")
+    override fun setDBName(name: String) {
+        dbName = name
+        println("DB name set to $name")
     }
 
     override fun prepareQuery(query: String, varNo: Int) {
@@ -113,13 +113,19 @@ class JDBCConnector() : DBConnector {
         return answer
     }
 
-    override fun startConnection(user: User, dbName: String) {
+    override fun startConnection() {
+        val user = User(dbName)
         val policy = ThreadPolicy.Builder().permitAll().build()
         StrictMode.setThreadPolicy(policy)
         Class.forName("com.mysql.jdbc.Driver").newInstance()
         closeConnection()
         try {
-            val connUrl = "jdbc:mysql://$ip:$port/$dbName"
+            val connUrl : String
+            if(dbName == "viewer"){
+                connUrl = "jdbc:mysql://$ip:$port/baza_biegow_przelajowych"
+            } else {
+                connUrl = "jdbc:mysql://$ip:$port/$dbName"
+            }
             val props = Properties()
             props["user"] = user.name
             props["password"] = user.pass
@@ -137,6 +143,7 @@ class JDBCConnector() : DBConnector {
         dbConnection = null
         currQuery = null
         currentRes = null
+        println("Connection to db closed!")
     }
 
     override fun executeQuery() {
@@ -159,33 +166,4 @@ class JDBCConnector() : DBConnector {
         currQuery = null
     }
 
-//    override fun executeQuery() {
-//        var stmt: Statement? = null
-//        var resultset: ResultSet? = null
-//
-//        try {
-//            stmt = dbConnection!!.createStatement()
-//            resultset = stmt!!.executeQuery("SELECT * FROM eventy;")
-//
-//            if (stmt.execute("SELECT * FROM eventy;")) {
-//                resultset = stmt.resultSet
-//            }
-//
-//            while (resultset!!.next()) {
-//                println(resultset.getString("nazwa"))
-//            }
-//        } catch (ex: SQLException) {
-//            // handle any errors
-//            ex.printStackTrace()
-//        }
-//    }
-
-//    override fun executeQuery() {
-//        var query = "select * from eventy;"
-//        try {
-//            currQuery = dbConnection!!.prepareStatement(query)
-//            currentRes = currQuery!!.executeQuery()
-//
-//        }
-//    }
 }

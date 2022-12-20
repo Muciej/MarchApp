@@ -172,3 +172,6 @@ CREATE TRIGGER `after_deleting_participant` AFTER DELETE ON`uczestnicy` FOR EACH
      DELETE FROM konta WHERE konta.id_konta = OLD.id_konta;
 END $$
 DELIMITER ;
+
+insert into baza_biegow_przelajowych.eventy(nazwa, nazwa_bazy) value
+    ("test_event", "ev_test_event")
