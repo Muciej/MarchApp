@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".logic.admin.UpdateParticipantData">
+    tools:context=".logic.admin.UpdateParticipantData"
+    app:background="@color/organiser_background_color">
 
     <TextView
         android:id="@+id/signInText"

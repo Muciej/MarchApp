@@ -10,7 +10,9 @@
     <uses-feature
         android:name="android.hardware.camera"
         android:required="false"/>
-
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -21,6 +23,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MarchApp"
         tools:targetApi="31">
+        <activity
+            android:name=".logic.organiser.ShowVolunteers"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
         <activity
             android:name=".logic.admin.UpdateParticipantData"
             android:exported="false">
@@ -144,7 +153,8 @@
             android:name=".logic.admin.CreateVolunteerActivity"
             android:exported="false">
             <meta-data
-                android:name="android.app.lib_name" android:value="" />
+                android:name="android.app.lib_name"
+                android:value="" />
         </activity>
         <activity
             android:name=".logic.admin.CreateUserActivity"
@@ -169,6 +179,13 @@
         </activity>
         <activity
             android:name=".logic.shared.LoginActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".logic.shared.ShowAndEditParticipant"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
