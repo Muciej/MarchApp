@@ -28,6 +28,9 @@ class LoginActivity : AppCompatActivity() {
         val backBtn = findViewById<Button>(R.id.btnBack)
 
         backBtn.setOnClickListener{
+            //TODO w celach testowych ustawilem wlaczanie sie skanowania kodu QR
+            //val Intent = Intent(this, ScanQr::class.java)
+            
             connector.closeConnection()
             val Intent = Intent(this, ChooseMarchActivity::class.java)
             startActivity(Intent)

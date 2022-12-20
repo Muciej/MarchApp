@@ -4,8 +4,12 @@
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name = "android.permission.CAMERA"/>
+    <uses-permission android:name ="android.permission.CAMERA"/>
     <uses-permission android:name = "android.permission.VIBRATE"/>
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false"/>
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
@@ -133,6 +137,13 @@
         </activity>
         <activity
             android:name=".logic.volunteer.VolunteerMain"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".logic.shared.ScanQr"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
