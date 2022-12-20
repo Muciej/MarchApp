@@ -1,4 +1,4 @@
-package com.dreamteam.marchapp.logic.organiser
+package com.dreamteam.marchapp.logic.shared
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -6,8 +6,11 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.Toast
 import com.dreamteam.marchapp.R
+import com.dreamteam.marchapp.logic.shared.stats.ChoosePointToViewStat
+import com.dreamteam.marchapp.logic.shared.stats.MarchResults
+import com.dreamteam.marchapp.logic.shared.stats.ParWhoPassedAGivenPoint
 
-class ViewStAsOrganiser : AppCompatActivity() {
+class ViewSt : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view_st_as_organiser)
@@ -18,7 +21,7 @@ class ViewStAsOrganiser : AppCompatActivity() {
         val participantsStatistics = findViewById<Button>(R.id.participantsStatistics)
 
         btnForward.setOnClickListener {
-            val Intent = Intent(this, OrganisatorMain::class.java)
+            val Intent = Intent(this, ChooseMarchActivity::class.java)
             startActivity(Intent)
         }
 
@@ -27,8 +30,14 @@ class ViewStAsOrganiser : AppCompatActivity() {
         //TODO: za pomocą odpowiednich kwerend.
 
         Stat_by_point.setOnClickListener {
-            val intent = Intent(this, SelectPointToFollow::class.java)
-            startActivity(intent)
+            Toast.makeText(
+                this,
+                "To będzie podgląd statystyk dla punktu!",
+                Toast.LENGTH_SHORT
+            ).show()
+            val Intent = Intent(this, ChoosePointToViewStat::class.java)
+            startActivity(Intent)
+//            val intent = Intent(this, SelectPointToFollow::class.java)
         }
 
         overall_stats.setOnClickListener {
@@ -37,6 +46,8 @@ class ViewStAsOrganiser : AppCompatActivity() {
                 "To będzie podgląd ogólnych statystyk!",
                 Toast.LENGTH_SHORT
             ).show()
+            val Intent = Intent(this, MarchResults::class.java)
+            startActivity(Intent)
         }
 
         participantsStatistics.setOnClickListener {
@@ -45,6 +56,8 @@ class ViewStAsOrganiser : AppCompatActivity() {
                 "To będzie podgląd statystyk uczestników!",
                 Toast.LENGTH_SHORT
             ).show()
+            val Intent = Intent(this, ParWhoPassedAGivenPoint::class.java)
+            startActivity(Intent)
         }
 
     }

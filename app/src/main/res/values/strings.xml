@@ -18,6 +18,10 @@
     <string name="title_activity_make_admin_account">MakeAdminAccount</string>
     <string name="title_activity_view_march_statistics">ViewMarchStatistics</string>
     <string name="title_activity_have_aview_in_statistics">HaveAViewInStatistics</string>
+    <string name="title_activity_participants_per_minute_chart">ParticipantsPerMinuteChart</string>
+    <string name="title_activity_runner_per_minute_st">RunnerPerMinuteSt</string>
+    <string name="czas_uczestnikow_na_punkcie">Statystyki dla punktu:</string>
+    <string name="wybierz_punkt">Wybierz punkt</string>
     <string name="wolontariusze">Wolontariusze</string>
     <string name="wybierz_wolontariusza">Dane wolontariuszy</string>
     <!-- TODO: Remove or change this placeholder text -->

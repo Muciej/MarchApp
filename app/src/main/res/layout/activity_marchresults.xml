@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".logic.shared.ChooseMarchActivity">
+    tools:context=".logic.organiser.OrganisatorMain">
 
     <Button
-        android:id="@+id/btnForward"
+        android:id="@+id/btnBack"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginStart="20dp"
@@ -18,37 +18,28 @@
         tools:ignore="SpeakableTextPresentCheck" />
 
     <TextView
-        android:id="@+id/chooseText"
+        android:id="@+id/view_statistics"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="30dp"
         android:gravity="center"
-        android:text="Wybierz marsz"
+        android:text="Wybierz kategorię"
         android:textSize="40dp"
         android:textStyle="bold" />
-
-    <ImageView
-        android:id="@+id/imageChoose"
-        android:layout_width="321dp"
-        android:layout_height="251dp"
-        android:layout_below="@+id/chooseText"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="-13dp"
-        android:src="@drawable/pic2" />
-
 
     <Spinner
         android:id="@+id/spinner2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/imageChoose"
+        android:layout_below="@+id/view_statistics"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="1dp"
         android:layout_marginEnd="20dp">
     </Spinner>
+
 
     <Button
         android:id="@+id/chooseBtn"
@@ -61,7 +52,24 @@
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
         android:background="@drawable/edit_text_background"
-        android:text="Wybierz" />
+        android:text="Wyświetl zajęte miejsca" />
+
+    <ImageView
+        android:id="@+id/imageSignUp"
+        android:layout_width="321dp"
+        android:layout_height="251dp"
+        android:layout_below="@+id/chooseBtn"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="-13dp"
+        android:src="@drawable/vecteezy_flat_design_trophy_trophy_vector_isolated_on_white_background_6425320" />
+
+
+
+
+
+
+
+
 
 
 </RelativeLayout>

@@ -26,6 +26,7 @@ class ChooseMarchActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
 
         val myspinner= findViewById<Spinner>(R.id.spinner2)
         val btnChoose = findViewById<Button>(R.id.chooseBtn)
+        val backBtn = findViewById<Button>(R.id.btnForward)
 
 //        val backBtn = findViewById<Button>(R.id.btnBack)
 
@@ -55,6 +56,12 @@ class ChooseMarchActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
 
         }
 
+        //przycisk powrotu
+
+        backBtn.setOnClickListener{
+            val Intent = Intent(this, LoginActivity::class.java)
+            startActivity(Intent)
+        }
 
         // przycisk zatwierdzenia wybranego marszu
         btnChoose.setOnClickListener{

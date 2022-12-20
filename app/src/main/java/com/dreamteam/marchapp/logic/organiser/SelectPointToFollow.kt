@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.dreamteam.marchapp.R
+import com.dreamteam.marchapp.logic.shared.ViewSt
 
 class SelectPointToFollow: AppCompatActivity(), AdapterView.OnItemSelectedListener {
     //From the DB
@@ -33,7 +34,8 @@ class SelectPointToFollow: AppCompatActivity(), AdapterView.OnItemSelectedListen
         }
 
         backBtn.setOnClickListener {
-            val intent = Intent(this, ViewStAsOrganiser::class.java)
+//            val intent = Intent(this, ViewStAsOrganiser::class.java)
+            val intent = Intent(this, ViewSt::class.java)
             startActivity(intent)
         }
 

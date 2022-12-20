@@ -1,17 +1,19 @@
+import org.gradle.api.initialization.resolve.RepositoriesMode
+
 pluginManagement {
     repositories {
         gradlePluginPortal()
         google()
         mavenCentral()
-        maven { url 'https://jitpack.io' }
+        maven { url 'https://jitpack.io' } // dodane ręcznie bo nie widział w xmlu
     }
 }
 dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS) // uwaga zmiana! Stack mówi: Gradle 6.8 introduced central declaration of repositories, new way to define repositories
     repositories {
         google()
         mavenCentral()
-        maven { url 'https://jitpack.io' }
+        maven { url 'https://jitpack.io' } // dodane ręcznie bo nie widział w xmlu
     }
 }
 rootProject.name = "MarchApp"
