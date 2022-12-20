@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.Toast
 import com.dreamteam.marchapp.R
 import com.dreamteam.marchapp.logic.shared.ChooseMarchActivity
+import com.dreamteam.marchapp.logic.shared.ViewSt
 
 class OrganisatorMain : AppCompatActivity() {
 
@@ -34,7 +35,7 @@ class OrganisatorMain : AppCompatActivity() {
         }
 
         view_statistics.setOnClickListener {
-            val Intent = Intent(this, ViewStAsOrganiser::class.java)
+            val Intent = Intent(this, ViewSt::class.java)
             startActivity(Intent)
         }
 

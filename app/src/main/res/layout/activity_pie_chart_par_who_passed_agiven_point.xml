@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--on below line we are creating a swipe to refresh layout-->
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:orientation="vertical"
+    tools:context=".logic.shared.stats.PieChartParWhoPassedAGivenPoint">
+
+    <Button
+        android:id="@+id/btnBack"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/ic_baseline_arrow_back_24"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <!--Ui component for our pie chart-->
+    <TextView
+        android:id="@+id/idTVHead"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="4dp"
+        android:gravity="center"
+        android:padding="4dp"
+        android:text="Uczestnicy według kategorii, którzy przebyli dany punkt:"
+        android:textAlignment="center"
+        android:textColor="@color/purple_500"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/pieChart"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_below="@id/idTVHead"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pieChart"
+        android:layout_marginTop="40dp"
+        android:orientation="horizontal"
+        android:weightSum="3">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:layout_weight="1"
+            android:drawableLeft="@drawable/ic_baseline_circle_24"
+            android:drawableTint="@color/purple_200"
+            android:gravity="center"
+            android:padding="4dp"
+            android:text="M20"
+            android:textAlignment="center"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:layout_weight="1"
+            android:drawableLeft="@drawable/ic_baseline_circle_24"
+            android:drawableTint="@color/yellow"
+            android:gravity="center"
+            android:padding="4dp"
+            android:text="K20"
+            android:textAlignment="center"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:layout_weight="1"
+            android:drawableLeft="@drawable/ic_baseline_circle_24"
+            android:drawableTint="@color/red"
+            android:gravity="center"
+            android:padding="4dp"
+            android:text="M50"
+            android:textAlignment="center"
+            android:textColor="@color/black" />
+
+    </LinearLayout>
+
+</RelativeLayout>
