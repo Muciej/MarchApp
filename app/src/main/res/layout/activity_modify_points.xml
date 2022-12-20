@@ -112,6 +112,7 @@
         android:text="Lista punktów" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/point_list"
         android:layout_width="372dp"
         android:layout_height="263dp"
         android:layout_below="@+id/textView"

@@ -60,10 +60,12 @@ object JDBCConnector : DBConnector {
     }
 
     override fun getRow(rowNo: Int, colNo: Int): Vector<String> {
-        for(i in 0 until rowNo){
+        val row = Vector<String>()
+        if(currentRes?.next() == false)
+            return row
+        for(i in 1 until rowNo) {
             currentRes?.next()
         }
-        val row = Vector<String>()
         for (i: Int in 1..colNo){
             row.add(currentRes?.getString(i))
         }
