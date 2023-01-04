@@ -41,7 +41,7 @@ object JDBCConnector : DBConnector {
 
     override fun getAnswer(): Vector<Vector<String>> {
         if (currentRes == null)
-            throw Exception("Last query did not return any result!")
+            throw Exception("No result!")
 
         val metadata = currentRes!!.metaData
         val colNo = metadata.columnCount
@@ -53,7 +53,9 @@ object JDBCConnector : DBConnector {
         return answer
     }
 
-    fun getCurrRow(colNo: Int): Vector<String>{
+    override fun getCurrRow(colNo: Int): Vector<String>{
+        if (currentRes == null)
+            throw Exception("No result!")
         val row = Vector<String>()
         for (i: Int in 1..colNo){
             row.add(currentRes?.getString(i))
@@ -62,9 +64,9 @@ object JDBCConnector : DBConnector {
     }
 
     override fun getRow(rowNo: Int, colNo: Int): Vector<String> {
+        if (currentRes == null)
+            throw Exception("No result!")
         val row = Vector<String>()
-        if(currentRes?.next() == false)
-            return row
         for(i in 1 until rowNo) {
             currentRes?.next()
         }
@@ -75,7 +77,10 @@ object JDBCConnector : DBConnector {
     }
 
     override fun getCol(colName: String): Vector<String> {
+        if (currentRes == null)
+            throw Exception("No result!")
         val answer = Vector<String>()
+        answer.add(currentRes?.getString(colName))
         while(currentRes?.next() == true){
             answer.add(currentRes?.getString(colName))
         }
@@ -85,7 +90,10 @@ object JDBCConnector : DBConnector {
     }
 
     override fun getCol(colNo: Int): Vector<String> {
+        if (currentRes == null)
+            throw Exception("No result!")
         val answer = Vector<String>()
+        answer.add(currentRes?.getString(colNo))
         while(currentRes?.next() == true){
             println(currentRes?.getString(colNo))
             answer.add(currentRes?.getString(colNo))
@@ -96,7 +104,11 @@ object JDBCConnector : DBConnector {
     }
 
     override fun getColInts(colNo: Int): Vector<Int> {
+        if (currentRes == null)
+            throw Exception("No result!")
         val answer = Vector<Int>()
+
+        answer.add(currentRes?.getInt(colNo))
         while(currentRes?.next() == true){
             println(currentRes?.getString(colNo))
             answer.add(currentRes?.getInt(colNo))
@@ -107,7 +119,11 @@ object JDBCConnector : DBConnector {
     }
 
     override fun getColBools(colNo: Int): Vector<Boolean> {
+        if (currentRes == null)
+            throw Exception("No result!")
         val answer = Vector<Boolean>()
+
+        answer.add(currentRes?.getBoolean(colNo))
         while(currentRes?.next() == true){
             println(currentRes?.getString(colNo))
             answer.add(currentRes?.getBoolean(colNo))
@@ -160,8 +176,9 @@ object JDBCConnector : DBConnector {
             e.printStackTrace()
             println("Could not execute query")
         }
-        if(currentRes == null){
-            println("Query with no result");
+        if(currentRes == null || !currentRes!!.next()){
+            currentRes = null;
+            println("Query with no or empty result");
         }
     }
 

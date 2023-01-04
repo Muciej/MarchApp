@@ -12,6 +12,7 @@ import com.dreamteam.marchapp.database.JDBCConnector
 import com.dreamteam.marchapp.logic.organiser.OrganisatorMain
 import com.dreamteam.marchapp.logic.volunteer.VolunteerMain
 import com.dreamteam.marchapp.logic.admin.AdministratorMain
+import java.util.Vector
 
 class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,7 +38,6 @@ class LoginActivity : AppCompatActivity() {
             if (username.text.isNullOrBlank() || password.text.isNullOrBlank()) {
                 Toast.makeText(this, "Żadne z pól nie może być puste", Toast.LENGTH_SHORT).show()
             } else {
-                var isCorrect = false
                 //TODO: Po stworzeniu bazy danych pobrane haslo z bazy porownujemy z zahashowanym
                 //na razie wyłączyłem hashowanie, bo jeszcze go nie ma w bazie
 //                val hashedPassword: String =
@@ -50,22 +50,23 @@ class LoginActivity : AppCompatActivity() {
                 connector.setStrVar(username.text.toString(), 1)
                 connector.setStrVar(password.text.toString(), 2)
                 connector.executeQuery()
-                val ans = connector.getRow(1, 1)
-                var intent: Intent? = null
-                if(ans.size == 0)
-                {
+                var ans : Vector<String>
+                try {
+                    ans = connector.getRow(1, 1)
+                } catch (e: Exception){
+                    ans = Vector<String>()
+                    ans.add("error")
                     Toast.makeText(this, "Niepoprawne dane, spróbuj ponownie!", Toast.LENGTH_SHORT).show()
-                    isCorrect = false
                 }
-                else{
-                    when(ans[0]){
-                        "organiser" -> intent = Intent(this, OrganisatorMain::class.java)
-                        "volounteer"-> intent = Intent(this, VolunteerMain::class.java)
-                        "participant" -> Toast.makeText(this, "Zalogowano jako uczestnik!", Toast.LENGTH_SHORT).show()
-                        "admin" -> intent = Intent(this, AdministratorMain::class.java)
-                        "register" -> {
-                            //Todo jakiś panel rejestracji?
-                        }
+
+                var intent: Intent? = null
+                when(ans[0]){
+                    "organiser" -> intent = Intent(this, OrganisatorMain::class.java)
+                    "volounteer"-> intent = Intent(this, VolunteerMain::class.java)
+                    "participant" -> Toast.makeText(this, "Zalogowano jako uczestnik!", Toast.LENGTH_SHORT).show()
+                    "admin" -> intent = Intent(this, AdministratorMain::class.java)
+                    "register" -> {
+                        //Todo jakiś panel rejestracji?
                     }
                 }
                 if(intent != null)
