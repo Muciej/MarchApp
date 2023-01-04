@@ -6,7 +6,10 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.Toast
 import com.dreamteam.marchapp.R
+import com.dreamteam.marchapp.logic.organiser.ShowVolunteers
 import com.dreamteam.marchapp.logic.shared.ChooseMarchActivity
+import com.dreamteam.marchapp.logic.shared.ViewSt
+import com.dreamteam.marchapp.logic.shared.ShowAndEditParticipant
 
 class AdministratorMain : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,6 +22,7 @@ class AdministratorMain : AppCompatActivity() {
         val updParBtn = findViewById<Button>(R.id.updateParticipant)
         val changeBtn = findViewById<Button>(R.id.changePass)
         val logoutBtn = findViewById<Button>(R.id.logOut)
+        val viewStats = findViewById<Button>(R.id.view_statistics)
 
         crtVolBtn.setOnClickListener{
             val intent = Intent(this, CreateVolunteerActivity::class.java)
@@ -31,12 +35,15 @@ class AdministratorMain : AppCompatActivity() {
         }
 
         updVolBtn.setOnClickListener{
-            val intent = Intent(this, UpdateVolunteerData::class.java)
+            val intent = Intent(this, ShowVolunteers::class.java)
+            intent.putExtra("accessLevel", "Admin")
             startActivity(intent)
         }
 
         updParBtn.setOnClickListener{
-            val intent = Intent(this, UpdateParticipantData::class.java)
+            //val intent = Intent(this, UpdateParticipantData::class.java)
+            val intent = Intent(this, ShowAndEditParticipant::class.java)
+            intent.putExtra("accessLevel", "Admin")
             startActivity(intent)
         }
 
@@ -46,6 +53,11 @@ class AdministratorMain : AppCompatActivity() {
 
         logoutBtn.setOnClickListener{
             val Intent = Intent(this, ChooseMarchActivity::class.java)
+            startActivity(Intent)
+        }
+
+        viewStats.setOnClickListener{
+            val Intent = Intent(this, ViewSt::class.java)
             startActivity(Intent)
         }
     }

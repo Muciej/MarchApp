@@ -7,12 +7,14 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import com.dreamteam.marchapp.R
+import com.dreamteam.marchapp.logic.shared.CodeQr
 import com.dreamteam.marchapp.logic.validation.EmailValidator
 import com.dreamteam.marchapp.logic.validation.PasswordValidator
 import com.dreamteam.marchapp.logic.validation.PhoneValidator
 import com.dreamteam.marchapp.logic.validation.UsernameValidator
 
 class CreateUserActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_user)
@@ -99,6 +101,7 @@ class CreateUserActivity : AppCompatActivity() {
                     ).show()
                     val intent = Intent(this, AdministratorMain::class.java)
                     startActivity(intent)
+                    
 
                     //Tutaj będzie leciało zapytanie do bazy, które stworzy nam administratora,
                     //z podanych danych, czyli username, password, email i phoneNr

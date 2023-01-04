@@ -1,9 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name ="android.permission.CAMERA"/>
+    <uses-permission android:name = "android.permission.VIBRATE"/>
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false"/>
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -14,6 +24,62 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MarchApp"
         tools:targetApi="31">
+        <activity
+            android:name=".logic.shared.stats.OverallMarchRes"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".logic.shared.stats.PieChartParWhoPassedAGivenPoint"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".logic.shared.stats.ListOfParWhoPassedAGivenPoint"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".logic.shared.stats.ChoosePointToViewStat"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".logic.shared.stats.MarchResults"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".logic.shared.stats.AvgTimeOfParOnPoint"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".logic.shared.stats.ParWhoPassedAGivenPoint"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".logic.organiser.ShowVolunteers"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
         <activity
             android:name=".logic.admin.UpdateParticipantData"
             android:exported="false">
@@ -28,8 +94,29 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+<!--        <activity-->
+<!--            android:name=".logic.organiser.ViewStAsOrganiser"-->
+<!--            android:exported="false">-->
+<!--            <meta-data-->
+<!--                android:name="android.app.lib_name"-->
+<!--                android:value="" />-->
+<!--        </activity>-->
         <activity
-            android:name=".logic.organiser.ViewStAsOrganiser"
+            android:name=".logic.shared.ViewSt"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".logic.organiser.SelectPointToFollow"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".logic.organiser.FollowPointStatus"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -113,10 +200,18 @@
                 android:value="" />
         </activity>
         <activity
+            android:name=".logic.shared.ScanQr"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".logic.admin.CreateVolunteerActivity"
             android:exported="false">
             <meta-data
-                android:name="android.app.lib_name" android:value="" />
+                android:name="android.app.lib_name"
+                android:value="" />
         </activity>
         <activity
             android:name=".logic.admin.CreateUserActivity"
@@ -142,6 +237,13 @@
         </activity>
         <activity
             android:name=".logic.shared.LoginActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".logic.shared.ShowAndEditParticipant"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

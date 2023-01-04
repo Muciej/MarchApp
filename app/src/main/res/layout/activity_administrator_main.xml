@@ -14,7 +14,7 @@
         android:layout_margin="30dp"
         android:gravity="center"
         android:text="Ekran Administratora"
-        android:textSize="40dp"
+        android:textSize="20dp"
         android:textStyle="bold" />
 
     <Button
@@ -44,7 +44,7 @@
         android:text="Stwórz konto uczestnika" />
 
     <Button
-        android:id="@+id/updateVolunteer"
+        android:id="@+id/view_statistics"
         android:layout_width="321dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/createParticipant"
@@ -54,7 +54,22 @@
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="15dp"
         android:background="@drawable/edit_text_background"
+        android:text="Zobacz statystyki" />
+
+    <Button
+        android:id="@+id/updateVolunteer"
+        android:layout_width="321dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/view_statistics"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/edit_text_background"
         android:text="Zaktualizuj konto wolontariusza" />
+
+<!--        android:text="Wolontariusze" />-->
 
     <Button
         android:id="@+id/updateParticipant"
@@ -67,7 +82,7 @@
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/edit_text_background"
-        android:text="Zaktualizuj konto uczestnika" />
+        android:text="Uczestnicy" />
 
     <Button
         android:id="@+id/changePass"

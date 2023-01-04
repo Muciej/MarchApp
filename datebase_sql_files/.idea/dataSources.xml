@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="@localhost" uuid="cd5a11d7-930a-4927-b009-03f7013df286">
-      <driver-ref>mariadb</driver-ref>
+    <data-source source="LOCAL" name="Serwer" uuid="80957521-780c-41db-b36a-906d065307a5">
+      <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
-      <jdbc-driver>org.mariadb.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mariadb://localhost:3306</jdbc-url>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://192.168.8.123:3306</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="@marchapp.sytes.net" uuid="f5be1aab-5437-4309-8c7f-0964863ed39a">
-      <driver-ref>mariadb</driver-ref>
+    <data-source source="LOCAL" name="admin_ev_test_event" uuid="6d7ae7c6-1a3c-4059-b81e-364e0094c44c">
+      <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
-      <jdbc-driver>org.mariadb.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mariadb://marchapp.sytes.net:3306</jdbc-url>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://192.168.8.123:3306</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="test_event admin" uuid="5fc77533-b7c5-4e81-88be-9fc867fbdccf">
-      <driver-ref>mariadb</driver-ref>
+    <data-source source="LOCAL" name="viewer" uuid="5e80233f-2690-4e30-a7c3-c7c4f048e432">
+      <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
-      <jdbc-driver>org.mariadb.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mariadb://marchapp.sytes.net:3306</jdbc-url>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://192.168.8.123:3306</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>

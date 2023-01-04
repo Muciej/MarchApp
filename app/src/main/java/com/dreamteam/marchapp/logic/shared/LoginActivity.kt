@@ -18,6 +18,8 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+        //CodeQr.createCode()
+
         val connector = JDBCConnector
         val username = findViewById<TextView>(R.id.username)
         val password = findViewById<TextView>(R.id.password)
@@ -25,6 +27,7 @@ class LoginActivity : AppCompatActivity() {
         val backBtn = findViewById<Button>(R.id.btnBack)
 
         backBtn.setOnClickListener{
+            
             connector.closeConnection()
             val Intent = Intent(this, ChooseMarchActivity::class.java)
             startActivity(Intent)

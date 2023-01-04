@@ -4,7 +4,7 @@
     <file url="file://$PROJECT_DIR$/database_dumps_mysql/baza_marszow.sql" dialect="MariaDB" />
     <file url="file://$PROJECT_DIR$/init_commands/base_account.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/init_commands/base_for_events_init.sql" dialect="MariaDB" />
-    <file url="file://$PROJECT_DIR$/init_commands/roles.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/init_commands/roles_deprecated.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/init_commands/sample_event_base_init.sql" dialect="MariaDB" />
   </component>
 </project>
