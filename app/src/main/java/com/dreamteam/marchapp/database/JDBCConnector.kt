@@ -9,11 +9,13 @@ import java.util.*
 object JDBCConnector : DBConnector {
 
     private var port: String = "3306"
-    private var ip: String = "marchapp.sytes.net"
+//    private var ip: String = "marchapp.sytes.net"
+    private var ip: String = "192.168.8.123"
     private var dbConnection: Connection? = null
     private var currQuery: PreparedStatement? = null
     private var currentRes: ResultSet? = null
     private var dbName = "viewer"
+    private var flags = "?autoReconnect=true&verifyServerCertificate=false&useSSL=true"
 
     override fun setDBName(name: String) {
         dbName = name
@@ -122,9 +124,9 @@ object JDBCConnector : DBConnector {
         try {
             val connUrl : String
             if(dbName == "viewer"){
-                connUrl = "jdbc:mysql://$ip:$port/baza_biegow_przelajowych"
+                connUrl = "jdbc:mysql://$ip:$port/baza_biegow_przelajowych$flags"
             } else {
-                connUrl = "jdbc:mysql://$ip:$port/$dbName"
+                connUrl = "jdbc:mysql://$ip:$port/$dbName$flags"
             }
             val props = Properties()
             props["user"] = user.name

@@ -1,6 +1,7 @@
-CREATE DATABASE `test_event`;
+drop database if exists ev_test_event;
+CREATE DATABASE ev_test_event;
 
-CREATE TABLE `test_event`.`punkty_kontrolne` (
+CREATE TABLE ev_test_event.`punkty_kontrolne` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `kolejność` INT NOT NULL,
   `online` TINYINT NULL,
@@ -11,7 +12,7 @@ CREATE TABLE `test_event`.`punkty_kontrolne` (
   UNIQUE INDEX kolejność_UNIQUE (kolejność ASC));
 
 
-CREATE TABLE `test_event`.`uczestnicy` (
+CREATE TABLE ev_test_event.`uczestnicy` (
   `nr_startowy` INT NOT NULL,
   `id_konta` INT NOT NULL,
   `imie` VARCHAR(60) NULL,
@@ -21,7 +22,7 @@ CREATE TABLE `test_event`.`uczestnicy` (
   UNIQUE INDEX `id_konta_UNIQUE` (`id_konta` ASC));
 
 
-CREATE TABLE `test_event`.`uczestnicy_do_akceptacji` (
+CREATE TABLE ev_test_event.`uczestnicy_do_akceptacji` (
   `id` INT NOT NULL,
   `imie` VARCHAR(45) NULL,
   `nazwisko` VARCHAR(60) NULL,
@@ -29,7 +30,7 @@ CREATE TABLE `test_event`.`uczestnicy_do_akceptacji` (
   PRIMARY KEY (`id`));
 
 
-CREATE TABLE `test_event`.`role` (
+CREATE TABLE ev_test_event.`role` (
   `id_roli` INT NOT NULL AUTO_INCREMENT,
   `nazwa` VARCHAR(30) NOT NULL,
   poziom_uprawnień VARCHAR(30) NOT NULL,
@@ -40,7 +41,7 @@ CREATE TABLE `test_event`.`role` (
 
 
 
-CREATE TABLE `test_event`.`konta` (
+CREATE TABLE ev_test_event.`konta` (
   `id_konta` INT NOT NULL AUTO_INCREMENT,
   `login` VARCHAR(50) NOT NULL,
   `hasło` CHAR(50) NOT NULL,
@@ -50,17 +51,17 @@ CREATE TABLE `test_event`.`konta` (
   UNIQUE INDEX `hasło_UNIQUE` (`hasło` ASC));
 
 
-CREATE TABLE `test_event`.`uczestnik_punkt` (
+CREATE TABLE ev_test_event.`uczestnik_punkt` (
   `id_uczestnika` INT NOT NULL,
   `id_punktu` INT NOT NULL,
   `data` VARCHAR(45) NOT NULL);
 
-CREATE TABLE `test_event`.`wolontariusz_punkt` (
+CREATE TABLE ev_test_event.`wolontariusz_punkt` (
   `id_wolontariusza` INT NOT NULL,
   `id_punktu` VARCHAR(45) NOT NULL);
 
 
-CREATE TABLE `test_event`.`personel` (
+CREATE TABLE ev_test_event.`personel` (
   `id_osoby` INT NOT NULL AUTO_INCREMENT,
   `id_konta` INT NOT NULL,
   `imie` VARCHAR(45) NOT NULL,
@@ -70,101 +71,101 @@ CREATE TABLE `test_event`.`personel` (
   PRIMARY KEY (`id_osoby`));
 
 
-CREATE TABLE `test_event`.`punkty_online` (
+CREATE TABLE ev_test_event.`punkty_online` (
   `id_punktu` INT NOT NULL,
   `ostatnia_aktywność` VARCHAR(45) NOT NULL);
 
-ALTER TABLE `test_event`.`uczestnicy`
+ALTER TABLE ev_test_event.`uczestnicy`
 ADD CONSTRAINT `id_konta_foreign`
   FOREIGN KEY (`id_konta`)
-  REFERENCES `test_event`.`konta` (`id_konta`)
+  REFERENCES ev_test_event.`konta` (`id_konta`)
   ON DELETE NO ACTION
   ON UPDATE NO ACTION;
 
-ALTER TABLE `test_event`.`uczestnicy_do_akceptacji`
+ALTER TABLE ev_test_event.`uczestnicy_do_akceptacji`
 ADD COLUMN `nr_telefonu` VARCHAR(9) NOT NULL AFTER `pseudonim`,
 CHANGE COLUMN `id` `id` INT NOT NULL AUTO_INCREMENT ,
 CHANGE COLUMN `imie` `imie` VARCHAR(45) NOT NULL ,
 CHANGE COLUMN `nazwisko` `nazwisko` VARCHAR(60) NOT NULL ;
 
-ALTER TABLE `test_event`.`role`
+ALTER TABLE ev_test_event.`role`
 DROP INDEX `poziom_uprawnień_UNIQUE` ;
 
-ALTER TABLE `test_event`.`konta`
+ALTER TABLE ev_test_event.`konta`
 ADD INDEX `rola_foreign_idx` (`rola_id` ASC);
 
-ALTER TABLE `test_event`.`konta`
+ALTER TABLE ev_test_event.`konta`
 ADD CONSTRAINT `rola_foreign`
   FOREIGN KEY (`rola_id`)
-  REFERENCES `test_event`.`role` (`id_roli`)
+  REFERENCES ev_test_event.`role` (`id_roli`)
   ON DELETE NO ACTION
   ON UPDATE NO ACTION;
 
 
 
-ALTER TABLE `test_event`.`uczestnik_punkt`
+ALTER TABLE ev_test_event.`uczestnik_punkt`
 ADD INDEX `id_uczestnika_foreign_idx` (`id_uczestnika` ASC),
 ADD INDEX `id_punktu_foreign_idx` (`id_punktu` ASC);
 
-ALTER TABLE `test_event`.`uczestnik_punkt`
+ALTER TABLE ev_test_event.`uczestnik_punkt`
 ADD CONSTRAINT `id_uczestnika_foreign`
   FOREIGN KEY (`id_uczestnika`)
-  REFERENCES `test_event`.`uczestnicy` (`nr_startowy`)
+  REFERENCES ev_test_event.`uczestnicy` (`nr_startowy`)
   ON DELETE NO ACTION
   ON UPDATE NO ACTION,
 ADD CONSTRAINT `id_punktu_foreign`
   FOREIGN KEY (`id_punktu`)
-  REFERENCES `test_event`.`punkty_kontrolne` (`id`)
+  REFERENCES ev_test_event.`punkty_kontrolne` (`id`)
   ON DELETE NO ACTION
   ON UPDATE NO ACTION;
 
 
-ALTER TABLE `test_event`.`wolontariusz_punkt`
+ALTER TABLE ev_test_event.`wolontariusz_punkt`
 CHANGE COLUMN `id_punktu` `id_punktu` INT NOT NULL ;
 
 
-ALTER TABLE `test_event`.`wolontariusz_punkt`
+ALTER TABLE ev_test_event.`wolontariusz_punkt`
 ADD INDEX `wolontariusz_foreign_idx` (`id_wolontariusza` ASC),
 ADD INDEX `punkt_foregin_idx` (`id_punktu` ASC);
 
-ALTER TABLE `test_event`.`wolontariusz_punkt`
+ALTER TABLE ev_test_event.`wolontariusz_punkt`
 ADD CONSTRAINT `wolontariusz_foreign`
   FOREIGN KEY (`id_wolontariusza`)
-  REFERENCES `test_event`.`personel` (`id_osoby`)
+  REFERENCES ev_test_event.`personel` (`id_osoby`)
   ON DELETE NO ACTION
   ON UPDATE NO ACTION,
 ADD CONSTRAINT `punkt_foregin`
   FOREIGN KEY (`id_punktu`)
-  REFERENCES `test_event`.`punkty_kontrolne` (`id`)
+  REFERENCES ev_test_event.`punkty_kontrolne` (`id`)
   ON DELETE NO ACTION
   ON UPDATE NO ACTION;
 
 
-ALTER TABLE `test_event`.`personel`
+ALTER TABLE ev_test_event.`personel`
 ADD INDEX `konto_foreign_idx` (`id_konta` ASC);
 ;
-ALTER TABLE `test_event`.`personel`
+ALTER TABLE ev_test_event.`personel`
 ADD CONSTRAINT `konto_foreign`
   FOREIGN KEY (`id_konta`)
-  REFERENCES `test_event`.`konta` (`id_konta`)
+  REFERENCES ev_test_event.`konta` (`id_konta`)
   ON DELETE NO ACTION
   ON UPDATE NO ACTION;
 
-ALTER TABLE `test_event`.`punkty_online`
+ALTER TABLE ev_test_event.`punkty_online`
 ADD INDEX `punkt2_foreign_idx` (`id_punktu` ASC);
 ;
-ALTER TABLE `test_event`.`punkty_online`
+ALTER TABLE ev_test_event.`punkty_online`
 ADD CONSTRAINT `punkt2_foreign`
   FOREIGN KEY (`id_punktu`)
-  REFERENCES `test_event`.`punkty_kontrolne` (`id`)
+  REFERENCES ev_test_event.`punkty_kontrolne` (`id`)
   ON DELETE NO ACTION
   ON UPDATE NO ACTION;
 
-ALTER TABLE `test_event`.`punkty_online`
+ALTER TABLE ev_test_event.`punkty_online`
 CHANGE COLUMN `ostatnia_aktywność` `data_ost_aktywności` VARCHAR(45) NOT NULL ;
 
 
-use test_event;
+use ev_test_event;
 DELIMITER $$
 CREATE TRIGGER `after_deleting_participant` AFTER DELETE ON`uczestnicy` FOR EACH ROW BEGIN
 	 #jeśli usuwamy uczestnika to powinniśmy usunąć jego konto
@@ -174,4 +175,10 @@ END $$
 DELIMITER ;
 
 insert into baza_biegow_przelajowych.eventy(nazwa, nazwa_bazy) value
-    ("test_event", "ev_test_event")
+    ("test_event", "ev_test_event");
+
+
+#tworzenie konta administratora dla danej bazy
+drop user if exists admin_ev_test_event@;
+create user 'admin_ev_test_event'@ identified by 'admin_ev_test_event';
+grant all privileges on ev_test_event.* to 'admin_ev_test_event'@;

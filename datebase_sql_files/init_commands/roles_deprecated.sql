@@ -62,7 +62,7 @@ grant select on test_event.konta to login;
 
 grant select on baza_biegow_przelajowych.eventy to 'march_viewer';
 
-insert into test_event.role (id_roli, nazwa, poziom_uprawnień) values
+insert into ev_test_event.role (id_roli, nazwa, poziom_uprawnień) values
 (1, 'Organizator', 'organiser'),
 (2, 'Wolontariusz', 'volounteer'),
 (3, 'Uczestnik', 'participant'),
