@@ -18,7 +18,6 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        println("tu powinno byc")
         //CodeQr.createCode()
 
         val connector = JDBCConnector
@@ -28,8 +27,6 @@ class LoginActivity : AppCompatActivity() {
         val backBtn = findViewById<Button>(R.id.btnBack)
 
         backBtn.setOnClickListener{
-            //TODO w celach testowych ustawilem wlaczanie sie skanowania kodu QR
-            //val Intent = Intent(this, ScanQr::class.java)
             
             connector.closeConnection()
             val Intent = Intent(this, ChooseMarchActivity::class.java)
