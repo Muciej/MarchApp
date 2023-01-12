@@ -158,7 +158,7 @@ class CreateUserActivity : AppCompatActivity() {
                     startActivity(intent)
                     
 
-                    //Tutaj będzie leciało zapytanie do bazy, które stworzy nam administratora,
+                    //Tutaj będzie leciało zapytanie do bazy, które stworzy nam usera,
                     //z podanych danych, czyli username, password, email i phoneNr
                     //tutaj hashujemy tez haslo: val hashedPassword: String =
                     //                    BCrypt.withDefaults().hashToString(12,password.text.toString().toCharArray())

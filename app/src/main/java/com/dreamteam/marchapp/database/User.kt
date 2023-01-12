@@ -22,4 +22,12 @@ class User{
 
         }
     }
+
+    enum class Role(val role_id: Int){
+        organiser(1),
+        volounteer(2),
+        participant(3),
+        admin(4),
+        register(5)
+    }
 }

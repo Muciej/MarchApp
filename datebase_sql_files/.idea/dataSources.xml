@@ -12,7 +12,7 @@
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://192.168.8.123:3306</jdbc-url>
+      <jdbc-url>jdbc:mysql://marchapp.sytes.net:3306</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
     <data-source source="LOCAL" name="viewer" uuid="5e80233f-2690-4e30-a7c3-c7c4f048e432">

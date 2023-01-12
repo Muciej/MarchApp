@@ -8,6 +8,7 @@ import android.widget.TextView
 import android.widget.Toast
 import com.dreamteam.marchapp.R
 import com.dreamteam.marchapp.database.JDBCConnector
+import com.dreamteam.marchapp.database.User
 import com.dreamteam.marchapp.logic.validation.EmailValidator
 import com.dreamteam.marchapp.logic.validation.PasswordValidator
 import com.dreamteam.marchapp.logic.validation.PhoneValidator
@@ -39,7 +40,7 @@ class CreateVolunteerActivity : AppCompatActivity() {
         connector.prepareQuery("insert into konta (login, hasło, rola_id) value (?, ?, ?);")
         connector.setStrVar(username.text.toString(), 1)
         connector.setStrVar(password.text.toString(), 2)
-        connector.setIntVar(usrRoleId, 2)
+        connector.setIntVar(usrRoleId, User.Role.volounteer.role_id)
         connector.executeQuery()
         connector.closeQuery()
 
