@@ -5,8 +5,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ScrollView
 import android.widget.Toast
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.dreamteam.marchapp.R
+import com.dreamteam.marchapp.database.DBConnector
+import com.dreamteam.marchapp.database.JDBCConnector
 
 class ModifyPoints : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,6 +23,15 @@ class ModifyPoints : AppCompatActivity() {
         val pointBtn = findViewById<Button>(R.id.pointBtn)
         val delPoint = findViewById<EditText>(R.id.delPoint)
         val deleteBtn = findViewById<Button>(R.id.delete_btn)
+        val pointlist = findViewById<RecyclerView>(R.id.point_list)
+
+
+        val connector: DBConnector = JDBCConnector
+        connector.startConnection()
+        connector.prepareQuery("select nazwa from punkty_kontrolne;")
+        connector.executeQuery()
+        val names = connector.getCol(1)
+        //TODO a jak to dodać do listy?
 
         btnBack.setOnClickListener{
             val Intent = Intent(this, Organisatormain2::class.java)

@@ -9,6 +9,7 @@ interface DBConnector {
     fun setIntVar(v: Int, varNo: Int)
     fun getAnswer(): Vector<Vector<String>>
     fun getRow(rowNo: Int, colNo: Int) : Vector<String>
+    fun getCurrRow(colNo: Int) : Vector<String>
     fun getCol(colName: String): Vector<String>
     fun getCol(colNo: Int): Vector<String>
     fun getColInts(colNo: Int): Vector<Int>

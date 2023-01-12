@@ -13,7 +13,7 @@ CREATE TABLE ev_test_event.`punkty_kontrolne` (
 
 
 CREATE TABLE ev_test_event.`uczestnicy` (
-  `nr_startowy` INT NOT NULL,
+  `nr_startowy` INT NOT NULL auto_increment,
   `id_konta` INT NOT NULL,
   `imie` VARCHAR(60) NULL,
   `nazwisko` VARCHAR(60) NULL,
@@ -37,8 +37,6 @@ CREATE TABLE ev_test_event.`role` (
   PRIMARY KEY (`id_roli`),
   UNIQUE INDEX `nazwa_UNIQUE` (`nazwa` ASC),
   UNIQUE INDEX `poziom_uprawnień_UNIQUE` (poziom_uprawnień ASC));
-
-
 
 
 CREATE TABLE ev_test_event.`konta` (

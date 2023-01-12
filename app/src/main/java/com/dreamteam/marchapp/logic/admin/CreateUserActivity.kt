@@ -7,17 +7,61 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import com.dreamteam.marchapp.R
+import com.dreamteam.marchapp.database.JDBCConnector
 import com.dreamteam.marchapp.logic.shared.CodeQr
 import com.dreamteam.marchapp.logic.validation.EmailValidator
 import com.dreamteam.marchapp.logic.validation.PasswordValidator
 import com.dreamteam.marchapp.logic.validation.PhoneValidator
 import com.dreamteam.marchapp.logic.validation.UsernameValidator
+import kotlinx.android.synthetic.main.activity_login.*
 
 class CreateUserActivity : AppCompatActivity() {
+    var connector = JDBCConnector
+    /**
+     * Invoked when all data is checked and we need a query to create new participant account
+     */
+    fun registerUser(){
+        connector.startConnection()
+        connector.prepareQuery("select * from role where nazwa = 'Uczestnik';")
+        connector.executeQuery()
+        var usrRoleId = -1
+        try {
+            usrRoleId = connector.getColInts(1)[0]
+        } catch (e : Exception){
+            throw Exception("Nie isniteje rola Uczestnika!")
+        }
+
+        //tworzenie konta w aplikacji
+        connector.prepareQuery("insert into konta (login, hasło, rola_id) value (?, ?, ?);")
+        connector.setStrVar(username.text.toString(), 1)
+        connector.setStrVar(password.text.toString(), 2)
+        connector.setIntVar(usrRoleId, 3)
+        connector.executeQuery()
+        connector.closeQuery()
+
+        //znalezienie id nowoutworzonego konta
+        connector.prepareQuery("select id_konta from konta where login = ? and hasło = ?;")
+        connector.setStrVar(username.text.toString(), 1)
+        connector.setStrVar(password.text.toString(), 2)
+        connector.executeQuery()
+        val accountID = connector.getColInts(1)[0]
+        connector.closeQuery()
+
+        //tworzenie wpisu w bazie danych uczestników
+        connector.prepareQuery("insert into uczestnicy (id_konta, imie, nazwisko, pseudonim) value (?, ?, ?, ?);")
+        connector.setIntVar(accountID, 1)
+        connector.setStrVar(username.text.toString(), 2)
+        connector.setStrVar(password.text.toString(), 3)
+        connector.setStrVar(username.text.toString(), 4)    //na razie pseudonim taki jak imię
+        connector.executeQuery()
+        connector.closeQuery()
+
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_user)
+
 
         val username = findViewById<TextView>(R.id.username)
         val password = findViewById<TextView>(R.id.password)
@@ -40,12 +84,22 @@ class CreateUserActivity : AppCompatActivity() {
                 Toast.makeText(this, "Żadne z pól nie może być puste", Toast.LENGTH_SHORT).show()
             } else {
                 var isCorrect = true
+                var loginTaken = true
 
                 //Tu lecą zapytania do bazy
                 //1. Zapytanie o to czy dana nazwa użytkownika jest zajęta,
+                connector.startConnection()
+                connector.prepareQuery("select * from konta where login = ?")
+                connector.setStrVar(username.text.toString(), 1)
+                connector.executeQuery()
+                try {
+                    connector.getAnswer()
+                } catch(e: Exception){
+                    loginTaken = false
+                }
                 //(zależy od tego jak będziemy to sprawdzać).
 
-                if (username.text.toString().equals("login")) {
+                if (loginTaken) {
                     Toast.makeText(
                         this,
                         "Użytkownik o tej nazwie już istnieje!",
@@ -94,6 +148,7 @@ class CreateUserActivity : AppCompatActivity() {
 
                 //Po rejestracji wracam do ekranu głównego administratora.
                 if (isCorrect) {
+                    registerUser()
                     Toast.makeText(
                         this,
                         "Rejestracja przebiegła poprawnie!",
