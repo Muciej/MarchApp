@@ -39,7 +39,7 @@ class CreateVolunteerActivity : AppCompatActivity() {
         connector.prepareQuery("insert into konta (login, hasło, rola_id) value (?, ?, ?);")
         connector.setStrVar(username.text.toString(), 1)
         connector.setStrVar(password.text.toString(), 2)
-        connector.setIntVar(usrRoleId, 3)
+        connector.setIntVar(usrRoleId, 2)
         connector.executeQuery()
         connector.closeQuery()
 
