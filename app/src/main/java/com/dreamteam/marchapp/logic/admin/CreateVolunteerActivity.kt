@@ -27,7 +27,7 @@ class CreateVolunteerActivity : AppCompatActivity() {
         val phoneNr = findViewById<TextView>(R.id.number)
 
         connector.startConnection()
-        connector.prepareQuery("select * from role where nazwa = 'Uczestnik';")
+        connector.prepareQuery("select * from role where nazwa = 'Wolontariusz';")
         connector.executeQuery()
         var usrRoleId = -1
         try {
