@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@color/white">
+    
+    <TextView
+        android:textColor="@color/black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Edycja danych"
+        android:layout_gravity="center"
+        android:textSize="25sp"
+        android:textStyle="bold"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:id="@+id/imie"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Imie: "
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/edit_imie"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="65dp"
+            android:textStyle="bold"
+            android:layout_toRightOf="@+id/imie"
+            android:background="@drawable/edit_text_background"
+            android:textColor="@color/black"
+            android:paddingBottom="3dp"
+            android:paddingTop="3dp"
+            android:paddingLeft="10dp"
+            />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:id="@+id/nazwisko"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nazwisko: "
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/nazwisko_edit"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="18dp"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/nazwisko"
+            android:background="@drawable/edit_text_background"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:paddingBottom="3dp"
+            android:paddingTop="3dp"
+            android:paddingLeft="10dp"
+             />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:id="@+id/nr_startowy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nr startowy: "
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/nr_startowy_edit"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="3dp"
+            android:layout_height="wrap_content"
+            android:paddingBottom="3dp"
+            android:paddingTop="3dp"
+            android:layout_toRightOf="@+id/nr_startowy"
+            android:background="@drawable/edit_text_background"
+            android:textColor="@color/black"
+            android:paddingLeft="10dp"
+            android:textStyle="bold"
+             />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:id="@+id/pseudonim"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Psudonim: "
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/pseudonim_edit"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="15dp"
+            android:layout_height="wrap_content"
+            android:paddingBottom="2dp"
+            android:paddingTop="2dp"
+            android:layout_toRightOf="@+id/pseudonim"
+            android:background="@drawable/edit_text_background"
+            android:paddingLeft="10dp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            />
+    </RelativeLayout>
+
+    <GridLayout android:layout_height="match_parent" android:layout_width="match_parent">
+        <Button
+            android:id="@+id/backb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:background="@drawable/edit_text_background"
+            android:layout_marginTop="20dp"
+            android:text="Powrót" />
+
+        <Button
+            android:id="@+id/editButton"
+            android:layout_marginLeft="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_background"
+            android:layout_marginTop="20dp"
+            android:text="Zapisz zmiany" />
+    </GridLayout>
+
+
+</LinearLayout>
