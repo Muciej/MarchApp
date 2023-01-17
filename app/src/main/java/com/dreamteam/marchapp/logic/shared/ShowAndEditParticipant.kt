@@ -188,6 +188,16 @@ class ShowAndEditParticipant : AppCompatActivity(), TableDataClickListener<Array
         return data
     }
 
+    private fun checkIfPresentInDB(obj : String, field : String, id:Int) : Boolean {
+        connector.prepareQuery("SELECT count(id_konta) FROM uczestnicy where $field = '$obj' and id_konta!=$id;")
+        connector.executeQuery()
+        //tzn ze nikt w bazie (poza obecna osoba) nie ma takiego pola
+        if (connector.getColInts(1)[0] == 0){
+            return false
+        }
+        return true
+    }
+
 
     private fun init_volunteers()
     {
@@ -300,6 +310,9 @@ class ShowAndEditParticipant : AppCompatActivity(), TableDataClickListener<Array
                         var editedStartNr = nr_startowy_edit.text.toString()
                         var editedPsudonim = pseudonim_edit.text.toString()
 
+                        var rowToEdit = 0;
+                        rowToEdit = clickedData!!.get(0).toInt()
+
 
 
                         if (editedName.isNullOrBlank() || editedLastName.isNullOrBlank() ||
@@ -326,13 +339,30 @@ class ShowAndEditParticipant : AppCompatActivity(), TableDataClickListener<Array
                                 isCorrect = false
                             }
 
+                            else if (checkIfPresentInDB(editedStartNr, "nr_startowy", rowToEdit ))
+                            {
+                                Toast.makeText(
+                                    this@ShowAndEditParticipant,
+                                    "Osoba o podanym nr startowym już istnieje w bazie!",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                isCorrect = false
+                            }
+                            else if (checkIfPresentInDB(editedPsudonim, "pseudonim", rowToEdit))
+                            {
+                                Toast.makeText(
+                                    this@ShowAndEditParticipant,
+                                    "Osoba o podanym pseudonimie już istnieje w bazie!",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                isCorrect = false
+                            }
+
                             //tu jeszcze powinienem sprawidzc czy osoba o tym numerze starowym już mnie jest w bazie
 
                             //Po aktualizacji wracam do ekranu głównego administratora.
                             if (isCorrect) {
-                                //pobiera
-                                var rowToEdit = 0;
-                                rowToEdit = clickedData!!.get(0).toInt()
+
 
                                 connector.prepareQuery("UPDATE uczestnicy SET imie = ?, nazwisko = ?, pseudonim = ? " +
                                         ", nr_startowy = ? WHERE id_konta = ?;")
