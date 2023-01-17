@@ -165,8 +165,10 @@ class ShowVolunteers : AppCompatActivity(), TableDataClickListener<Array<String>
     private fun selectData(name: String):MutableList<Array<String>>
     {
         val dataa = name.split(" ")
+        var imie = dataa[0]
+        var nazwisko = dataa[1]
         connector.prepareQuery("select id_osoby, imie, nazwisko, nr_telefonu, mail from personel inner join konta on personel.id_konta = konta.id_konta where rola_id=2" +
-                " and imie='" + dataa[0] + "' and nazwisko = '" + dataa[1] + "';")
+                " and imie= '$imie' and nazwisko =  '$nazwisko';")
         connector.executeQuery()
 
         var temp: Vector<String>? = null
@@ -200,6 +202,16 @@ class ShowVolunteers : AppCompatActivity(), TableDataClickListener<Array<String>
         }
         connector.closeQuery()
         return data
+    }
+
+    private fun checkIfPresentInDB(obj : String, field : String, id:Int) : Boolean {
+        connector.prepareQuery("SELECT count(id_osoby) FROM personel where $field = '$obj' and id_osoby!=$id;")
+        connector.executeQuery()
+        //tzn ze nikt w bazie (poza obecna osoba) nie ma takiego pola
+        if (connector.getColInts(1)[0] == 0){
+            return false
+        }
+        return true
     }
 
     private fun init_volunteers()
@@ -312,6 +324,9 @@ class ShowVolunteers : AppCompatActivity(), TableDataClickListener<Array<String>
                         var editedPhone = nr_telefonu_edit.text.toString()
                         var editedMail = mail_edit.text.toString()
 
+                        var rowToEdit = 0;
+                        rowToEdit = clickedData!!.get(0).toInt()
+
 
 
                         if (editedName.isNullOrBlank() || editedLastName.isNullOrBlank() ||
@@ -352,12 +367,29 @@ class ShowVolunteers : AppCompatActivity(), TableDataClickListener<Array<String>
                                 ).show()
                                 isCorrect = false
                             }
+                            else if (checkIfPresentInDB(editedPhone, "nr_telefonu", rowToEdit ))
+                            {
+                                Toast.makeText(
+                                    this@ShowVolunteers,
+                                    "Osoba o podanym nr telefonu już istnieje w bazie!",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                isCorrect = false
+                            }
+                            else if (checkIfPresentInDB(editedMail, "mail", rowToEdit))
+                            {
+                                Toast.makeText(
+                                    this@ShowVolunteers,
+                                    "Osoba o podanym mailu już istnieje w bazie!",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                isCorrect = false
+                            }
 
                             //Po aktualizacji wracam do ekranu głównego administratora.
                             if (isCorrect) {
                                 //pobiera
-                                var rowToEdit = 0;
-                                rowToEdit = clickedData!!.get(0).toInt()
+
 
                                 //zamiast tego bedzie zapytanie do bazy
                                 /*
