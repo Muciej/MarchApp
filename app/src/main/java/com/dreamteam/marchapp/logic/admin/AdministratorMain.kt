@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.Toast
 import com.dreamteam.marchapp.R
+import com.dreamteam.marchapp.database.JDBCConnector
 import com.dreamteam.marchapp.logic.organiser.ShowVolunteers
 import com.dreamteam.marchapp.logic.shared.ChooseMarchActivity
 import com.dreamteam.marchapp.logic.shared.ViewSt
@@ -52,6 +53,7 @@ class AdministratorMain : AppCompatActivity() {
         }
 
         logoutBtn.setOnClickListener{
+            JDBCConnector.closeConnection()
             val Intent = Intent(this, ChooseMarchActivity::class.java)
             startActivity(Intent)
         }
