@@ -89,8 +89,7 @@ class CreateAdminInMarchAccount : AppCompatActivity() {
                     startActivity(Intent)
 
                     //TODO: Podczas rejestracji hashujemy haslo:
-//                    val hashedPass = BCrypt.withDefaults().hashToString(12, password.text.toString().toCharArray())
-
+//                    val hashedPass = Hasher.hash(password.text.toString())
 
                     //TODO:Tutaj będzie leciało zapytanie do bazy, które stworzy nam administratora,
                     //TODO:z podanych danych, czyli username, password, email i phoneNr

@@ -6,9 +6,9 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
-import at.favre.lib.crypto.bcrypt.BCrypt
 import com.dreamteam.marchapp.R
 import com.dreamteam.marchapp.database.JDBCConnector
+import com.dreamteam.marchapp.logic.config.PasswordEncoder
 import com.dreamteam.marchapp.logic.validation.EmailValidator
 import com.dreamteam.marchapp.logic.validation.PasswordValidator
 import com.dreamteam.marchapp.logic.validation.PhoneValidator
@@ -35,7 +35,7 @@ class CreateVolunteerActivity : AppCompatActivity() {
             throw Exception("Nie isniteje rola Uczestnika!")
         }
 
-        val hashedPass = BCrypt.withDefaults().hashToString(12, password.text.toString().toCharArray())
+        val hashedPass = PasswordEncoder.hash(password.text.toString())
 
         //tworzenie konta w aplikacji
         connector.prepareQuery("insert into konta (login, hasło, rola_id) value (?, ?, ?);")
