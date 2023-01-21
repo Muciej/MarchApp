@@ -6,14 +6,13 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import at.favre.lib.crypto.bcrypt.BCrypt
 import com.dreamteam.marchapp.R
 import com.dreamteam.marchapp.database.JDBCConnector
-import com.dreamteam.marchapp.database.User
 import com.dreamteam.marchapp.logic.validation.EmailValidator
 import com.dreamteam.marchapp.logic.validation.PasswordValidator
 import com.dreamteam.marchapp.logic.validation.PhoneValidator
 import com.dreamteam.marchapp.logic.validation.UsernameValidator
-import kotlinx.android.synthetic.main.activity_login.*
 
 class CreateVolunteerActivity : AppCompatActivity() {
     var connector = JDBCConnector
@@ -36,18 +35,20 @@ class CreateVolunteerActivity : AppCompatActivity() {
             throw Exception("Nie isniteje rola Uczestnika!")
         }
 
+        val hashedPass = BCrypt.withDefaults().hashToString(12, password.text.toString().toCharArray())
+
         //tworzenie konta w aplikacji
         connector.prepareQuery("insert into konta (login, hasło, rola_id) value (?, ?, ?);")
         connector.setStrVar(username.text.toString(), 1)
-        connector.setStrVar(password.text.toString(), 2)
-        connector.setIntVar(usrRoleId, User.Role.volounteer.role_id)
+        connector.setStrVar(hashedPass, 2)
+        connector.setIntVar(usrRoleId,3)
         connector.executeQuery()
         connector.closeQuery()
 
         //znalezienie id nowoutworzonego konta
         connector.prepareQuery("select id_konta from konta where login = ? and hasło = ?;")
         connector.setStrVar(username.text.toString(), 1)
-        connector.setStrVar(password.text.toString(), 2)
+        connector.setStrVar(hashedPass, 2)
         connector.executeQuery()
         val accountID = connector.getColInts(1)[0]
         connector.closeQuery()
@@ -164,11 +165,6 @@ class CreateVolunteerActivity : AppCompatActivity() {
                     ).show()
                     val intent = Intent(this, AdministratorMain::class.java)
                     startActivity(intent)
-
-                    //Tutaj będzie leciało zapytanie do bazy, które stworzy nam wolontariusza,
-                    //z podanych danych, czyli username, password, email i phoneNr
-                    //tutaj hashujemy tez haslo: val hashedPassword: String =
-                    //                    BCrypt.withDefaults().hashToString(12,password.text.toString().toCharArray())
                 }
             }
         }

@@ -6,9 +6,9 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import at.favre.lib.crypto.bcrypt.BCrypt
 import com.dreamteam.marchapp.R
 import com.dreamteam.marchapp.database.JDBCConnector
-import com.dreamteam.marchapp.logic.shared.CodeQr
 import com.dreamteam.marchapp.logic.validation.EmailValidator
 import com.dreamteam.marchapp.logic.validation.PasswordValidator
 import com.dreamteam.marchapp.logic.validation.PhoneValidator
@@ -31,10 +31,12 @@ class CreateUserActivity : AppCompatActivity() {
             throw Exception("Nie isniteje rola Uczestnika!")
         }
 
+        val hashedPass = BCrypt.withDefaults().hashToString(12, password.text.toString().toCharArray())
+
         //tworzenie konta w aplikacji
         connector.prepareQuery("insert into konta (login, hasło, rola_id) value (?, ?, ?);")
         connector.setStrVar(username.text.toString(), 1)
-        connector.setStrVar(password.text.toString(), 2)
+        connector.setStrVar(hashedPass, 2)
         connector.setIntVar(usrRoleId, 3)
         connector.executeQuery()
         connector.closeQuery()
@@ -42,7 +44,7 @@ class CreateUserActivity : AppCompatActivity() {
         //znalezienie id nowoutworzonego konta
         connector.prepareQuery("select id_konta from konta where login = ? and hasło = ?;")
         connector.setStrVar(username.text.toString(), 1)
-        connector.setStrVar(password.text.toString(), 2)
+        connector.setStrVar(hashedPass, 2)
         connector.executeQuery()
         val accountID = connector.getColInts(1)[0]
         connector.closeQuery()
@@ -51,7 +53,7 @@ class CreateUserActivity : AppCompatActivity() {
         connector.prepareQuery("insert into uczestnicy (id_konta, imie, nazwisko, pseudonim) value (?, ?, ?, ?);")
         connector.setIntVar(accountID, 1)
         connector.setStrVar(username.text.toString(), 2)
-        connector.setStrVar(password.text.toString(), 3)
+        connector.setStrVar(hashedPass, 3)
         connector.setStrVar(username.text.toString(), 4)    //na razie pseudonim taki jak imię
         connector.executeQuery()
         connector.closeQuery()
@@ -156,12 +158,6 @@ class CreateUserActivity : AppCompatActivity() {
                     ).show()
                     val intent = Intent(this, AdministratorMain::class.java)
                     startActivity(intent)
-                    
-
-                    //Tutaj będzie leciało zapytanie do bazy, które stworzy nam usera,
-                    //z podanych danych, czyli username, password, email i phoneNr
-                    //tutaj hashujemy tez haslo: val hashedPassword: String =
-                    //                    BCrypt.withDefaults().hashToString(12,password.text.toString().toCharArray())
                 }
             }
         }
