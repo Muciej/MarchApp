@@ -13,6 +13,8 @@ import com.dreamteam.marchapp.logic.validation.EmailValidator
 import com.dreamteam.marchapp.logic.validation.PasswordValidator
 import com.dreamteam.marchapp.logic.validation.PhoneValidator
 import com.dreamteam.marchapp.logic.validation.UsernameValidator
+import com.dreamteam.marchapp.database.User
+import kotlinx.android.synthetic.main.activity_login.*
 
 class CreateVolunteerActivity : AppCompatActivity() {
     var connector = JDBCConnector
@@ -21,6 +23,8 @@ class CreateVolunteerActivity : AppCompatActivity() {
      */
     fun registerUser(){
         val username = findViewById<TextView>(R.id.username)
+        val name = findViewById<TextView>(R.id.name)
+        val lastname = findViewById<TextView>(R.id.lastname)
         val password = findViewById<TextView>(R.id.password)
         val email = findViewById<TextView>(R.id.email)
         val phoneNr = findViewById<TextView>(R.id.number)
@@ -31,8 +35,9 @@ class CreateVolunteerActivity : AppCompatActivity() {
         var usrRoleId = -1
         try {
             usrRoleId = connector.getColInts(1)[0]
+
         } catch (e : Exception){
-            throw Exception("Nie isniteje rola Uczestnika!")
+            throw Exception("Nie istnieje rola Uczestnika!")
         }
 
         val hashedPass = PasswordEncoder.hash(password.text.toString())
@@ -53,12 +58,11 @@ class CreateVolunteerActivity : AppCompatActivity() {
         val accountID = connector.getColInts(1)[0]
         connector.closeQuery()
 
-        //tworzenie wpisu w bazie danych uczestników
+        //tworzenie wpisu w bazie danych personelu
         connector.prepareQuery("insert into personel (id_konta, imie, nazwisko, nr_telefonu, mail) value (?, ?, ?, ?, ?);")
         connector.setIntVar(accountID, 1)
-        connector.setStrVar(username.text.toString(), 2)
-        //TODO podmienić na faktycznie nazwisko
-        connector.setStrVar(username.text.toString(), 3)
+        connector.setStrVar(name.text.toString(), 2)
+        connector.setStrVar(lastname.text.toString(), 3)
         connector.setStrVar(phoneNr.text.toString(), 4)
         connector.setStrVar(email.text.toString(), 5)
         connector.executeQuery()
@@ -70,6 +74,8 @@ class CreateVolunteerActivity : AppCompatActivity() {
         setContentView(R.layout.activity_create_volunteer)
 
         val username = findViewById<TextView>(R.id.username)
+        val name = findViewById<TextView>(R.id.name)
+        val lastname = findViewById<TextView>(R.id.lastname)
         val password = findViewById<TextView>(R.id.password)
         val repPassword = findViewById<TextView>(R.id.repeatPassword)
         val email = findViewById<TextView>(R.id.email)
@@ -83,7 +89,7 @@ class CreateVolunteerActivity : AppCompatActivity() {
         }
 
         registerBtn.setOnClickListener{
-            if (username.text.isNullOrBlank() || password.text.isNullOrBlank() ||
+            if (name.text.isNullOrBlank() || lastname.text.isNullOrBlank() || username.text.isNullOrBlank() || password.text.isNullOrBlank() ||
                 repPassword.text.isNullOrBlank() || email.text.isNullOrBlank() ||
                 phoneNr.text.isNullOrBlank()
             )
@@ -122,8 +128,26 @@ class CreateVolunteerActivity : AppCompatActivity() {
                         Toast.LENGTH_SHORT
                     ).show()
                     isCorrect = false
+                }
+                else if(!NameValidator.validate(name.text.toString())) {
+                    Toast.makeText(
+                        this,
+                        "Nieprawidlowy format imienia (imie nie może zawierać znaków specjalnych i zaczynać się z małej litery)",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    isCorrect = false
 
-                } else if (!PasswordValidator.validate(password.text.toString())) {
+                }
+                else if(!LastNameValidator.validate(lastname.text.toString())) {
+                    Toast.makeText(
+                        this,
+                        "Nieprawidlowy format nazwiska (naziwsko nie może zawierać znaków specjalnych i zaczynać się z małej litery)",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    isCorrect = false
+                }
+
+                else if (!PasswordValidator.validate(password.text.toString())) {
                     Toast.makeText(
                         this,
                         "Nienprawidlowa dlugosc hasla (8-64 znaki)",

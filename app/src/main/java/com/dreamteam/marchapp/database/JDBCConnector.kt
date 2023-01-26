@@ -182,6 +182,8 @@ object JDBCConnector : DBConnector {
             currentRes = null;
             println("Query with no or empty result");
         }
+
+
     }
 
     override fun closeQuery() {

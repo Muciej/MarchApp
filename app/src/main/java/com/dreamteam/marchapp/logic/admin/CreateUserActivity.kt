@@ -28,7 +28,7 @@ class CreateUserActivity : AppCompatActivity() {
         try {
             usrRoleId = connector.getColInts(1)[0]
         } catch (e : Exception){
-            throw Exception("Nie isniteje rola Uczestnika!")
+            throw Exception("Nie istnieje rola Uczestnika!")
         }
 
         val hashedPass = PasswordEncoder.hash(password.text.toString())
