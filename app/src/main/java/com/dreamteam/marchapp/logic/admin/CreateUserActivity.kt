@@ -28,7 +28,7 @@ class CreateUserActivity : AppCompatActivity() {
         try {
             usrRoleId = connector.getColInts(1)[0]
         } catch (e : Exception){
-            throw Exception("Nie isniteje rola Uczestnika!")
+            throw Exception("Nie istnieje rola Uczestnika!")
         }
 
         //tworzenie konta w aplikacji
