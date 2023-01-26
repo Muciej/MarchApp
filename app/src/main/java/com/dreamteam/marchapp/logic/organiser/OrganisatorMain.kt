@@ -1,13 +1,12 @@
 package com.dreamteam.marchapp.logic.organiser
 
 import android.content.Intent
-import android.graphics.drawable.AnimationDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
-import android.widget.RelativeLayout
 import android.widget.Toast
 import com.dreamteam.marchapp.R
+import com.dreamteam.marchapp.database.JDBCConnector
 import com.dreamteam.marchapp.logic.shared.ChooseMarchActivity
 import com.dreamteam.marchapp.logic.shared.ViewSt
 
@@ -63,9 +62,9 @@ class OrganisatorMain : AppCompatActivity() {
         }
 
         log_out_from_org_account.setOnClickListener{
+            JDBCConnector.closeConnection()
             val Intent = Intent(this, ChooseMarchActivity::class.java)
             startActivity(Intent)
         }
-
     }
 }

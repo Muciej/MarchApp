@@ -6,12 +6,12 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import at.favre.lib.crypto.bcrypt.BCrypt
 import com.dreamteam.marchapp.R
 import com.dreamteam.marchapp.database.JDBCConnector
 import com.dreamteam.marchapp.logic.organiser.OrganisatorMain
 import com.dreamteam.marchapp.logic.volunteer.VolunteerMain
 import com.dreamteam.marchapp.logic.admin.AdministratorMain
+import com.dreamteam.marchapp.logic.config.PasswordEncoder
 import java.util.Vector
 
 class LoginActivity : AppCompatActivity() {
@@ -38,17 +38,14 @@ class LoginActivity : AppCompatActivity() {
             if (username.text.isNullOrBlank() || password.text.isNullOrBlank()) {
                 Toast.makeText(this, "Żadne z pól nie może być puste", Toast.LENGTH_SHORT).show()
             } else {
-                //TODO: Po stworzeniu bazy danych pobrane haslo z bazy porownujemy z zahashowanym
-                //na razie wyłączyłem hashowanie, bo jeszcze go nie ma w bazie
-//                val hashedPassword: String =
-//                    BCrypt.withDefaults().hashToString(12,password.text.toString().toCharArray())
+                val hashedPassword = PasswordEncoder.hash(password.text.toString())
 
                 connector.startConnection()
                 connector.prepareQuery("select r.poziom_uprawnień from konta k\n" +
                         "join role r on k.rola_id = r.id_roli\n" +
                         "where login = ? and hasło = ?;")
                 connector.setStrVar(username.text.toString(), 1)
-                connector.setStrVar(password.text.toString(), 2)
+                connector.setStrVar(hashedPassword, 2)
                 connector.executeQuery()
                 var ans : Vector<String>
                 try {

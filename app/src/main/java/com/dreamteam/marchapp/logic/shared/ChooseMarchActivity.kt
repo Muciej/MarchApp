@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.dreamteam.marchapp.R
 import com.dreamteam.marchapp.database.DBConnector
 import com.dreamteam.marchapp.database.JDBCConnector
-import com.dreamteam.marchapp.database.User
 import java.util.Vector
 
 //TODO Zrobić ekran strtowy, z którego idzieĶy do ekranu zapisanego w tej klasie
@@ -32,10 +31,10 @@ class ChooseMarchActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
 
         connector.setDBName("viewer")
         connector.startConnection()
-        connector.prepareQuery("SELECT * FROM eventy;")
+        connector.prepareQuery("SELECT * FROM baza_biegow_przelajowych.eventy;")
         connector.executeQuery()
         marches = connector.getCol(2)
-        connector.prepareQuery("SELECT * FROM eventy;")
+        connector.prepareQuery("SELECT * FROM baza_biegow_przelajowych.eventy;")
         connector.executeQuery()
         dbNames = connector.getCol(3)
         if(dbNames.size > 0){
@@ -83,6 +82,4 @@ class ChooseMarchActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
     private fun showToast(context: Context = applicationContext, message: String, duration: Int = Toast.LENGTH_LONG) {
         Toast.makeText(context, message, duration).show()
     }
-
-
 }

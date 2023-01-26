@@ -88,10 +88,12 @@ class CreateAdminInMarchAccount : AppCompatActivity() {
                     val Intent = Intent(this, OrganisatorMain::class.java)
                     startActivity(Intent)
 
+                    //TODO: Podczas rejestracji hashujemy haslo:
+//                    val hashedPass = Hasher.hash(password.text.toString())
+
                     //TODO:Tutaj będzie leciało zapytanie do bazy, które stworzy nam administratora,
                     //TODO:z podanych danych, czyli username, password, email i phoneNr
                 }
-
             }
         }
     }
