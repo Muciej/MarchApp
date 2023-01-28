@@ -129,23 +129,23 @@ class CreateVolunteerActivity : AppCompatActivity() {
                     ).show()
                     isCorrect = false
                 }
-                else if(!NameValidator.validate(name.text.toString())) {
-                    Toast.makeText(
-                        this,
-                        "Nieprawidlowy format imienia (imie nie może zawierać znaków specjalnych i zaczynać się z małej litery)",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    isCorrect = false
-
-                }
-                else if(!LastNameValidator.validate(lastname.text.toString())) {
-                    Toast.makeText(
-                        this,
-                        "Nieprawidlowy format nazwiska (naziwsko nie może zawierać znaków specjalnych i zaczynać się z małej litery)",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    isCorrect = false
-                }
+//                else if(!NameValidator.validate(name.text.toString())) {
+//                    Toast.makeText(
+//                        this,
+//                        "Nieprawidlowy format imienia (imie nie może zawierać znaków specjalnych i zaczynać się z małej litery)",
+//                        Toast.LENGTH_SHORT
+//                    ).show()
+//                    isCorrect = false
+//
+//                }
+//                else if(!LastNameValidator.validate(lastname.text.toString())) {
+//                    Toast.makeText(
+//                        this,
+//                        "Nieprawidlowy format nazwiska (naziwsko nie może zawierać znaków specjalnych i zaczynać się z małej litery)",
+//                        Toast.LENGTH_SHORT
+//                    ).show()
+//                    isCorrect = false
+//                }
 
                 else if (!PasswordValidator.validate(password.text.toString())) {
                     Toast.makeText(

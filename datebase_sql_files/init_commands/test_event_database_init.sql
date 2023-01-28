@@ -38,11 +38,10 @@ CREATE TABLE ev_test_event.`role` (
   UNIQUE INDEX `nazwa_UNIQUE` (`nazwa` ASC),
   UNIQUE INDEX `poziom_uprawnień_UNIQUE` (poziom_uprawnień ASC));
 
-
 CREATE TABLE ev_test_event.`konta` (
   `id_konta` INT NOT NULL AUTO_INCREMENT,
   `login` VARCHAR(50) NOT NULL,
-  `hasło` CHAR(50) NOT NULL,
+  `hasło` CHAR(100) NOT NULL,
   `rola_id` INT NOT NULL,
   PRIMARY KEY (`id_konta`),
   UNIQUE INDEX `login_UNIQUE` (`login` ASC),
@@ -163,18 +162,17 @@ ALTER TABLE ev_test_event.`punkty_online`
 CHANGE COLUMN `ostatnia_aktywność` `data_ost_aktywności` VARCHAR(45) NOT NULL ;
 
 
-use ev_test_event;
-DELIMITER $$
-CREATE TRIGGER `after_deleting_participant` AFTER DELETE ON`uczestnicy` FOR EACH ROW BEGIN
-	 #jeśli usuwamy uczestnika to powinniśmy usunąć jego konto
-     #zakładam że uczestnika usuwamy przed rozpoczęciem biegu więc tabele takie jak uczestnik_punkt sa puste
-     DELETE FROM konta WHERE konta.id_konta = OLD.id_konta;
-END $$
-DELIMITER ;
+# use ev_test_event;
+# DELIMITER $$
+# CREATE TRIGGER `after_deleting_participant` AFTER DELETE ON`uczestnicy` FOR EACH ROW BEGIN
+# 	 #jeśli usuwamy uczestnika to powinniśmy usunąć jego konto
+#      #zakładam że uczestnika usuwamy przed rozpoczęciem biegu więc tabele takie jak uczestnik_punkt sa puste
+#      DELETE FROM konta WHERE konta.id_konta = OLD.id_konta;
+# END $$
+# DELIMITER ;
 
-insert into baza_biegow_przelajowych.eventy(nazwa, nazwa_bazy) value
-    ("test_event", "ev_test_event");
-
+insert into baza_biegow_przelajowych.eventy(nazwa, nazwa_bazy, rozpoczete) value
+    ("test_event", "ev_test_event", true);
 
 #tworzenie konta administratora dla danej bazy
 drop user if exists admin_ev_test_event@;

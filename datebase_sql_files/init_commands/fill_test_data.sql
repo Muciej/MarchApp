@@ -2,22 +2,35 @@ set foreign_key_checks = false;
 use ev_test_event;
 
 insert into ev_test_event.konta (login, hasło, rola_id) value
+('Organizator', 'organizator', 1),
+#     wolontariusze
+('Wolontariusz', 'wolontariusz', 2),
+('Muciej', '2137', 2),
+('Wiiika', 'haslo', 2),
+#     admini
+('Administrator', 'admin', 4),
+#     uczestnicy
+('Uczestnik', 'uczestnik', 3),
 ('Bartek', 'jazda_z_tym_koksem', 3),
 ('Alan', 'matma<3', 3),
 ('Przemek', 'co_nie_lubi_drzemek', 3),
-('Marta', 'kurczak', 3);
+('Marta', 'kurczak', 3),
+('Piotruś', 'java_zle_pachnie', 2);
 
 insert into ev_test_event.uczestnicy (nr_startowy,id_konta, imie, nazwisko, pseudonim) value
-(1, 6, 'Bartosz', 'Podbipięta', 'Bartek'),
-(2, 7, 'Alan', 'Kasprzykowski', 'ElAlamein'),
-(3, 8, 'Przemysław', 'Kruk', 'PrzemKo'),
-(4, 9, 'Marta', 'Nie_mam_pomyslu', 'Marcia');
+(5, 6, 'Uczestnik', 'Uczestniak', 'User'),
+(1, 7, 'Bartosz', 'Podbipięta', 'Bartek'),
+(2, 8, 'Alan', 'Kasprzykowski', 'ElAlamein'),
+(3, 9, 'Przemysław', 'Kruk', 'PrzemKo'),
+(4, 10, 'Marta', 'Nie_mam_pomyslu', 'Marcia'),
+(6, 11, 'Piotr', 'Piotrczak', 'Piotruś');
 
 insert into personel (id_konta, imie, nazwisko, nr_telefonu, mail) value
 (1, 'Organizator', 'Organizatorski', '666666666', 'orgzanizator@organizuje.com'),
-(2, 'Admin', 'Administatorski', '123987456', 'admin@wp.pl'),
-(3, 'Piotr', 'Piotrowski', '111222333', 'Piotrus@pan.pl'),
-(4, 'Maciej', 'Józefkowicz', '666356123', 'muciej@gmail.com');
+(2, 'Wolontariusz', 'Wolontariuszowski', '213756753', 'wolontariusz@skanuje.com'),
+(3, 'Maciej', 'Józefkowicz', '666666666', 'maciej.joz@lucy.com'),
+(4, 'Wiktoria', 'Październikowska', '123321123', 'wiki@ikiw.com'),
+(5, 'Administrator', 'Adminowski', '123050322', 'admin@i_tak_nie_odpisze.pl');
 
 insert into punkty_kontrolne (kolejność, online, nazwa, kilometr, współrzędne_geograficzne) value
 (1, 1, 'Start', 0, '30N, 50E'),
