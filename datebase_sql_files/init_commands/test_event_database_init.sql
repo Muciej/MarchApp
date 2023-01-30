@@ -179,3 +179,10 @@ insert into baza_biegow_przelajowych.eventy(nazwa, nazwa_bazy, rozpoczete) value
 drop user if exists admin_ev_test_event@;
 create user 'admin_ev_test_event'@ identified by 'admin_ev_test_event';
 grant all privileges on ev_test_event.* to 'admin_ev_test_event'@;
+
+create view ev_test_event.czas_uczestnicy_punkt as
+select * from ev_test_event.punkty_kontrolne p
+        inner join ev_test_event.uczestnik_punkt up on p.id = up.id_punktu
+        inner join ev_test_event.uczestnicy u on up.id_uczestnika = u.nr_startowy
+        order by u.nr_startowy;
+
