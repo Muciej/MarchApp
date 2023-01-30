@@ -6,10 +6,13 @@ import androidx.core.app.ActivityCompat
 import com.budiyev.android.codescanner.*
 import com.dreamteam.marchapp.R
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.os.Build
+import androidx.annotation.RequiresApi
 import com.dreamteam.marchapp.database.DBConnector
 import com.dreamteam.marchapp.database.JDBCConnector
+import java.text.SimpleDateFormat
 import java.util.*
 
 class ScanQr : AppCompatActivity() {
@@ -17,6 +20,7 @@ class ScanQr : AppCompatActivity() {
     var connector: DBConnector = JDBCConnector
     private lateinit var codeScanner: CodeScanner
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
 
         connector.startConnection()
@@ -40,11 +44,11 @@ class ScanQr : AppCompatActivity() {
                 codeScanner.isAutoFocusEnabled = true // Whether to enable auto focus or not
                 codeScanner.isFlashEnabled = false // Whether to enable flash or not
 
-                // Callbacks
+                // Callbacks and DB operations on user account
                 codeScanner.decodeCallback = DecodeCallback {
                     runOnUiThread {
                         var isInDatabase = true
-                        connector.prepareQuery("SELECT kod_qr FROM uczestnicy WHERE kod_qr LIKE '${it.text}' ")
+                        connector.prepareQuery("SELECT * FROM uczestnicy WHERE kod_qr LIKE '${it.text}' ")
                         connector.executeQuery()
                         try {
                             var answer: Vector<Vector<String>> = connector.getAnswer()
@@ -54,6 +58,10 @@ class ScanQr : AppCompatActivity() {
 
                         if(isInDatabase) {
                             Toast.makeText(this, "Scan result correct, id: ${it.text}", Toast.LENGTH_LONG).show()
+                            var date = getCurrentDate()
+                            connector.prepareQuery("")
+                            connector.executeQuery()
+
                         } else {
                             Toast.makeText(this, "No match in database, ? ${it.text}", Toast.LENGTH_LONG).show()
                         }
@@ -71,6 +79,19 @@ class ScanQr : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    @SuppressLint("WeekBasedYear")
+    @RequiresApi(Build.VERSION_CODES.N)
+    private fun getCurrentDate(): String {
+        val currentTime: String = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            SimpleDateFormat("YYYY-MM-DD HH:mm:ss", Locale.getDefault()).format(Date())
+        } else {
+            TODO("VERSION.SDK_INT < N")
+        }
+        println(currentTime)
+
+        return currentTime
     }
 
     override fun onResume() {
