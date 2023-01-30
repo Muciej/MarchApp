@@ -79,8 +79,12 @@ class ScanQr : AppCompatActivity() {
                             Toast.makeText(this, "Scan result correct, id: ${it.text}", Toast.LENGTH_LONG).show()
 
                             connector.closeQuery()
-                            connector.prepareQuery("SELECT * FROM uczestnicy WHERE kod_qr LIKE '${it.text}' ")
-                            connector.executeQuery()
+                            try{
+                                connector.prepareQuery("SELECT * FROM uczestnicy WHERE kod_qr LIKE '${it.text}'; ")
+                                connector.executeQuery()
+                            } catch (e : Exception){
+                                Toast.makeText(this, "Błąd przy wyszukiwaniu użytkownika o danym ID z kodu QR", Toast.LENGTH_LONG).show()
+                            }
 
                             // get startID from query above
                             var startID = Integer.parseInt(connector.getCol(1)[0])
@@ -89,10 +93,27 @@ class ScanQr : AppCompatActivity() {
                             // get sys date
                             var date = getCurrentDate()
 
-                            // inserting informations into 'uczestnik_punkt' tabel
-                            connector.prepareQuery("insert into uczestnik_punkt(id_uczestnika, id_punktu, data) values (${startID}, ${pointID}, '${date}' ) ")
-                            connector.executeQuery()
-                            connector.closeQuery()
+                            // check whether this user was scanned on this point before
+                            connector.prepareQuery("select * from uczestnik_punkt where id_uczestnika = ${startID};")
+                            var scanned = false
+                            try {
+                                connector.executeQuery()
+                                connector.getAnswer()
+                            } catch (e : Exception){
+                                scanned = true
+                            }
+
+                            if(scanned){
+                                Toast.makeText(this, "Użytkownik o id $startID już odwiedził ten punkt kontrolny", Toast.LENGTH_LONG).show()
+                            } else {
+                                // inserting informations into 'uczestnik_punkt' tabel
+                                try{
+                                    connector.prepareQuery("insert into uczestnik_punkt(id_uczestnika, id_punktu, data) values (${startID}, ${pointID}, '${date}' ) ")
+                                    connector.executeQuery()
+                                    connector.closeQuery()
+                                } catch (e : Exception)
+                                Toast.makeText(this, "Błąd przy aktualizowaniu bazy danych", Toast.LENGTH_LONG).show()
+                            }
 
                         } else {
                             Toast.makeText(this, "No match in database, ? ${it.text}", Toast.LENGTH_LONG).show()
