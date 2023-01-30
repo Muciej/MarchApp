@@ -18,6 +18,7 @@ CREATE TABLE ev_test_event.`uczestnicy` (
   `imie` VARCHAR(60) NULL,
   `nazwisko` VARCHAR(60) NULL,
   `pseudonim` VARCHAR(45) NULL,
+  'kod_qr'  VARCHAR(15) NULL,
   PRIMARY KEY (`nr_startowy`),
   UNIQUE INDEX `id_konta_UNIQUE` (`id_konta` ASC));
 
