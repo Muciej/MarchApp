@@ -22,6 +22,12 @@ class CreateUserActivity : AppCompatActivity() {
      * Invoked when all data is checked and we need a query to create new participant account
      */
     fun registerUser(){
+
+        val username = findViewById<TextView>(R.id.username)
+        val password = findViewById<TextView>(R.id.password)
+        val name = findViewById<TextView>(R.id.name)
+        val lastname = findViewById<TextView>(R.id.lastname)
+
         connector.startConnection()
         connector.prepareQuery("select * from role where nazwa = 'Uczestnik';")
         connector.executeQuery()
@@ -53,8 +59,8 @@ class CreateUserActivity : AppCompatActivity() {
         //tworzenie wpisu w bazie danych uczestników
         connector.prepareQuery("insert into uczestnicy (id_konta, imie, nazwisko, pseudonim, kod_qr) value (?, ?, ?, ?, ?);")
         connector.setIntVar(accountID, 1)
-        connector.setStrVar(username.text.toString(), 2)
-        connector.setStrVar(hashedPass, 3)
+        connector.setStrVar(name.text.toString(), 2)
+        connector.setStrVar(lastname.text.toString(), 3)
         connector.setStrVar(username.text.toString(), 4)    //na razie pseudonim taki jak imię
 
 
@@ -72,8 +78,8 @@ class CreateUserActivity : AppCompatActivity() {
         val username = findViewById<TextView>(R.id.username)
         val password = findViewById<TextView>(R.id.password)
         val repPassword = findViewById<TextView>(R.id.repeatPassword)
-        val email = findViewById<TextView>(R.id.name)
-        val phoneNr = findViewById<TextView>(R.id.lastname)
+        val name = findViewById<TextView>(R.id.name)
+        val lastname = findViewById<TextView>(R.id.lastname)
         val registerBtn = findViewById<Button>(R.id.registerBtn)
         val backBtn = findViewById<Button>(R.id.btnBack)
 
@@ -84,8 +90,8 @@ class CreateUserActivity : AppCompatActivity() {
 
         registerBtn.setOnClickListener {
             if (username.text.isNullOrBlank() || password.text.isNullOrBlank() ||
-                repPassword.text.isNullOrBlank() || email.text.isNullOrBlank() ||
-                phoneNr.text.isNullOrBlank()
+                repPassword.text.isNullOrBlank() || name.text.isNullOrBlank() ||
+                lastname.text.isNullOrBlank()
             ) {
                 Toast.makeText(this, "Żadne z pól nie może być puste", Toast.LENGTH_SHORT).show()
             } else {
@@ -136,17 +142,17 @@ class CreateUserActivity : AppCompatActivity() {
                         Toast.LENGTH_SHORT
                     ).show()
                     isCorrect = false
-                } else if (!EmailValidator.validate(email.text.toString())) {
+                } else if (!NameValidator.validate(name.text.toString())) {
                     Toast.makeText(
                         this,
-                        "Nieprawidłowy format email!",
+                        "Imię nie może zawierać spacji!",
                         Toast.LENGTH_SHORT
                     ).show()
                     isCorrect = false
-                } else if (!PhoneValidator.validate(phoneNr.text.toString())) {
+                } else if (!LastNameValidator.validate(lastname.text.toString())) {
                     Toast.makeText(
                         this,
-                        "Nieprawidłowy format numeru!",
+                        "Nazwisko nie może zawierać spacji!",
                         Toast.LENGTH_SHORT
                     ).show()
                     isCorrect = false

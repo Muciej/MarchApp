@@ -45,8 +45,7 @@ CREATE TABLE ev_test_event.`konta` (
   `hasło` CHAR(100) NOT NULL,
   `rola_id` INT NOT NULL,
   PRIMARY KEY (`id_konta`),
-  UNIQUE INDEX `login_UNIQUE` (`login` ASC),
-  UNIQUE INDEX `hasło_UNIQUE` (`hasło` ASC));
+  unique INDEX `login_UNIQUE` (`login` ASC));
 
 
 CREATE TABLE ev_test_event.`uczestnik_punkt` (

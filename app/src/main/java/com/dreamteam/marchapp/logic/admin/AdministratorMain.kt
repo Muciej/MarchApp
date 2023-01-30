@@ -24,6 +24,7 @@ class AdministratorMain : AppCompatActivity() {
         val changeBtn = findViewById<Button>(R.id.changePass)
         val logoutBtn = findViewById<Button>(R.id.logOut)
         val viewStats = findViewById<Button>(R.id.view_statistics)
+        val addPointToVolunteer = findViewById<Button>(R.id.addPointToVolunteer)
 
         crtVolBtn.setOnClickListener{
             val intent = Intent(this, CreateVolunteerActivity::class.java)
@@ -32,6 +33,11 @@ class AdministratorMain : AppCompatActivity() {
 
         crtParBtn.setOnClickListener{
             val intent = Intent(this, CreateUserActivity::class.java)
+            startActivity(intent)
+        }
+
+        addPointToVolunteer.setOnClickListener{
+            val intent = Intent(this, AssignVolunteerToPoint::class.java)
             startActivity(intent)
         }
 
