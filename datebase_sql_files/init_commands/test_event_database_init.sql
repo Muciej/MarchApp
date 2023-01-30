@@ -52,7 +52,7 @@ CREATE TABLE ev_test_event.`konta` (
 CREATE TABLE ev_test_event.`uczestnik_punkt` (
   `id_uczestnika` INT NOT NULL,
   `id_punktu` INT NOT NULL,
-  `data` VARCHAR(45) NOT NULL);
+  `data` DATETIME NOT NULL);
 
 CREATE TABLE ev_test_event.`wolontariusz_punkt` (
   `id_wolontariusza` INT NOT NULL,
