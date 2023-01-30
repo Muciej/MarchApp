@@ -186,6 +186,13 @@
                 android:value="" />
         </activity>
         <activity
+            android:name=".logic.admin.AssignVolunteerToPoint"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".logic.volunteer.VolunteerPointActivity"
             android:exported="false">
             <meta-data
