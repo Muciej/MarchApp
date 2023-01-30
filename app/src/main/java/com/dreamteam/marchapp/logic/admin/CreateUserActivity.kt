@@ -14,7 +14,6 @@ import com.dreamteam.marchapp.logic.validation.NameValidator
 import com.dreamteam.marchapp.logic.validation.PasswordValidator
 import com.dreamteam.marchapp.logic.validation.LastNameValidator
 import com.dreamteam.marchapp.logic.validation.UsernameValidator
-import kotlinx.android.synthetic.main.activity_login.*
 
 class CreateUserActivity : AppCompatActivity() {
     var connector = JDBCConnector
@@ -60,6 +59,8 @@ class CreateUserActivity : AppCompatActivity() {
         val accountID = connector.getColInts(1)[0]
         connector.closeQuery()
 
+        val qrCode = createCode()
+        connector.startConnection()
 
         //tworzenie wpisu w bazie danych uczestników
         connector.prepareQuery("insert into uczestnicy (id_konta, imie, nazwisko, pseudonim, kod_qr) value (?, ?, ?, ?, ?) ;")
@@ -67,7 +68,7 @@ class CreateUserActivity : AppCompatActivity() {
         connector.setStrVar(name.text.toString(), 2)
         connector.setStrVar(lastname.text.toString(), 3)
         connector.setStrVar(username.text.toString(), 4)    //na razie pseudonim taki jak imię
-        connector.setStrVar(createCode(), 5)
+        connector.setStrVar(qrCode, 5)
         connector.executeQuery()
         connector.closeQuery()
 
