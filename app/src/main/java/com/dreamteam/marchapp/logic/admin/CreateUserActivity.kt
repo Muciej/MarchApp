@@ -9,7 +9,11 @@ import android.widget.Toast
 import com.dreamteam.marchapp.R
 import com.dreamteam.marchapp.database.JDBCConnector
 import com.dreamteam.marchapp.logic.config.PasswordEncoder
-import com.dreamteam.marchapp.logic.validation.*
+import com.dreamteam.marchapp.logic.shared.CodeQr.createCode
+import com.dreamteam.marchapp.logic.validation.EmailValidator
+import com.dreamteam.marchapp.logic.validation.PasswordValidator
+import com.dreamteam.marchapp.logic.validation.PhoneValidator
+import com.dreamteam.marchapp.logic.validation.UsernameValidator
 import kotlinx.android.synthetic.main.activity_login.*
 
 class CreateUserActivity : AppCompatActivity() {
@@ -53,11 +57,14 @@ class CreateUserActivity : AppCompatActivity() {
         connector.closeQuery()
 
         //tworzenie wpisu w bazie danych uczestników
-        connector.prepareQuery("insert into uczestnicy (id_konta, imie, nazwisko, pseudonim) value (?, ?, ?, ?);")
+        connector.prepareQuery("insert into uczestnicy (id_konta, imie, nazwisko, pseudonim, kod_qr) value (?, ?, ?, ?, ?);")
         connector.setIntVar(accountID, 1)
         connector.setStrVar(name.text.toString(), 2)
         connector.setStrVar(lastname.text.toString(), 3)
         connector.setStrVar(username.text.toString(), 4)    //na razie pseudonim taki jak imię
+
+
+        connector.setStrVar(createCode(), 5)
         connector.executeQuery()
         connector.closeQuery()
 
