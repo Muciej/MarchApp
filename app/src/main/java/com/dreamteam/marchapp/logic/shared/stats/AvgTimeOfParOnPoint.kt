@@ -45,11 +45,25 @@ class AvgTimeOfParOnPoint : AppCompatActivity() {
 //                "inner join ev_test_event.uczestnicy u on up.id_uczestnika = u.nr_startowy\n" +
 //                "order by u.nr_startowy;\n")
 
-        connector.prepareQuery("select * from ev_test_event.czas_uczestnicy_punkt;")
-        connector.executeQuery()
-        points = connector.getCol(4) // puntky trasy
-        participants = connector.getCol(10) //numer startowy uczestnika
-        timesOnPoint = connector.getCol(9) // kolumna z czasami uczestników
+        connector.prepareQuery("select * from czas_uczestnicy_punkt;")
+        var answer : Vector<Vector<String>> = Vector<Vector<String>>()
+        try {
+            connector.executeQuery()
+//            points = connector.getCol(4) // puntky trasy
+//            participants = connector.getCol(10) //numer startowy uczestnika
+//            timesOnPoint = connector.getCol(9) // kolumna z czasami uczestników
+
+            answer = connector.getAnswer()
+        } catch (e : Exception){
+            //todo toast informujący o błędzie
+        }
+
+        for(row in answer){
+            points.add(row[3])
+            participants.add(row[9])
+            timesOnPoint.add(row[8])
+            println(row[3] + " " + row[9] + " " + row[8])
+        }
 
         val btnBack = findViewById<Button>(R.id.btnBack)
 

@@ -29,7 +29,7 @@ class ChoosePointToViewStat : AppCompatActivity(), AdapterView.OnItemSelectedLis
          */
 
         connector.startConnection()
-        connector.prepareQuery("SELECT * FROM ev_test_event.punkty_kontrolne;")
+        connector.prepareQuery("SELECT * FROM punkty_kontrolne;")
         connector.executeQuery()
         points = connector.getCol(4)
 
