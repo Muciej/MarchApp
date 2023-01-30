@@ -41,29 +41,32 @@ class CreateUserActivity : AppCompatActivity() {
         val hashedPass = PasswordEncoder.hash(password.text.toString())
 
         //tworzenie konta w aplikacji
-        connector.prepareQuery("insert into konta (login, hasło, rola_id) value (?, ?, ?);")
-        connector.setStrVar(username.text.toString(), 1)
-        connector.setStrVar(hashedPass, 2)
-        connector.setIntVar(usrRoleId, 3)
-        connector.executeQuery()
+        try {
+            connector.prepareQuery("insert into konta (login, hasło, rola_id) value (?, ?, ?);")
+            connector.setStrVar(username.text.toString(), 1)
+            connector.setStrVar(hashedPass, 2)
+            connector.setIntVar(usrRoleId, 3)
+            connector.executeQuery()
+        } catch (e : Exception){
+            e.printStackTrace()
+        }
         connector.closeQuery()
 
         //znalezienie id nowoutworzonego konta
-        connector.prepareQuery("select id_konta from konta where login = ? and hasło = ?;")
+        connector.prepareQuery("select id_konta from konta where login = ? and hasło = ? ;")
         connector.setStrVar(username.text.toString(), 1)
         connector.setStrVar(hashedPass, 2)
         connector.executeQuery()
         val accountID = connector.getColInts(1)[0]
         connector.closeQuery()
 
+
         //tworzenie wpisu w bazie danych uczestników
-        connector.prepareQuery("insert into uczestnicy (id_konta, imie, nazwisko, pseudonim, kod_qr) value (?, ?, ?, ?, ?);")
+        connector.prepareQuery("insert into uczestnicy (id_konta, imie, nazwisko, pseudonim, kod_qr) value (?, ?, ?, ?, ?) ;")
         connector.setIntVar(accountID, 1)
         connector.setStrVar(name.text.toString(), 2)
         connector.setStrVar(lastname.text.toString(), 3)
         connector.setStrVar(username.text.toString(), 4)    //na razie pseudonim taki jak imię
-
-
         connector.setStrVar(createCode(), 5)
         connector.executeQuery()
         connector.closeQuery()
@@ -145,14 +148,14 @@ class CreateUserActivity : AppCompatActivity() {
                 } else if (!NameValidator.validate(name.text.toString())) {
                     Toast.makeText(
                         this,
-                        "Imię nie może zawierać spacji oraz musi zaczynać się wielką literą!",
+                        "Imię nie może zawierać spacji oraz\n musi zaczynać się wielką literą!",
                         Toast.LENGTH_SHORT
                     ).show()
                     isCorrect = false
                 } else if (!LastNameValidator.validate(lastname.text.toString())) {
                     Toast.makeText(
                         this,
-                        "Nazwisko nie może zawierać spacji oraz musi zaczynać się wielką literą!",
+                        "Nazwisko nie może zawierać spacji oraz\n musi zaczynać się wielką literą!",
                         Toast.LENGTH_SHORT
                     ).show()
                     isCorrect = false
