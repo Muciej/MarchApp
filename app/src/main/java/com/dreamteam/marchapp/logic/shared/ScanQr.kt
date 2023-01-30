@@ -94,13 +94,15 @@ class ScanQr : AppCompatActivity() {
                             var date = getCurrentDate()
 
                             // check whether this user was scanned on this point before
-                            connector.prepareQuery("select * from uczestnik_punkt where id_uczestnika = ${startID};")
-                            var scanned = false
+                            connector.prepareQuery("select * from uczestnik_punkt where id_uczestnika = ? and id_punktu = ? ;")
+                            connector.setIntVar(startID, 1)
+                            connector.setIntVar(pointID, 2)
+                            var scanned = true
                             try {
                                 connector.executeQuery()
                                 connector.getAnswer()
                             } catch (e : Exception){
-                                scanned = true
+                                scanned = false
                             }
 
                             if(scanned){
