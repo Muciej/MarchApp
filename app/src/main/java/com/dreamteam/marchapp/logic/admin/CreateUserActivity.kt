@@ -145,14 +145,14 @@ class CreateUserActivity : AppCompatActivity() {
                 } else if (!NameValidator.validate(name.text.toString())) {
                     Toast.makeText(
                         this,
-                        "Imię nie może zawierać spacji!",
+                        "Imię nie może zawierać spacji oraz musi zaczynać się wielką literą!",
                         Toast.LENGTH_SHORT
                     ).show()
                     isCorrect = false
                 } else if (!LastNameValidator.validate(lastname.text.toString())) {
                     Toast.makeText(
                         this,
-                        "Nazwisko nie może zawierać spacji!",
+                        "Nazwisko nie może zawierać spacji oraz musi zaczynać się wielką literą!",
                         Toast.LENGTH_SHORT
                     ).show()
                     isCorrect = false
