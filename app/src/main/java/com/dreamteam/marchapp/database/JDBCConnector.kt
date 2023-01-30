@@ -156,6 +156,7 @@ object JDBCConnector : DBConnector {
         } catch (e: SQLException){
             e.printStackTrace()
             println("Couldn't establish connection")
+            throw SQLException("Error while connecting do database")
         }
     }
 
@@ -177,6 +178,7 @@ object JDBCConnector : DBConnector {
         } catch (e: SQLException){
             e.printStackTrace()
             println("Could not execute query")
+            throw SQLException("Error during executing query")
         }
         if(currentRes == null || !currentRes!!.next()){
             currentRes = null;

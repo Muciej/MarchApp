@@ -7,8 +7,20 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import com.dreamteam.marchapp.R
+import com.dreamteam.marchapp.database.JDBCConnector
 
 class CreateAdminInMarchAccount : AppCompatActivity() {
+
+    val connector = JDBCConnector
+
+    /**
+     * Invoked when data is check for valid values and
+     * we want to send query to database
+     */
+    fun registerAdmin(){
+
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_admin_in_march_account)
