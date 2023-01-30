@@ -25,6 +25,17 @@ class ScanQr : AppCompatActivity() {
 
         connector.startConnection()
 
+        /**
+         * currentUserID - it's id of 'volunteer' obtained from 'personel' table by using 'wolontariusze_info_view'
+         * pointID - it's id of point which is related to 'volunteer'
+         */
+        var CurrentUserID = connector.getCurrentUserID()
+        connector.prepareQuery("select* from wolontariusze_info_view where id_konta like '${CurrentUserID}' ")
+        connector.executeQuery()
+        var pointID = Integer.parseInt(connector.getCol(4)[0])
+        connector.closeQuery()
+
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
             if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
@@ -48,24 +59,44 @@ class ScanQr : AppCompatActivity() {
                 codeScanner.decodeCallback = DecodeCallback {
                     runOnUiThread {
                         var isInDatabase = true
+
+                        // if qr code linked to user exists try to get info otherwise exception that doesnt exists
                         connector.prepareQuery("SELECT * FROM uczestnicy WHERE kod_qr LIKE '${it.text}' ")
                         connector.executeQuery()
                         try {
-                            var answer: Vector<Vector<String>> = connector.getAnswer()
+                            connector.getAnswer()
                         } catch(e: Exception){
                             isInDatabase = false
                         }
 
+                        /**
+                         * if user has qr code linked then add to uczestnik_punkt:
+                         * startID - start ID which is linked with user
+                         * pointID - id of the point which is connected with volunteer
+                         * current android system date in sql 'datetime' type format -> YYYY-MM-DD HH:mm:ss
+                         */
                         if(isInDatabase) {
                             Toast.makeText(this, "Scan result correct, id: ${it.text}", Toast.LENGTH_LONG).show()
-                            var date = getCurrentDate()
-                            connector.prepareQuery("")
+
+                            connector.closeQuery()
+                            connector.prepareQuery("SELECT * FROM uczestnicy WHERE kod_qr LIKE '${it.text}' ")
                             connector.executeQuery()
+
+                            // get startID from query above
+                            var startID = Integer.parseInt(connector.getCol(1)[0])
+                            connector.closeQuery()
+
+                            // get sys date
+                            var date = getCurrentDate()
+
+                            // inserting informations into 'uczestnik_punkt' tabel
+                            connector.prepareQuery("insert into uczestnik_punkt(id_uczestnika, id_punktu, data) values (${startID}, ${pointID}, '${date}' ) ")
+                            connector.executeQuery()
+                            connector.closeQuery()
 
                         } else {
                             Toast.makeText(this, "No match in database, ? ${it.text}", Toast.LENGTH_LONG).show()
                         }
-
                     }
                 }
                 codeScanner.errorCallback = ErrorCallback { // or ErrorCallback.SUPPRESS
@@ -80,6 +111,15 @@ class ScanQr : AppCompatActivity() {
             }
         }
     }
+    override fun onResume() {
+        super.onResume()
+        codeScanner.startPreview()
+    }
+
+    override fun onPause() {
+        codeScanner.releaseResources()
+        super.onPause()
+    }
 
     @SuppressLint("WeekBasedYear")
     @RequiresApi(Build.VERSION_CODES.N)
@@ -89,18 +129,7 @@ class ScanQr : AppCompatActivity() {
         } else {
             TODO("VERSION.SDK_INT < N")
         }
-        println(currentTime)
 
         return currentTime
-    }
-
-    override fun onResume() {
-        super.onResume()
-        codeScanner.startPreview()
-    }
-
-    override fun onPause() {
-        codeScanner.releaseResources()
-        super.onPause()
     }
 }
