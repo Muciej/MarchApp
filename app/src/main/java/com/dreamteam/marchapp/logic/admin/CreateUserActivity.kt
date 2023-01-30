@@ -10,9 +10,9 @@ import com.dreamteam.marchapp.R
 import com.dreamteam.marchapp.database.JDBCConnector
 import com.dreamteam.marchapp.logic.config.PasswordEncoder
 import com.dreamteam.marchapp.logic.shared.CodeQr.createCode
-import com.dreamteam.marchapp.logic.validation.EmailValidator
+import com.dreamteam.marchapp.logic.validation.NameValidator
 import com.dreamteam.marchapp.logic.validation.PasswordValidator
-import com.dreamteam.marchapp.logic.validation.PhoneValidator
+import com.dreamteam.marchapp.logic.validation.LastNameValidator
 import com.dreamteam.marchapp.logic.validation.UsernameValidator
 import kotlinx.android.synthetic.main.activity_login.*
 
