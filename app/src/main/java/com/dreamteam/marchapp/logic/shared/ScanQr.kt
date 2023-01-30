@@ -138,7 +138,9 @@ class ScanQr : AppCompatActivity() {
                 }
             }
         }
+        connector.closeConnection()
     }
+
     override fun onResume() {
         super.onResume()
         codeScanner.startPreview()
