@@ -21,7 +21,7 @@ class CreateVolunteerActivity : AppCompatActivity() {
     /**
      * Invoked when all data is checked and we need a query to create new participant account
      */
-    fun registerUser(){
+    fun registerUser() : Boolean{
         val username = findViewById<TextView>(R.id.username)
         val name = findViewById<TextView>(R.id.name)
         val lastname = findViewById<TextView>(R.id.lastname)
@@ -29,44 +29,68 @@ class CreateVolunteerActivity : AppCompatActivity() {
         val email = findViewById<TextView>(R.id.email)
         val phoneNr = findViewById<TextView>(R.id.number)
 
-        connector.startConnection()
+        try {
+            connector.startConnection()
+        } catch (e : Exception){
+            Toast.makeText(
+                this,
+                "Nie można nawiązać połączenia z bazą!",
+                Toast.LENGTH_SHORT
+            ).show()
+            return false;
+        }
         connector.prepareQuery("select * from role where nazwa = 'Wolontariusz';")
-        connector.executeQuery()
         var usrRoleId = -1
         try {
+            connector.executeQuery()
             usrRoleId = connector.getColInts(1)[0]
 
         } catch (e : Exception){
-            throw Exception("Nie istnieje rola Uczestnika!")
+            Toast.makeText(
+                this,
+                "Nie została zdefiniowana rola wolontariusza!",
+                Toast.LENGTH_SHORT
+            ).show()
+            return false;
         }
 
         val hashedPass = PasswordEncoder.hash(password.text.toString())
+        try {
+            //tworzenie konta w aplikacji
+            connector.prepareQuery("insert into konta (login, hasło, rola_id) value (?, ?, ?);")
+            connector.setStrVar(username.text.toString(), 1)
+            connector.setStrVar(hashedPass, 2)
+            connector.setIntVar(usrRoleId, 3)
+            connector.executeQuery()
+            connector.closeQuery()
 
-        //tworzenie konta w aplikacji
-        connector.prepareQuery("insert into konta (login, hasło, rola_id) value (?, ?, ?);")
-        connector.setStrVar(username.text.toString(), 1)
-        connector.setStrVar(hashedPass, 2)
-        connector.setIntVar(usrRoleId,3)
-        connector.executeQuery()
-        connector.closeQuery()
+            //znalezienie id nowoutworzonego konta
+            connector.prepareQuery("select id_konta from konta where login = ? and hasło = ?;")
+            connector.setStrVar(username.text.toString(), 1)
+            connector.setStrVar(hashedPass, 2)
+            connector.executeQuery()
+            val accountID = connector.getColInts(1)[0]
+            connector.closeQuery()
 
-        //znalezienie id nowoutworzonego konta
-        connector.prepareQuery("select id_konta from konta where login = ? and hasło = ?;")
-        connector.setStrVar(username.text.toString(), 1)
-        connector.setStrVar(hashedPass, 2)
-        connector.executeQuery()
-        val accountID = connector.getColInts(1)[0]
-        connector.closeQuery()
+            //tworzenie wpisu w bazie danych personelu
+            connector.prepareQuery("insert into personel (id_konta, imie, nazwisko, nr_telefonu, mail) value (?, ?, ?, ?, ?);")
+            connector.setIntVar(accountID, 1)
+            connector.setStrVar(name.text.toString(), 2)
+            connector.setStrVar(lastname.text.toString(), 3)
+            connector.setStrVar(phoneNr.text.toString(), 4)
+            connector.setStrVar(email.text.toString(), 5)
+            connector.executeQuery()
+            connector.closeQuery()
 
-        //tworzenie wpisu w bazie danych personelu
-        connector.prepareQuery("insert into personel (id_konta, imie, nazwisko, nr_telefonu, mail) value (?, ?, ?, ?, ?);")
-        connector.setIntVar(accountID, 1)
-        connector.setStrVar(name.text.toString(), 2)
-        connector.setStrVar(lastname.text.toString(), 3)
-        connector.setStrVar(phoneNr.text.toString(), 4)
-        connector.setStrVar(email.text.toString(), 5)
-        connector.executeQuery()
-        connector.closeQuery()
+            return true;
+        } catch (e : Exception){
+            Toast.makeText(
+                this,
+                "Nie udało się dodać wolontariusza!",
+                Toast.LENGTH_SHORT
+            ).show()
+            return false;
+        }
 
     }
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -179,9 +203,8 @@ class CreateVolunteerActivity : AppCompatActivity() {
                 }
 
                 //Po rejestracji wracam do ekranu głównego administratora.
-                if (isCorrect)
+                if (isCorrect && registerUser())
                 {
-                    registerUser()
                     Toast.makeText(
                         this,
                         "Rejestracja przebiegła poprawnie!",

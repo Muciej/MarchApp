@@ -15,11 +15,20 @@ object JDBCConnector : DBConnector {
     private var currQuery: PreparedStatement? = null
     private var currentRes: ResultSet? = null
     private var dbName = "viewer"
+    private var loggedUserID = -1
     private var flags = "?autoReconnect=true&verifyServerCertificate=false&useSSL=true"
 
     override fun setDBName(name: String) {
         dbName = name
         println("DB name set to $name")
+    }
+
+    override fun getCurrentUserID() : Int{
+        return loggedUserID
+    }
+
+    override fun setCurrentUserID(id: Int) {
+        loggedUserID = id
     }
 
     override fun prepareQuery(query: String, varNo: Int) {
@@ -112,6 +121,7 @@ object JDBCConnector : DBConnector {
         while(currentRes?.next() == true){
             println(currentRes?.getString(colNo))
             answer.add(currentRes?.getInt(colNo))
+            currentRes?.getDate(5)
         }
         currentRes?.close()
         currentRes = null
@@ -156,6 +166,7 @@ object JDBCConnector : DBConnector {
         } catch (e: SQLException){
             e.printStackTrace()
             println("Couldn't establish connection")
+            throw SQLException("Error while connecting do database")
         }
     }
 
@@ -177,6 +188,7 @@ object JDBCConnector : DBConnector {
         } catch (e: SQLException){
             e.printStackTrace()
             println("Could not execute query")
+            throw SQLException("Error during executing query")
         }
         if(currentRes == null || !currentRes!!.next()){
             currentRes = null;

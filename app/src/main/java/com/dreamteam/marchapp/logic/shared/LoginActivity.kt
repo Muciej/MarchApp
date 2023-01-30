@@ -41,7 +41,7 @@ class LoginActivity : AppCompatActivity() {
                 val hashedPassword = PasswordEncoder.hash(password.text.toString())
 
                 connector.startConnection()
-                connector.prepareQuery("select r.poziom_uprawnień from konta k\n" +
+                connector.prepareQuery("select r.poziom_uprawnień, k.id_konta from konta k\n" +
                         "join role r on k.rola_id = r.id_roli\n" +
                         "where login = ? and hasło = ?;")
                 connector.setStrVar(username.text.toString(), 1)
@@ -49,7 +49,9 @@ class LoginActivity : AppCompatActivity() {
                 connector.executeQuery()
                 var ans : Vector<String>
                 try {
-                    ans = connector.getRow(1, 1)
+                    ans = connector.getRow(1, 2)
+                    connector.setCurrentUserID(Integer.parseInt(ans[1]))
+                    println(Integer.parseInt(ans[1]))
                 } catch (e: Exception){
                     ans = Vector<String>()
                     ans.add("error")

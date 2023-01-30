@@ -18,6 +18,7 @@ CREATE TABLE ev_test_event.`uczestnicy` (
   `imie` VARCHAR(60) NULL,
   `nazwisko` VARCHAR(60) NULL,
   `pseudonim` VARCHAR(45) NULL,
+  'kod_qr'  VARCHAR(15) NULL,
   PRIMARY KEY (`nr_startowy`),
   UNIQUE INDEX `id_konta_UNIQUE` (`id_konta` ASC));
 
@@ -51,7 +52,7 @@ CREATE TABLE ev_test_event.`konta` (
 CREATE TABLE ev_test_event.`uczestnik_punkt` (
   `id_uczestnika` INT NOT NULL,
   `id_punktu` INT NOT NULL,
-  `data` VARCHAR(45) NOT NULL);
+  `data` DATETIME NOT NULL);
 
 CREATE TABLE ev_test_event.`wolontariusz_punkt` (
   `id_wolontariusza` INT NOT NULL,
