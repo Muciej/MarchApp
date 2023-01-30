@@ -8,12 +8,18 @@ import com.dreamteam.marchapp.R
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Build
+import com.dreamteam.marchapp.database.DBConnector
+import com.dreamteam.marchapp.database.JDBCConnector
+import java.util.*
 
-class ScanQr  : AppCompatActivity() {
+class ScanQr : AppCompatActivity() {
 
+    var connector: DBConnector = JDBCConnector
     private lateinit var codeScanner: CodeScanner
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        connector.startConnection()
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
@@ -37,7 +43,21 @@ class ScanQr  : AppCompatActivity() {
                 // Callbacks
                 codeScanner.decodeCallback = DecodeCallback {
                     runOnUiThread {
-                        Toast.makeText(this, "Scan result: ${it.text}", Toast.LENGTH_LONG).show()
+                        var isInDatabase = true
+                        connector.prepareQuery("SELECT kod_qr FROM uczestnicy WHERE kod_qr LIKE '${it.text}' ")
+                        connector.executeQuery()
+                        try {
+                            var answer: Vector<Vector<String>> = connector.getAnswer()
+                        } catch(e: Exception){
+                            isInDatabase = false
+                        }
+
+                        if(isInDatabase) {
+                            Toast.makeText(this, "Scan result correct, id: ${it.text}", Toast.LENGTH_LONG).show()
+                        } else {
+                            Toast.makeText(this, "No match in database, ? ${it.text}", Toast.LENGTH_LONG).show()
+                        }
+
                     }
                 }
                 codeScanner.errorCallback = ErrorCallback { // or ErrorCallback.SUPPRESS
