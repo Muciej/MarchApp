@@ -7,13 +7,99 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import com.dreamteam.marchapp.R
+import com.dreamteam.marchapp.database.JDBCConnector
+import com.dreamteam.marchapp.logic.config.PasswordEncoder
+import com.dreamteam.marchapp.logic.validation.EmailValidator
+import com.dreamteam.marchapp.logic.validation.PasswordValidator
+import com.dreamteam.marchapp.logic.validation.PhoneValidator
+import com.dreamteam.marchapp.logic.validation.UsernameValidator
+import kotlinx.android.synthetic.main.activity_create_admin_in_march_account.*
 
 class CreateAdminInMarchAccount : AppCompatActivity() {
+
+    val connector = JDBCConnector
+
+    /**
+     * Invoked when data is check for valid values and
+     * we want to send query to database
+     */
+    fun registerAdmin(username : String, name : String, lastname : String, password : String, email : String, phoneNr : String) : Boolean{
+        try {
+            connector.startConnection()
+        } catch (e : Exception){
+            Toast.makeText(
+                this,
+                "Nie można nawiązać połączenia z bazą!",
+                Toast.LENGTH_SHORT
+            ).show()
+            return false;
+        }
+        connector.prepareQuery("select * from role where nazwa = 'Administrator';")
+        var usrRoleId = -1
+        try {
+            connector.executeQuery()
+            usrRoleId = connector.getColInts(1)[0]
+
+        } catch (e : Exception){
+            Toast.makeText(
+                this,
+                "Nie została zdefiniowana rola administratora!",
+                Toast.LENGTH_SHORT
+            ).show()
+            return false;
+        }
+
+        val hashedPass = PasswordEncoder.hash(password)
+
+        try {
+            //tworzenie konta w aplikacji
+            connector.prepareQuery("insert into konta (login, hasło, rola_id) value (?, ?, ?);")
+            connector.setStrVar(username, 1)
+            connector.setStrVar(hashedPass, 2)
+            connector.setIntVar(usrRoleId, 3)
+            connector.executeQuery()
+            connector.closeQuery()
+            println("Konto poszło")
+
+            //znalezienie id nowoutworzonego konta
+            connector.prepareQuery("select id_konta from konta where login = ? and hasło = ?;")
+            connector.setStrVar(username, 1)
+            connector.setStrVar(hashedPass, 2)
+            connector.executeQuery()
+            val accountID = connector.getColInts(1)[0]
+            connector.closeQuery()
+            println("Id roli admina: $accountID")
+
+
+            //tworzenie wpisu w bazie danych personelu
+            connector.prepareQuery("insert into personel (id_konta, imie, nazwisko, nr_telefonu, mail) value (?, ?, ?, ?, ?);")
+            connector.setIntVar(accountID, 1)
+            connector.setStrVar(name, 2)
+            connector.setStrVar(lastname, 3)
+            connector.setStrVar(phoneNr, 4)
+            connector.setStrVar(email, 5)
+            connector.executeQuery()
+            connector.closeQuery()
+            println("Utworzone w personel")
+
+            return true;
+        } catch (e : Exception){
+            Toast.makeText(
+                this,
+                "Nie udało się dodać administratora!",
+                Toast.LENGTH_SHORT
+            ).show()
+            return false;
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_admin_in_march_account)
 
-        val username = findViewById<TextView>(R.id.username)
+        val name = findViewById<TextView>(R.id.name)
+        val lastname = findViewById<TextView>(R.id.lastname3)
+        val username = findViewById<TextView>(R.id.username2)
         val password = findViewById<TextView>(R.id.password)
         val repPassword = findViewById<TextView>(R.id.repeatPassword)
         val email = findViewById<TextView>(R.id.email)
@@ -37,22 +123,41 @@ class CreateAdminInMarchAccount : AppCompatActivity() {
             else
             {
                 var isCorrect = true
+                var loginTaken = true
 
-                //TODO:Tu lecą zapytania do bazy
-                //TODO:1. Zapytanie o to czy dana nazwa użytkownika jest zajęta,
-                //TODO:2. Ewentualne zapytania o format email i numeru telefonu
-                //TODO:(zależy od tego jak będziemy to sprawdzać).
+                connector.startConnection()
+                connector.prepareQuery("select * from konta where login = ?")
+                connector.setStrVar(username.text.toString(), 1)
+                connector.executeQuery()
+                try {
+                    connector.getAnswer()
+                } catch(e: Exception){
+                    loginTaken = false
+                }
 
 
-                if (username.text.toString().equals("login")) {
+                if (loginTaken) {
                     Toast.makeText(
                         this,
                         "Użytkownik o tej nazwie już istnieje!",
                         Toast.LENGTH_SHORT
                     ).show()
                     isCorrect = false
-                }
-                else if (password.text.toString() != repPassword.text.toString()) {
+                } else if(!UsernameValidator.validate(username.text.toString())) {
+                    Toast.makeText(
+                        this,
+                        "Nieprawidlowy format nazwy uzytkownika (5-15 znakow, tylko litery i cyfry)",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    isCorrect = false
+                } else if (!PasswordValidator.validate(password.text.toString())) {
+                    Toast.makeText(
+                        this,
+                        "Nienprawidlowa dlugosc hasla (8-64 znaki)",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    isCorrect = false
+                } else if (password.text.toString() != repPassword.text.toString()) {
                     Toast.makeText(
                         this,
                         "Wprowadzone hasła muszą być identyczne!",
@@ -60,7 +165,7 @@ class CreateAdminInMarchAccount : AppCompatActivity() {
                     ).show()
                     isCorrect = false
                 }
-                else if (email.text.toString().equals("123")) {
+                else if (!EmailValidator.validate(email.text.toString())) {
                     Toast.makeText(
                         this,
                         "Nieprawidłowy format email!",
@@ -68,7 +173,7 @@ class CreateAdminInMarchAccount : AppCompatActivity() {
                     ).show()
                     isCorrect = false
                 }
-                else if (phoneNr.text.toString().equals("abc")) {
+                else if (!PhoneValidator.validate(phoneNr.text.toString())) {
                     Toast.makeText(
                         this,
                         "Nieprawidłowy format numeru!",
@@ -77,8 +182,15 @@ class CreateAdminInMarchAccount : AppCompatActivity() {
                     isCorrect = false
                 }
 
+                val str_username = username.text.toString()
+                val str_name = name.text.toString()
+                val str_lastname = lastname.text.toString()
+                val str_password = password.text.toString()
+                val str_email = email.text.toString()
+                val str_phonenr = phoneNr.text.toString()
+
                 //Po rejestracji wracam do ekranu głównego administratora.
-                if (isCorrect)
+                if (isCorrect && registerAdmin(str_username, str_name, str_lastname, str_password, str_email, str_phonenr))
                 {
                     Toast.makeText(
                         this,
@@ -87,12 +199,6 @@ class CreateAdminInMarchAccount : AppCompatActivity() {
                     ).show()
                     val Intent = Intent(this, OrganisatorMain::class.java)
                     startActivity(Intent)
-
-                    //TODO: Podczas rejestracji hashujemy haslo:
-//                    val hashedPass = Hasher.hash(password.text.toString())
-
-                    //TODO:Tutaj będzie leciało zapytanie do bazy, które stworzy nam administratora,
-                    //TODO:z podanych danych, czyli username, password, email i phoneNr
                 }
             }
         }

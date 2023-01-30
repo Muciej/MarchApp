@@ -4,6 +4,8 @@ import java.util.Vector
 
 interface DBConnector {
     fun setDBName(name: String)
+    fun setCurrentUserID(id : Int)
+    fun getCurrentUserID() : Int
     fun prepareQuery(query: String, varNo: Int = 0)
     fun setStrVar(v: String, varNo: Int)
     fun setIntVar(v: Int, varNo: Int)

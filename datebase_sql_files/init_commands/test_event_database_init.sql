@@ -18,6 +18,7 @@ CREATE TABLE ev_test_event.`uczestnicy` (
   `imie` VARCHAR(60) NULL,
   `nazwisko` VARCHAR(60) NULL,
   `pseudonim` VARCHAR(45) NULL,
+  'kod_qr'  VARCHAR(15) NULL,
   PRIMARY KEY (`nr_startowy`),
   UNIQUE INDEX `id_konta_UNIQUE` (`id_konta` ASC));
 
@@ -51,7 +52,7 @@ CREATE TABLE ev_test_event.`konta` (
 CREATE TABLE ev_test_event.`uczestnik_punkt` (
   `id_uczestnika` INT NOT NULL,
   `id_punktu` INT NOT NULL,
-  `data` VARCHAR(45) NOT NULL);
+  `data` DATETIME NOT NULL);
 
 CREATE TABLE ev_test_event.`wolontariusz_punkt` (
   `id_wolontariusza` INT NOT NULL,
@@ -178,3 +179,9 @@ insert into baza_biegow_przelajowych.eventy(nazwa, nazwa_bazy, rozpoczete) value
 drop user if exists admin_ev_test_event@;
 create user 'admin_ev_test_event'@ identified by 'admin_ev_test_event';
 grant all privileges on ev_test_event.* to 'admin_ev_test_event'@;
+
+create view ev_test_event.wolontariusze_info_view as
+select p.id_osoby, p.id_konta, wp.id_wolontariusza, wp.id_punktu, p.imie, p.nazwisko, p.nr_telefonu, p.mail, k.login, k.hasło
+from ev_test_event.personel p
+inner join ev_test_event.konta k on p.id_konta = k.id_konta
+inner join ev_test_event.wolontariusz_punkt wp on p.id_osoby = wp.id_wolontariusza;
