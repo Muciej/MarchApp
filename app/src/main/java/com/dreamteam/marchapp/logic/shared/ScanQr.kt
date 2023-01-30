@@ -111,8 +111,13 @@ class ScanQr : AppCompatActivity() {
                                     connector.prepareQuery("insert into uczestnik_punkt(id_uczestnika, id_punktu, data) values (${startID}, ${pointID}, '${date}' ) ")
                                     connector.executeQuery()
                                     connector.closeQuery()
-                                } catch (e : Exception)
-                                Toast.makeText(this, "Błąd przy aktualizowaniu bazy danych", Toast.LENGTH_LONG).show()
+                                } catch (e : Exception) {
+                                    Toast.makeText(
+                                        this,
+                                        "Błąd przy aktualizowaniu bazy danych",
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                }
                             }
 
                         } else {
