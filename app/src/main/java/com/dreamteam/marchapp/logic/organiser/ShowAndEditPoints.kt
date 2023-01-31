@@ -1,4 +1,4 @@
-package com.dreamteam.marchapp.logic.shared
+package com.dreamteam.marchapp.logic.organiser
 
 
 import android.app.Dialog
@@ -20,39 +20,38 @@ import androidx.fragment.app.DialogFragment
 import com.dreamteam.marchapp.R
 import com.dreamteam.marchapp.R.id.*
 import com.dreamteam.marchapp.database.JDBCConnector
-import com.dreamteam.marchapp.logic.admin.AdministratorMain
-import com.dreamteam.marchapp.logic.organiser.OrganisatorMain
-import com.dreamteam.marchapp.logic.validation.LastNameValidator
-import com.dreamteam.marchapp.logic.validation.NameValidator
-import com.dreamteam.marchapp.logic.volunteer.VolunteerMain
 import de.codecrafters.tableview.TableView
 import de.codecrafters.tableview.listeners.TableDataClickListener
 import de.codecrafters.tableview.model.TableColumnPxWidthModel
 import de.codecrafters.tableview.toolkit.SimpleTableDataAdapter
 import de.codecrafters.tableview.toolkit.SimpleTableHeaderAdapter
 import de.codecrafters.tableview.toolkit.TableDataRowBackgroundProviders
-import kotlinx.android.synthetic.main.dialog_edit_user.*
-import kotlinx.android.synthetic.main.dialog_edit_user.view.*
+import kotlinx.android.synthetic.main.dialog_edit_point.*
+import kotlinx.android.synthetic.main.dialog_edit_point.view.*
+import kotlinx.android.synthetic.main.dialog_edit_user.edit_imie
+import kotlinx.android.synthetic.main.dialog_edit_user.nazwisko_edit
+import kotlinx.android.synthetic.main.dialog_edit_user.nr_startowy_edit
+import kotlinx.android.synthetic.main.dialog_edit_user.view.editButton
 import kotlinx.android.synthetic.main.dialog_zoom_data.view.backb
 import java.util.*
 import kotlin.collections.ArrayList
 
-class ShowAndEditParticipant : AppCompatActivity(), TableDataClickListener<Array<String>> {
+
+class ShowAndEditPoints : AppCompatActivity(), TableDataClickListener<Array<String>> {
     var lastClickedRow = -1
     lateinit var data : MutableList<Array<String>>
     lateinit var adapterData: SimpleTableDataAdapter
     lateinit var tableView : TableView<Array<String>>
     lateinit var editModeCheckbox : CheckBox
-    lateinit var volunteersList : ArrayList<String>
+    lateinit var pointsList : ArrayList<String>
     var connector = JDBCConnector
     lateinit var customSpinner : TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_organiser_show_volunteers)
-        var accessLevel = intent.getStringExtra("accessLevel")
+        setContentView(R.layout.activity_show_and_edit_points)
         val backBtn = findViewById<Button>(btnBack)
-        val adapterHead = SimpleTableHeaderAdapter(this@ShowAndEditParticipant, "Id","Nr", "Imie", "Nazwisko", "Pseudonim")
+        val adapterHead = SimpleTableHeaderAdapter(this@ShowAndEditPoints, "Id", "Online", "Nazwa", "Km", "Współrzędne")
         tableView = findViewById<View>(volunteersTable) as TableView<Array<String>>
         tableView.addDataClickListener(this)
         tableView.setHeaderBackgroundColor(Color.rgb(		98, 0, 238))
@@ -66,26 +65,13 @@ class ShowAndEditParticipant : AppCompatActivity(), TableDataClickListener<Array
             )
         )
         editModeCheckbox = findViewById<CheckBox>(editCheckbox)
-        if (accessLevel == "Organiser" || accessLevel == "Volunteer")
-        {
-            editModeCheckbox.isClickable=false
-            editModeCheckbox.visibility=View.INVISIBLE
-        }
-
-        val title = findViewById<TextView>(R.id.ChooseVolonteersTextView)
-        title.text = "Wybierz uczestnika"
-
-        val hint = findViewById<TextView>(R.id.textView)
-        hint.text = "Wybierz uczestnika"
-
-        init_volunteers()
+        
+        init_points()
 
 
         backBtn.setOnClickListener{
             lateinit var intent : Intent
-            if (accessLevel == "Organiser") intent = Intent(this, OrganisatorMain::class.java)
-            else if (accessLevel == "Admin") intent = Intent(this, AdministratorMain::class.java)
-            else if (accessLevel == "Volunteer") intent = Intent(this, VolunteerMain::class.java)
+            intent = Intent(this, Organisatormain2::class.java)
             startActivity(intent)
         }
 
@@ -98,16 +84,16 @@ class ShowAndEditParticipant : AppCompatActivity(), TableDataClickListener<Array
 
         val columnModel = TableColumnPxWidthModel(5, 200)
         columnModel.setColumnWidth(0, 80)
-        columnModel.setColumnWidth(1, 100)
-        columnModel.setColumnWidth(2, 250)
-        columnModel.setColumnWidth(3, 250)
+        columnModel.setColumnWidth(1, 180)
+        columnModel.setColumnWidth(2, 350)
+        columnModel.setColumnWidth(3, 140)
         columnModel.setColumnWidth(4, 350)
         tableView.columnModel = columnModel
 
 
 
         customSpinner.setOnClickListener{
-            val dialog = Dialog(this@ShowAndEditParticipant)
+            val dialog = Dialog(this@ShowAndEditPoints)
             dialog.setContentView(R.layout.dialog_searchable_spinner)
             dialog.window?.setLayout(800,800)
             dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -115,7 +101,7 @@ class ShowAndEditParticipant : AppCompatActivity(), TableDataClickListener<Array
 
             val edittext = dialog.findViewById<EditText>(edit_text)
             val listview = dialog.findViewById<ListView>(listView)
-            val adapter = ArrayAdapter(this@ShowAndEditParticipant, android.R.layout.simple_list_item_1, volunteersList)
+            val adapter = ArrayAdapter(this@ShowAndEditPoints, android.R.layout.simple_list_item_1, pointsList)
 
             listview.adapter = adapter
 
@@ -132,9 +118,9 @@ class ShowAndEditParticipant : AppCompatActivity(), TableDataClickListener<Array
                 AdapterView.OnItemClickListener { p0, p1, p2, p3 ->
                     customSpinner.text = adapter.getItem(p2)
 
-                    adapterData = if (listview.getItemAtPosition(p2).toString().lowercase() == "wszyscy") SimpleTableDataAdapter(this@ShowAndEditParticipant, initData())
-                    else if (listview.getItemAtPosition(p2).toString().lowercase()!="nie wybrano") SimpleTableDataAdapter(this@ShowAndEditParticipant, selectData(listview.getItemAtPosition(p2).toString()))
-                    else SimpleTableDataAdapter(this@ShowAndEditParticipant, arrayOf())
+                    adapterData = if (listview.getItemAtPosition(p2).toString().lowercase() == "wszystkie") SimpleTableDataAdapter(this@ShowAndEditPoints, initData())
+                    else if (listview.getItemAtPosition(p2).toString().lowercase()!="nie wybrano") SimpleTableDataAdapter(this@ShowAndEditPoints, selectData(listview.getItemAtPosition(p2).toString().split(" | ")[0]))
+                    else SimpleTableDataAdapter(this@ShowAndEditPoints, arrayOf())
                     adapterData.setTextSize(12)
                     adapterData.setTextColor(Color.BLACK)
                     tableView.dataAdapter = adapterData
@@ -145,8 +131,8 @@ class ShowAndEditParticipant : AppCompatActivity(), TableDataClickListener<Array
     }
     private fun selectData(name: String):MutableList<Array<String>>
     {
-        val dataa = name.split(" ")
-        connector.prepareQuery("select id_konta, nr_startowy,imie, nazwisko, pseudonim from uczestnicy  where imie='" + dataa[0] + "' and nazwisko = '" + dataa[1] + "';")
+
+        connector.prepareQuery("SELECT * FROM ev_test_event.punkty_kontrolne WHERE nazwa = '$name';")
         connector.executeQuery()
 
 
@@ -160,19 +146,17 @@ class ShowAndEditParticipant : AppCompatActivity(), TableDataClickListener<Array
 
     private fun initData():MutableList<Array<String>>
     {
-        connector.prepareQuery("select id_konta, nr_startowy,imie, nazwisko, pseudonim from uczestnicy;")
+        connector.prepareQuery("SELECT * FROM ev_test_event.punkty_kontrolne order by kilometr")
         connector.executeQuery()
         var temp: Vector<String>? = null
         var counter = 1
 
-        //należy zainicjalizować
         data = mutableListOf()
         while(true)
         {
             try {
-                temp = connector.getCurrRow(5)
+                temp = connector.getCurrRow(6)
                 connector.moveRow()
-//                temp = connector.getRow(counter,5)
                 data.add(temp.toTypedArray())
                 counter++;
             }
@@ -185,25 +169,15 @@ class ShowAndEditParticipant : AppCompatActivity(), TableDataClickListener<Array
         return data
     }
 
-    private fun checkIfPresentInDB(obj : String, field : String, id:Int) : Boolean {
-        connector.prepareQuery("SELECT count(id_konta) FROM uczestnicy where $field = '$obj' and id_konta!=$id;")
-        connector.executeQuery()
-        //tzn ze nikt w bazie (poza obecna osoba) nie ma takiego pola
-        if (connector.getColInts(1)[0] == 0){
-            return false
-        }
-        return true
-    }
 
-
-    private fun init_volunteers()
+    private fun init_points()
     {
         connector.startConnection()
-        connector.prepareQuery("select imie, nazwisko from uczestnicy")
+        connector.prepareQuery("select nazwa, kilometr from punkty_kontrolne order by kilometr")
         connector.executeQuery()
 
-        volunteersList = ArrayList<String>()
-        volunteersList.add("Nie wybrano")
+        pointsList = ArrayList<String>()
+        pointsList.add("Nie wybrano")
         var temp: Vector<String>? = null
         var counter = 1
 
@@ -212,7 +186,7 @@ class ShowAndEditParticipant : AppCompatActivity(), TableDataClickListener<Array
             try {
                 temp = connector.getCurrRow(2)
                 connector.moveRow()
-                volunteersList.add(temp[0] + " " + temp[1])
+                pointsList.add(temp[0] + " | " + temp[1] + " km")
                 counter++;
             }
             catch (e: Exception)
@@ -221,10 +195,17 @@ class ShowAndEditParticipant : AppCompatActivity(), TableDataClickListener<Array
             }
         }
         connector.closeQuery()
-        volunteersList.add("Wszyscy")
+        pointsList.add("Wszystkie")
     }
 
-
+    private fun checkIfPresentInDB(obj : String, field : String, id:Int) : Boolean {
+        connector.prepareQuery("SELECT count(nazwa) FROM punkty_kontrolne where $field = '$obj' and id!=$id;")
+        connector.executeQuery()
+        if (connector.getColInts(1)[0] == 0){
+            return false
+        }
+        return true
+    }
 
 
     override fun onDataClicked(rowIndex: Int, clickedData: Array<String>?) {
@@ -244,30 +225,31 @@ class ShowAndEditParticipant : AppCompatActivity(), TableDataClickListener<Array
 
                     getDialog()!!.getWindow()?.setBackgroundDrawableResource(R.drawable.round_corners);
                     dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-                    dialog?.window?.setLayout(1000,900)
-                    var rootView : View = inflater.inflate(R.layout.dialog_zoom_data_user, container, false)
+                    dialog?.window?.setLayout(1000,1100)
+                    var rootView : View = inflater.inflate(R.layout.dialog_zoom_point, container, false)
                     rootView.backb.setOnClickListener { dismiss() }
 
-                    val name = rootView.findViewById<TextView>(R.id.imie)
-                    val lastname = rootView.findViewById<TextView>(R.id.nazwisko)
-                    val start_nr = rootView.findViewById<TextView>(R.id.nr_startowy)
-                    val pseudo = rootView.findViewById<TextView>(R.id.pseudonim)
 
-                    val nameSpan = SpannableString(name?.text.toString() + (clickedData?.get(2)))
-                    val lastnameSpan = SpannableString(lastname?.text.toString() + (clickedData?.get(3)))
-                    val start_nrSpan = SpannableString(start_nr?.text.toString() + (clickedData?.get(1)))
-                    val pseudoSpan = SpannableString(pseudo?.text.toString() + (clickedData?.get(4)))
+                    val online = rootView.findViewById<TextView>(R.id.imie)
+                    val nazwa = rootView.findViewById<TextView>(R.id.nazwisko)
+                    val km = rootView.findViewById<TextView>(R.id.pseudonim)
+                    val wsp = rootView.findViewById<TextView>(R.id.wsp)
 
-                    nameSpan.setSpan(ForegroundColorSpan(Color.BLUE), name.text.length, nameSpan.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                    val onlineSpan = SpannableString(online?.text.toString() + (clickedData?.get(1)))
+                    val nazwaSpan = SpannableString(nazwa?.text.toString() + (clickedData?.get(2)))
+                    val kmSpan = SpannableString(km?.text.toString() + (clickedData?.get(3)))
+                    val wspSpan = SpannableString(wsp?.text.toString() + (clickedData?.get(4)))
 
-                    lastnameSpan.setSpan(ForegroundColorSpan(Color.BLUE),lastname.text.length, lastnameSpan.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-                    start_nrSpan.setSpan(ForegroundColorSpan(Color.BLUE), start_nr.text.length, start_nrSpan.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-                    pseudoSpan.setSpan(ForegroundColorSpan(Color.BLUE), pseudo.text.length, pseudoSpan.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                    onlineSpan.setSpan(ForegroundColorSpan(Color.BLUE), online.text.length, onlineSpan.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
 
-                    name.text = nameSpan
-                    lastname.text = lastnameSpan
-                    start_nr.text = start_nrSpan
-                    pseudo.text = pseudoSpan
+                    nazwaSpan.setSpan(ForegroundColorSpan(Color.BLUE),nazwa.text.length, nazwaSpan.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                    kmSpan.setSpan(ForegroundColorSpan(Color.BLUE), km.text.length, kmSpan.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                    wspSpan.setSpan(ForegroundColorSpan(Color.BLUE), wsp.text.length, wspSpan.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+                    nazwa.text = nazwaSpan
+                    online.text = onlineSpan
+                    km.text = kmSpan
+                    wsp.text = wspSpan
 
                     return rootView
                 }
@@ -275,7 +257,7 @@ class ShowAndEditParticipant : AppCompatActivity(), TableDataClickListener<Array
                 override fun onStart() {
                     super.onStart()
                     getDialog()!!.getWindow()?.setBackgroundDrawableResource(R.drawable.round_corners);
-                    dialog?.window?.setLayout(1000,900)
+                    dialog?.window?.setLayout(1000,1100)
                 }
             }
 
@@ -296,89 +278,101 @@ class ShowAndEditParticipant : AppCompatActivity(), TableDataClickListener<Array
 
 
                     dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-                    var rootView : View = inflater.inflate(R.layout.dialog_edit_user, container, false)
+                    var rootView : View = inflater.inflate(R.layout.dialog_edit_point, container, false)
                     rootView.backb.setOnClickListener { dismiss() }
 
-                    rootView.editButton.setOnClickListener {
-                        //chcemy do bazy danych i do tabeli wklepać wartości z edycji
+                    rootView.deleteButton.setOnClickListener {
+                        //usuwanie punktu
+                        var rowToEdit = 0;
+                        rowToEdit = clickedData!!.get(0).toInt()
 
-                        //nowe wartości
+                        connector.prepareQuery("DELETE FROM wolontariusz_punkt WHERE id_punktu = ?")
+                        connector.setIntVar(rowToEdit, 1)
+                        try{connector.executeQuery()} catch (e: Exception){print("error")}
+                        connector.closeQuery()
+
+                        connector.prepareQuery("DELETE FROM punkty_online WHERE  id_punktu = ?")
+                        connector.setIntVar(rowToEdit, 1)
+                        try{connector.executeQuery()} catch (e: Exception){print("error")}
+                        connector.closeQuery()
+
+                        connector.prepareQuery("DELETE FROM punkty_kontrolne WHERE  id = ?")
+                        connector.setIntVar(rowToEdit, 1)
+                        try{connector.executeQuery()} catch (e: Exception){print("error")}
+                        connector.closeQuery()
+
+                        init_points()
+
+                        dismiss() }
+
+                    rootView.editButton.setOnClickListener {
+
                         var editedName = edit_imie.text.toString()
-                        var editedLastName = nazwisko_edit.text.toString()
-                        var editedStartNr = nr_startowy_edit.text.toString()
-                        var editedPsudonim = pseudonim_edit.text.toString()
+                        var editedOnline = nazwisko_edit.text.toString()
+                        var editedkm = nr_startowy_edit.text.toString()
+                        var editedwsp = wsp_edit.text.toString()
 
                         var rowToEdit = 0;
                         rowToEdit = clickedData!!.get(0).toInt()
 
 
 
-                        if (editedName.isNullOrBlank() || editedLastName.isNullOrBlank() ||
-                            editedPsudonim.isNullOrBlank() || editedStartNr.isNullOrBlank()
+                        if (editedName.isNullOrBlank() || editedOnline.isNullOrBlank() ||
+                            editedkm.isNullOrBlank() || editedwsp.isNullOrBlank()
                         ) {
-                            Toast.makeText(this@ShowAndEditParticipant, "Żadne z pól nie może być puste", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this@ShowAndEditPoints, "Żadne z pól nie może być puste", Toast.LENGTH_SHORT).show()
                         } else {
                             var isCorrect = true
 
-
-                            if (!NameValidator.validate(editedName)) {
-                                Toast.makeText(
-                                    this@ShowAndEditParticipant,
-                                    "Nieprawidłowy format imienia!",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                                isCorrect = false
-                            } else if (!LastNameValidator.validate(editedLastName)) {
-                                Toast.makeText(
-                                    this@ShowAndEditParticipant,
-                                    "Nieprawidłowy format nazwiska!",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                                isCorrect = false
-                            }
-
-                            else if (checkIfPresentInDB(editedStartNr, "nr_startowy", rowToEdit ))
+                            if (checkIfPresentInDB(editedName, "nazwa", rowToEdit ))
                             {
                                 Toast.makeText(
-                                    this@ShowAndEditParticipant,
-                                    "Osoba o podanym nr startowym już istnieje w bazie!",
+                                    this@ShowAndEditPoints,
+                                    "Punkt o podanej już istnieje w bazie!",
                                     Toast.LENGTH_SHORT
                                 ).show()
                                 isCorrect = false
                             }
-                            else if (checkIfPresentInDB(editedPsudonim, "pseudonim", rowToEdit))
+                            else if (checkIfPresentInDB(editedkm, "kilometr", rowToEdit))
                             {
                                 Toast.makeText(
-                                    this@ShowAndEditParticipant,
-                                    "Osoba o podanym pseudonimie już istnieje w bazie!",
+                                    this@ShowAndEditPoints,
+                                    "Punkt na danym kilometrze już istnieje w bazie!",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                isCorrect = false
+                            }
+                            else if (checkIfPresentInDB(editedwsp, "współrzędne_geograficzne", rowToEdit))
+                            {
+                                Toast.makeText(
+                                    this@ShowAndEditPoints,
+                                    "Punkt o podanych współrzędnych już istnieje w bazie!",
                                     Toast.LENGTH_SHORT
                                 ).show()
                                 isCorrect = false
                             }
 
 
-                            //Po aktualizacji wracam do ekranu głównego administratora.
                             if (isCorrect) {
 
 
-                                connector.prepareQuery("UPDATE uczestnicy SET imie = ?, nazwisko = ?, pseudonim = ? " +
-                                        ", nr_startowy = ? WHERE id_konta = ?;")
-                                connector.setStrVar(editedName, 1)
-                                connector.setStrVar(editedLastName, 2)
-                                connector.setStrVar(editedPsudonim, 3)
-                                connector.setStrVar(editedStartNr, 4)
+                                connector.prepareQuery("UPDATE punkty_kontrolne SET online = ?, nazwa = ?, kilometr = ?, współrzędne_geograficzne = ? WHERE  id = ?")
+                                connector.setStrVar(editedOnline, 1)
+                                connector.setStrVar(editedName, 2)
+                                connector.setStrVar(editedkm, 3)
+                                connector.setStrVar(editedwsp, 4)
                                 connector.setIntVar(rowToEdit, 5)
 
 
-
-                                try{connector.executeQuery()} catch (e: Exception){print("erorr")}
+                                try{connector.executeQuery()} catch (e: Exception){print("error")}
                                 connector.closeQuery()
 
-                                adapterData = SimpleTableDataAdapter(this@ShowAndEditParticipant, initData())
+
+                                adapterData = SimpleTableDataAdapter(this@ShowAndEditPoints, initData())
                                 adapterData.setTextSize(12)
                                 adapterData.setTextColor(Color.BLACK)
                                 tableView.dataAdapter = adapterData
-                                init_volunteers()
+                                init_points()
                                 customSpinner.text = ""
                                 dismiss()
 
@@ -387,15 +381,14 @@ class ShowAndEditParticipant : AppCompatActivity(), TableDataClickListener<Array
 
                     }
 
-
                     val name = rootView.findViewById<EditText>(R.id.edit_imie)
                     val lastname = rootView.findViewById<EditText>(R.id.nazwisko_edit)
                     val start_nr = rootView.findViewById<EditText>(R.id.nr_startowy_edit)
-                    val pseudo = rootView.findViewById<EditText>(R.id.pseudonim_edit)
+                    val pseudo = rootView.findViewById<EditText>(R.id.wsp_edit)
 
                     name.setText(clickedData?.get(2))
-                    lastname.setText(clickedData?.get(3))
-                    start_nr.setText(clickedData?.get(1))
+                    lastname.setText(clickedData?.get(1))
+                    start_nr.setText(clickedData?.get(3))
                     pseudo.setText(clickedData?.get(4))
 
                     return rootView
@@ -404,7 +397,7 @@ class ShowAndEditParticipant : AppCompatActivity(), TableDataClickListener<Array
                 override fun onStart() {
                     super.onStart()
                     getDialog()!!.getWindow()?.setBackgroundDrawableResource(R.drawable.round_corners);
-                    dialog?.window?.setLayout(1000,1020)
+                    dialog?.window?.setLayout(1000,1100)
                 }
             }
 

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import com.dreamteam.marchapp.R
+import kotlinx.android.synthetic.main.activity_organisatormain2.*
 
 class Organisatormain2 : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -13,6 +14,7 @@ class Organisatormain2 : AppCompatActivity() {
 
         val btnForward = findViewById<Button>(R.id.btnForward)
         val modifyPoints = findViewById<Button>(R.id.modify_points)
+        val addPoints = findViewById<Button>(R.id.add_points)
         val modifyTracks = findViewById<Button>(R.id.modify_tracks)
         val makeBackup = findViewById<Button>(R.id.make_backup)
         val modifyPerData = findViewById<Button>(R.id.modify_par_data)
@@ -23,7 +25,12 @@ class Organisatormain2 : AppCompatActivity() {
         }
 
         modifyPoints.setOnClickListener{
-            val Intent = Intent(this, ModifyPoints::class.java)
+            val Intent = Intent(this, ShowAndEditPoints::class.java)
+            startActivity(Intent)
+        }
+
+        addPoints.setOnClickListener{
+            val Intent = Intent(this, CreatePointActivity::class.java)
             startActivity(Intent)
         }
 

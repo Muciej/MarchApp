@@ -33,10 +33,18 @@ class ChooseMarchActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
         connector.startConnection()
         connector.prepareQuery("SELECT * FROM baza_biegow_przelajowych.eventy;")
         connector.executeQuery()
-        marches = connector.getCol(2)
+        try {
+            marches = connector.getCol(2)
+        } catch (e : Exception){
+            showToast(message = "No events in database");
+        }
+
         connector.prepareQuery("SELECT * FROM baza_biegow_przelajowych.eventy;")
         connector.executeQuery()
-        dbNames = connector.getCol(3)
+        try {
+            dbNames = connector.getCol(3)
+        } catch (_: Exception){}
+
         if(dbNames.size > 0){
             connector.setDBName(dbNames[0])
         }

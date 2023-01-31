@@ -7,7 +7,9 @@ import android.widget.Button
 import android.widget.Toast
 import com.dreamteam.marchapp.R
 import com.dreamteam.marchapp.database.JDBCConnector
+import com.dreamteam.marchapp.logic.shared.ChangePassword
 import com.dreamteam.marchapp.logic.shared.ChooseMarchActivity
+import com.dreamteam.marchapp.logic.shared.ScanQr
 import com.dreamteam.marchapp.logic.shared.ViewSt
 
 class VolunteerMain : AppCompatActivity() {
@@ -32,12 +34,13 @@ class VolunteerMain : AppCompatActivity() {
         }
 
         scannerBtn.setOnClickListener{
-            val Intent = Intent(this, VolunteerScannerActivity::class.java)
+            val Intent = Intent(this, ScanQr::class.java)
             startActivity(Intent)
         }
 
         changeBtn.setOnClickListener{
-            Toast.makeText(this, "Tu będzie ekran zmiany hasła", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, ChangePassword::class.java)
+            startActivity(intent)
         }
 
         logoutBtn.setOnClickListener{

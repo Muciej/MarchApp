@@ -10,11 +10,12 @@ object JDBCConnector : DBConnector {
 
     private var port: String = "3306"
     private var ip: String = "marchapp.sytes.net"
-//    private var ip: String = "192.168.8.123"
+    //    private var ip: String = "192.168.8.123"
     private var dbConnection: Connection? = null
     private var currQuery: PreparedStatement? = null
     private var currentRes: ResultSet? = null
     private var dbName = "viewer"
+    private var loggedUserID = -1
     private var flags = "?autoReconnect=true&verifyServerCertificate=false&useSSL=true"
 
     override fun setDBName(name: String) {
@@ -23,7 +24,18 @@ object JDBCConnector : DBConnector {
 
     }
 
+    override fun getCurrentUserID() : Int{
+        return loggedUserID
+    }
+
+    override fun setCurrentUserID(id: Int) {
+        loggedUserID = id
+    }
+
     override fun prepareQuery(query: String, varNo: Int) {
+        if (dbConnection?.isClosed == true){
+            startConnection()
+        }
         currQuery?.close()
         try {
             currQuery = dbConnection?.prepareStatement(query)
@@ -62,6 +74,12 @@ object JDBCConnector : DBConnector {
             row.add(currentRes?.getString(i))
         }
         return row
+    }
+
+    override fun moveRow() {
+        if(!currentRes?.next()!!){
+            println("Reached end of the answer")
+        }
     }
 
     override fun getRow(rowNo: Int, colNo: Int): Vector<String> {
@@ -114,6 +132,7 @@ object JDBCConnector : DBConnector {
         while(currentRes?.next() == true){
             println(currentRes?.getString(colNo))
             answer.add(currentRes?.getInt(colNo))
+            currentRes?.getDate(5)
         }
         currentRes?.close()
         currentRes = null
@@ -136,8 +155,9 @@ object JDBCConnector : DBConnector {
     }
 
     override fun startConnection() {
-        if(dbConnection != null)
+        if(dbConnection != null){
             return
+        }
         val user = User(dbName)
         val policy = ThreadPolicy.Builder().permitAll().build()
         StrictMode.setThreadPolicy(policy)
@@ -158,6 +178,7 @@ object JDBCConnector : DBConnector {
         } catch (e: SQLException){
             e.printStackTrace()
             println("Couldn't establish connection")
+            throw SQLException("Error while connecting do database")
         }
     }
 
@@ -171,6 +192,9 @@ object JDBCConnector : DBConnector {
     }
 
     override fun executeQuery() {
+        if (dbConnection?.isClosed == true){
+            startConnection()
+        }
         try {
             println("Executing query")
             if(currQuery?.execute() == true){
@@ -179,6 +203,7 @@ object JDBCConnector : DBConnector {
         } catch (e: SQLException){
             e.printStackTrace()
             println("Could not execute query")
+            throw SQLException("Error during executing query")
         }
         if(currentRes == null || !currentRes!!.next()){
             currentRes = null;

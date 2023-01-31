@@ -8,6 +8,7 @@ import android.widget.Toast
 import com.dreamteam.marchapp.R
 import com.dreamteam.marchapp.database.JDBCConnector
 import com.dreamteam.marchapp.logic.organiser.ShowVolunteers
+import com.dreamteam.marchapp.logic.shared.ChangePassword
 import com.dreamteam.marchapp.logic.shared.ChooseMarchActivity
 import com.dreamteam.marchapp.logic.shared.ViewSt
 import com.dreamteam.marchapp.logic.shared.ShowAndEditParticipant
@@ -24,6 +25,7 @@ class AdministratorMain : AppCompatActivity() {
         val changeBtn = findViewById<Button>(R.id.changePass)
         val logoutBtn = findViewById<Button>(R.id.logOut)
         val viewStats = findViewById<Button>(R.id.view_statistics)
+        val addPointToVolunteer = findViewById<Button>(R.id.addPointToVolunteer)
 
         crtVolBtn.setOnClickListener{
             val intent = Intent(this, CreateVolunteerActivity::class.java)
@@ -32,6 +34,11 @@ class AdministratorMain : AppCompatActivity() {
 
         crtParBtn.setOnClickListener{
             val intent = Intent(this, CreateUserActivity::class.java)
+            startActivity(intent)
+        }
+
+        addPointToVolunteer.setOnClickListener{
+            val intent = Intent(this, AssignVolunteerToPoint::class.java)
             startActivity(intent)
         }
 
@@ -49,7 +56,8 @@ class AdministratorMain : AppCompatActivity() {
         }
 
         changeBtn.setOnClickListener{
-            Toast.makeText(this, "Tu będzie ekran zmiany hasła", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, ChangePassword::class.java)
+            startActivity(intent)
         }
 
         logoutBtn.setOnClickListener{

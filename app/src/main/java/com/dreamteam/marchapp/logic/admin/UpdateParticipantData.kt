@@ -10,6 +10,7 @@ import com.dreamteam.marchapp.R
 import com.dreamteam.marchapp.logic.validation.EmailValidator
 import com.dreamteam.marchapp.logic.validation.PhoneValidator
 
+@Deprecated("Old unused class")
 class UpdateParticipantData : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

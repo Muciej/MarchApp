@@ -3,13 +3,11 @@ CREATE DATABASE ev_test_event;
 
 CREATE TABLE ev_test_event.`punkty_kontrolne` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `kolejność` INT NOT NULL,
   `online` TINYINT NULL,
   `nazwa` VARCHAR(45) NULL,
   `kilometr` INT NULL,
   `współrzędne_geograficzne` VARCHAR(100) NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX kolejność_UNIQUE (kolejność ASC));
+  PRIMARY KEY (`id`));
 
 
 CREATE TABLE ev_test_event.`uczestnicy` (
@@ -18,6 +16,7 @@ CREATE TABLE ev_test_event.`uczestnicy` (
   `imie` VARCHAR(60) NULL,
   `nazwisko` VARCHAR(60) NULL,
   `pseudonim` VARCHAR(45) NULL,
+  'kod_qr'  VARCHAR(15) NULL,
   PRIMARY KEY (`nr_startowy`),
   UNIQUE INDEX `id_konta_UNIQUE` (`id_konta` ASC));
 
@@ -44,14 +43,13 @@ CREATE TABLE ev_test_event.`konta` (
   `hasło` CHAR(100) NOT NULL,
   `rola_id` INT NOT NULL,
   PRIMARY KEY (`id_konta`),
-  UNIQUE INDEX `login_UNIQUE` (`login` ASC),
-  UNIQUE INDEX `hasło_UNIQUE` (`hasło` ASC));
+  unique INDEX `login_UNIQUE` (`login` ASC));
 
 
 CREATE TABLE ev_test_event.`uczestnik_punkt` (
   `id_uczestnika` INT NOT NULL,
   `id_punktu` INT NOT NULL,
-  `data` VARCHAR(45) NOT NULL);
+  `data` DATETIME NOT NULL);
 
 CREATE TABLE ev_test_event.`wolontariusz_punkt` (
   `id_wolontariusza` INT NOT NULL,
@@ -178,3 +176,17 @@ insert into baza_biegow_przelajowych.eventy(nazwa, nazwa_bazy, rozpoczete) value
 drop user if exists admin_ev_test_event@;
 create user 'admin_ev_test_event'@ identified by 'admin_ev_test_event';
 grant all privileges on ev_test_event.* to 'admin_ev_test_event'@;
+
+
+create view ev_test_event.czas_uczestnicy_punkt as
+select * from ev_test_event.punkty_kontrolne p
+        inner join ev_test_event.uczestnik_punkt up on p.id = up.id_punktu
+        inner join ev_test_event.uczestnicy u on up.id_uczestnika = u.nr_startowy
+        order by u.nr_startowy;
+
+create view ev_test_event.wolontariusze_info_view as
+select p.id_osoby, p.id_konta, wp.id_wolontariusza, wp.id_punktu, p.imie, p.nazwisko, p.nr_telefonu, p.mail, k.login, k.hasło
+from ev_test_event.personel p
+inner join ev_test_event.konta k on p.id_konta = k.id_konta
+inner join ev_test_event.wolontariusz_punkt wp on p.id_osoby = wp.id_wolontariusza;
+

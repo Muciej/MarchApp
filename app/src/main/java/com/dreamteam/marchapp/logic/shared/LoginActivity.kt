@@ -12,6 +12,7 @@ import com.dreamteam.marchapp.logic.organiser.OrganisatorMain
 import com.dreamteam.marchapp.logic.volunteer.VolunteerMain
 import com.dreamteam.marchapp.logic.admin.AdministratorMain
 import com.dreamteam.marchapp.logic.config.PasswordEncoder
+import com.dreamteam.marchapp.logic.participant.RegisterParticipant
 import java.util.Vector
 
 class LoginActivity : AppCompatActivity() {
@@ -26,6 +27,7 @@ class LoginActivity : AppCompatActivity() {
         val password = findViewById<TextView>(R.id.password)
         val btnSign = findViewById<Button>(R.id.signbtn)
         val backBtn = findViewById<Button>(R.id.btnBack)
+        val btnRegister = findViewById<Button>(R.id.registerbtn)
 
         backBtn.setOnClickListener{
             
@@ -41,7 +43,7 @@ class LoginActivity : AppCompatActivity() {
                 val hashedPassword = PasswordEncoder.hash(password.text.toString())
 
                 connector.startConnection()
-                connector.prepareQuery("select r.poziom_uprawnień from konta k\n" +
+                connector.prepareQuery("select r.poziom_uprawnień, k.id_konta from konta k\n" +
                         "join role r on k.rola_id = r.id_roli\n" +
                         "where login = ? and hasło = ?;")
                 connector.setStrVar(username.text.toString(), 1)
@@ -49,7 +51,9 @@ class LoginActivity : AppCompatActivity() {
                 connector.executeQuery()
                 var ans : Vector<String>
                 try {
-                    ans = connector.getRow(1, 1)
+                    ans = connector.getRow(1, 2)
+                    connector.setCurrentUserID(Integer.parseInt(ans[1]))
+                    println(Integer.parseInt(ans[1]))
                 } catch (e: Exception){
                     ans = Vector<String>()
                     ans.add("error")
@@ -62,13 +66,18 @@ class LoginActivity : AppCompatActivity() {
                     "volounteer"-> intent = Intent(this, VolunteerMain::class.java)
                     "participant" -> Toast.makeText(this, "Zalogowano jako uczestnik!", Toast.LENGTH_SHORT).show()
                     "admin" -> intent = Intent(this, AdministratorMain::class.java)
-                    "register" -> {
-                        //Todo jakiś panel rejestracji?
-                    }
+
                 }
                 if(intent != null)
                     startActivity(intent)
             }
+        }
+
+        btnRegister.setOnClickListener{
+
+            connector.closeConnection()
+            val Intent = Intent(this, RegisterParticipant::class.java)
+            startActivity(Intent)
         }
     }
 
