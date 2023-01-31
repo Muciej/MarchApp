@@ -61,6 +61,7 @@ class ScanQr : AppCompatActivity() {
                         var isInDatabase = true
 
                         // if qr code linked to user exists try to get info otherwise exception that doesnt exists
+                        println("Linked qr code: $it.text")
                         connector.prepareQuery("SELECT * FROM uczestnicy WHERE kod_qr LIKE '${it.text}' ")
                         connector.executeQuery()
                         try {
