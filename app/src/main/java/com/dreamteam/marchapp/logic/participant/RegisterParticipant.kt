@@ -10,7 +10,6 @@ import com.dreamteam.marchapp.R
 import com.dreamteam.marchapp.database.JDBCConnector
 import com.dreamteam.marchapp.logic.shared.LoginActivity
 import com.dreamteam.marchapp.logic.validation.*
-import kotlinx.android.synthetic.main.activity_update_volunteer_data.*
 
 class RegisterParticipant : AppCompatActivity(){
     var connector = JDBCConnector

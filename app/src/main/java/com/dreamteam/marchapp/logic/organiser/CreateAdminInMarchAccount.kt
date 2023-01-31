@@ -13,7 +13,6 @@ import com.dreamteam.marchapp.logic.validation.EmailValidator
 import com.dreamteam.marchapp.logic.validation.PasswordValidator
 import com.dreamteam.marchapp.logic.validation.PhoneValidator
 import com.dreamteam.marchapp.logic.validation.UsernameValidator
-import kotlinx.android.synthetic.main.activity_create_admin_in_march_account.*
 
 class CreateAdminInMarchAccount : AppCompatActivity() {
 
