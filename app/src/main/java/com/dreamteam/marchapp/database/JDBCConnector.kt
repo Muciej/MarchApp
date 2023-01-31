@@ -75,6 +75,12 @@ object JDBCConnector : DBConnector {
         return row
     }
 
+    override fun moveRow() {
+        if(!currentRes?.next()!!){
+
+        }
+    }
+
     override fun getRow(rowNo: Int, colNo: Int): Vector<String> {
         if (currentRes == null)
             throw Exception("No result!")

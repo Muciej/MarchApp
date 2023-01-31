@@ -175,7 +175,9 @@ class ShowAndEditParticipant : AppCompatActivity(), TableDataClickListener<Array
         while(true)
         {
             try {
-                temp = connector.getRow(counter,5)
+                temp = connector.getCurrRow(5)
+                connector.moveRow()
+//                temp = connector.getRow(counter,5)
                 data.add(temp.toTypedArray())
                 counter++;
             }
@@ -213,7 +215,8 @@ class ShowAndEditParticipant : AppCompatActivity(), TableDataClickListener<Array
         while(true)
         {
             try {
-                temp = connector.getRow(counter,2)
+                temp = connector.getCurrRow(2)
+                connector.moveRow()
                 volunteersList.add(temp[0] + " " + temp[1])
                 counter++;
             }
