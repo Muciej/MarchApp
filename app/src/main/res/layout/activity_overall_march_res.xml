@@ -20,20 +20,25 @@
         android:id="@+id/view_statistics"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="70dp"
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="30dp"
         android:gravity="center"
         android:text="Zajęte miejsca"
-        android:textSize="20dp"
+        android:textSize="30dp"
         android:textStyle="bold" />
 
-    <androidx.recyclerview.widget.RecyclerView
+
+    <ListView
+        android:id="@+id/userlist"
         android:layout_width="match_parent"
         android:layout_below="@+id/view_statistics"
-        android:layout_marginStart="30dp"
-        android:layout_height="match_parent" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="4dp"
+        android:layout_height="wrap_content" >
+    </ListView>
 
 
 </RelativeLayout>

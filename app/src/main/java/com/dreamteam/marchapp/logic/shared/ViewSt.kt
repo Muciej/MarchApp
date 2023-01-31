@@ -8,7 +8,7 @@ import android.widget.Toast
 import com.dreamteam.marchapp.R
 import com.dreamteam.marchapp.logic.shared.stats.ChoosePointToViewStat
 import com.dreamteam.marchapp.logic.shared.stats.MarchResults
-import com.dreamteam.marchapp.logic.shared.stats.ParWhoPassedAGivenPoint
+import com.dreamteam.marchapp.logic.shared.stats.PieChartParWhoPassedAGivenPoint
 
 class ViewSt : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,7 +18,7 @@ class ViewSt : AppCompatActivity() {
         val btnForward = findViewById<Button>(R.id.btnForward)
         val Stat_by_point = findViewById<Button>(R.id.Stat_by_point)
         val overall_stats = findViewById<Button>(R.id.overall_stats)
-        val participantsStatistics = findViewById<Button>(R.id.participantsStatistics)
+        val btnOvlRes = findViewById<Button>(R.id.showOverallRes)
 
         btnForward.setOnClickListener {
             val Intent = Intent(this, ChooseMarchActivity::class.java)
@@ -30,33 +30,30 @@ class ViewSt : AppCompatActivity() {
         //TODO: za pomocą odpowiednich kwerend.
 
         Stat_by_point.setOnClickListener {
-            Toast.makeText(
-                this,
-                "To będzie podgląd statystyk dla punktu!",
-                Toast.LENGTH_SHORT
-            ).show()
+//            Toast.makeText(
+//                this,
+//                "To będzie podgląd statystyk dla punktu!",
+//                Toast.LENGTH_SHORT
+//            ).show()
             val Intent = Intent(this, ChoosePointToViewStat::class.java)
             startActivity(Intent)
 //            val intent = Intent(this, SelectPointToFollow::class.java)
         }
 
         overall_stats.setOnClickListener {
-            Toast.makeText(
-                this,
-                "To będzie podgląd ogólnych statystyk!",
-                Toast.LENGTH_SHORT
-            ).show()
+//            Toast.makeText(
+//                this,
+//                "To będzie podgląd ogólnych statystyk!",
+//                Toast.LENGTH_SHORT
+//            ).show()
             val Intent = Intent(this, MarchResults::class.java)
             startActivity(Intent)
         }
 
-        participantsStatistics.setOnClickListener {
-            Toast.makeText(
-                this,
-                "To będzie podgląd statystyk uczestników!",
-                Toast.LENGTH_SHORT
-            ).show()
-            val Intent = Intent(this, ParWhoPassedAGivenPoint::class.java)
+
+        // tutaj przeniesie nas do ekranu z wykresem kolowym
+        btnOvlRes.setOnClickListener{
+            val Intent = Intent(this, PieChartParWhoPassedAGivenPoint::class.java)
             startActivity(Intent)
         }
 

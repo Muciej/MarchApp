@@ -21,6 +21,7 @@ object JDBCConnector : DBConnector {
     override fun setDBName(name: String) {
         dbName = name
         println("DB name set to $name")
+
     }
 
     override fun getCurrentUserID() : Int{
@@ -112,8 +113,9 @@ object JDBCConnector : DBConnector {
             throw Exception("No result!")
         val answer = Vector<String>()
         answer.add(currentRes?.getString(colNo))
+//        println(currentRes?.getString(colNo))
         while(currentRes?.next() == true){
-            println(currentRes?.getString(colNo))
+//            println(currentRes?.getString(colNo))
             answer.add(currentRes?.getString(colNo))
         }
         currentRes?.close()
