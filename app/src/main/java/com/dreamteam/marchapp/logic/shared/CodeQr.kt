@@ -10,8 +10,11 @@ import com.google.zxing.WriterException
 import android.graphics.Bitmap
 import android.os.Environment
 import android.os.Build
+import com.dreamteam.marchapp.database.DBConnector
+import com.dreamteam.marchapp.database.JDBCConnector
 
 object CodeQr {
+    var connector: DBConnector = JDBCConnector
     private var STRING_LENGTH = 10
     private var savePath = Environment.getExternalStorageDirectory().path + "/QRCode/"
 
@@ -27,9 +30,12 @@ object CodeQr {
     }
 
     private fun validateString(str : String) : Boolean {
-        //TODO zapytanie do bazy czy istnieje taki kod (narazie zhardcodowane)
-        val stringsFromDb = arrayListOf("abcdefghij", "abplsadhij", "abAIFSJDNIij")
-        for(s in stringsFromDb)
+        connector.prepareQuery("select kod_qr from uczestnicy")
+        connector.executeQuery()
+        val vectorFromDB = connector.getCol(1)
+        connector.closeQuery()
+
+        for(s in vectorFromDB)
         {
             if(str.equals(s))
             {
@@ -61,20 +67,18 @@ object CodeQr {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                     savePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).getPath() + "/QRCode/"
                 }
-        //TODO code-> zamienić na zmienną zwracaną z bazy danych. Ta zmienna to ma być indeks
-        // danego usera i on ma być wykorzystany jako nazwa pliku qr, czyli np. 1.jpg, 2.jpg,...,n (gdzie n - to liczba uczestnikow)
-        // Czyli trzeba bedzie napisać query do bazy danych zwracające te pole
         qrgSaver.save(savePath, code, bitmap, QRGContents.ImageType.IMAGE_JPEG)
     }
 
     fun createCode() : String {
+        connector.startConnection()
         var code = randomString()
 
-        if(validateString(code)){
-            code = randomString()
+        while (validateString(code)) {
+                code = randomString()
         }
-
         generateCodeActivity(code)
+        connector.closeConnection()
 
         return code
     }

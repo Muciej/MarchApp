@@ -12,6 +12,7 @@ import com.dreamteam.marchapp.logic.organiser.OrganisatorMain
 import com.dreamteam.marchapp.logic.volunteer.VolunteerMain
 import com.dreamteam.marchapp.logic.admin.AdministratorMain
 import com.dreamteam.marchapp.logic.config.PasswordEncoder
+import com.dreamteam.marchapp.logic.participant.RegisterParticipant
 import java.util.Vector
 
 class LoginActivity : AppCompatActivity() {
@@ -26,6 +27,7 @@ class LoginActivity : AppCompatActivity() {
         val password = findViewById<TextView>(R.id.password)
         val btnSign = findViewById<Button>(R.id.signbtn)
         val backBtn = findViewById<Button>(R.id.btnBack)
+        val btnRegister = findViewById<Button>(R.id.registerbtn)
 
         backBtn.setOnClickListener{
             
@@ -64,13 +66,18 @@ class LoginActivity : AppCompatActivity() {
                     "volounteer"-> intent = Intent(this, VolunteerMain::class.java)
                     "participant" -> Toast.makeText(this, "Zalogowano jako uczestnik!", Toast.LENGTH_SHORT).show()
                     "admin" -> intent = Intent(this, AdministratorMain::class.java)
-                    "register" -> {
-                        //Todo jakiś panel rejestracji?
-                    }
+
                 }
                 if(intent != null)
                     startActivity(intent)
             }
+        }
+
+        btnRegister.setOnClickListener{
+
+            connector.closeConnection()
+            val Intent = Intent(this, RegisterParticipant::class.java)
+            startActivity(Intent)
         }
     }
 

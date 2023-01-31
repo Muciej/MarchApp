@@ -15,8 +15,8 @@
         android:id="@+id/ekran_organizatora"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="70dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="30dp"
         android:gravity="center"
@@ -31,7 +31,7 @@
         android:layout_below="@+id/ekran_organizatora"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="15dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="5dp"
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="15dp"
         android:background="@drawable/edit_text_background"
@@ -77,10 +77,23 @@
         android:text="Wolontariusze" />
 
     <Button
-        android:id="@+id/change_org_Pass"
+        android:id="@+id/participant"
         android:layout_width="321dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/volunteers"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/edit_text_background"
+        android:text="Uczestnicy" />
+
+    <Button
+        android:id="@+id/change_org_Pass"
+        android:layout_width="321dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/participant"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="15dp"
         android:layout_marginTop="18dp"

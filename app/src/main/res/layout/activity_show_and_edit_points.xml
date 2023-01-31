@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".logic.organiser.ShowAndEditPoints">
+
+    <Button
+        android:id="@+id/btnBack"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/ic_baseline_arrow_back_24"
+        tools:ignore="SpeakableTextPresentCheck"
+        />
+
+    <CheckBox
+        android:id="@+id/editCheckbox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="180dp"
+        android:layout_toEndOf="@+id/btnBack"
+        android:backgroundTint="#673AB7"
+        android:padding="7dp"
+        android:text="Tryb edycji"
+        android:buttonTint="#673AB7"
+        android:textColorHighlight="#673AB7"
+        android:textColorLink="#673AB7"
+        android:textSize="18sp" />
+
+    <TextView
+        android:layout_below="@+id/btnBack"
+        android:id="@+id/ChooseVolonteersTextView"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
+        android:gravity="center"
+        android:text="Wybierz punkt"
+        android:textSize="24sp"
+        />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ChooseVolonteersTextView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:background="@android:drawable/editbox_background"
+        android:drawableEnd="@drawable/ic_baseline_arrow_drop_down_24"
+        android:gravity="center_vertical"
+        android:hint="Wybierz punkt"
+        android:padding="12px"
+        tools:ignore="TextContrastCheck" />
+
+
+    <de.codecrafters.tableview.TableView
+        android:id="@+id/volunteersTable"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_below="@id/textView"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10sp"
+        android:background="#00971919"
+        app:tableView_columnCount="5"
+        app:tableView_headerColor="#673AB7" />
+
+</RelativeLayout>
