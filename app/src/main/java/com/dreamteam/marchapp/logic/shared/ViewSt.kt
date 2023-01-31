@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.Toast
 import com.dreamteam.marchapp.R
+import com.dreamteam.marchapp.database.JDBCConnector
 import com.dreamteam.marchapp.logic.shared.stats.ChoosePointToViewStat
 import com.dreamteam.marchapp.logic.shared.stats.MarchResults
 import com.dreamteam.marchapp.logic.shared.stats.PieChartParWhoPassedAGivenPoint
@@ -21,6 +22,7 @@ class ViewSt : AppCompatActivity() {
         val btnOvlRes = findViewById<Button>(R.id.showOverallRes)
 
         btnForward.setOnClickListener {
+            JDBCConnector.closeConnection()
             val Intent = Intent(this, ChooseMarchActivity::class.java)
             startActivity(Intent)
         }
