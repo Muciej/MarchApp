@@ -12,6 +12,7 @@ interface DBConnector {
     fun getAnswer(): Vector<Vector<String>>
     fun getRow(rowNo: Int, colNo: Int) : Vector<String>
     fun getCurrRow(colNo: Int) : Vector<String>
+    fun moveRow()
     fun getCol(colName: String): Vector<String>
     fun getCol(colNo: Int): Vector<String>
     fun getColInts(colNo: Int): Vector<Int>

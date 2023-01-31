@@ -3,13 +3,11 @@ CREATE DATABASE ev_test_event;
 
 CREATE TABLE ev_test_event.`punkty_kontrolne` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `kolejność` INT NOT NULL,
   `online` TINYINT NULL,
   `nazwa` VARCHAR(45) NULL,
   `kilometr` INT NULL,
   `współrzędne_geograficzne` VARCHAR(100) NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX kolejność_UNIQUE (kolejność ASC));
+  PRIMARY KEY (`id`));
 
 
 CREATE TABLE ev_test_event.`uczestnicy` (

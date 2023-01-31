@@ -157,7 +157,9 @@ class AssignVolunteerToPoint : AppCompatActivity(), TableDataClickListener<Array
         while(true)
         {
             try {
-                temp = connector.getRow(counter,4)
+//                temp = connector.getRow(counter,4)
+                temp = connector.getCurrRow(4)
+                connector.moveRow()
                 data.add(temp.toTypedArray())
                 counter++;
             }
@@ -186,7 +188,9 @@ class AssignVolunteerToPoint : AppCompatActivity(), TableDataClickListener<Array
         while(true)
         {
             try {
-                temp = connector.getRow(counter,2)
+//                temp = connector.getRow(counter,2)
+                temp = connector.getCurrRow(2)
+                connector.moveRow()
                 volunteersList.add(temp[0] + " " + temp[1])
                 counter++;
             }

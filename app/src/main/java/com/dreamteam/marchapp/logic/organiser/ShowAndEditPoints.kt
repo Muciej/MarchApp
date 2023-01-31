@@ -163,7 +163,9 @@ class ShowAndEditPoints : AppCompatActivity(), TableDataClickListener<Array<Stri
         while(true)
         {
             try {
-                temp = connector.getRow(counter,6)
+//                temp = connector.getRow(counter,6)
+                temp = connector.getCurrRow(6)
+                connector.moveRow()
                 data.add(temp.toTypedArray())
                 counter++;
             }
@@ -191,7 +193,9 @@ class ShowAndEditPoints : AppCompatActivity(), TableDataClickListener<Array<Stri
         while(true)
         {
             try {
-                temp = connector.getRow(counter,2)
+                temp = connector.getCurrRow(2)
+                connector.moveRow()
+//                temp = connector.getRow(counter,2)
                 pointsList.add(temp[0] + " | " + temp[1])
                 counter++;
             }
