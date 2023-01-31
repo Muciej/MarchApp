@@ -19,14 +19,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import com.dreamteam.marchapp.R
 import com.dreamteam.marchapp.R.id.*
-import com.dreamteam.marchapp.R.id.nr_startowy_edit
-import com.dreamteam.marchapp.R.id.wsp_edit
 import com.dreamteam.marchapp.database.JDBCConnector
-import com.dreamteam.marchapp.logic.admin.AdministratorMain
-import com.dreamteam.marchapp.logic.organiser.Organisatormain2
-import com.dreamteam.marchapp.logic.validation.LastNameValidator
-import com.dreamteam.marchapp.logic.validation.NameValidator
-import com.dreamteam.marchapp.logic.volunteer.VolunteerMain
 import de.codecrafters.tableview.TableView
 import de.codecrafters.tableview.listeners.TableDataClickListener
 import de.codecrafters.tableview.model.TableColumnPxWidthModel
@@ -34,11 +27,11 @@ import de.codecrafters.tableview.toolkit.SimpleTableDataAdapter
 import de.codecrafters.tableview.toolkit.SimpleTableHeaderAdapter
 import de.codecrafters.tableview.toolkit.TableDataRowBackgroundProviders
 import kotlinx.android.synthetic.main.dialog_edit_point.*
-import kotlinx.android.synthetic.main.dialog_edit_user.*
+import kotlinx.android.synthetic.main.dialog_edit_point.view.*
 import kotlinx.android.synthetic.main.dialog_edit_user.edit_imie
 import kotlinx.android.synthetic.main.dialog_edit_user.nazwisko_edit
 import kotlinx.android.synthetic.main.dialog_edit_user.nr_startowy_edit
-import kotlinx.android.synthetic.main.dialog_edit_user.view.*
+import kotlinx.android.synthetic.main.dialog_edit_user.view.editButton
 import kotlinx.android.synthetic.main.dialog_zoom_data.view.backb
 import java.util.*
 import kotlin.collections.ArrayList
@@ -58,7 +51,7 @@ class ShowAndEditPoints : AppCompatActivity(), TableDataClickListener<Array<Stri
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_show_and_edit_points)
         val backBtn = findViewById<Button>(btnBack)
-        val adapterHead = SimpleTableHeaderAdapter(this@ShowAndEditPoints, "Id","Kol.", "Online", "Nazwa", "Km", "Współrzędne")
+        val adapterHead = SimpleTableHeaderAdapter(this@ShowAndEditPoints, "Id", "Online", "Nazwa", "Km", "Współrzędne")
         tableView = findViewById<View>(volunteersTable) as TableView<Array<String>>
         tableView.addDataClickListener(this)
         tableView.setHeaderBackgroundColor(Color.rgb(		98, 0, 238))
@@ -89,13 +82,12 @@ class ShowAndEditPoints : AppCompatActivity(), TableDataClickListener<Array<Stri
 
 
 
-        val columnModel = TableColumnPxWidthModel(6, 200)
+        val columnModel = TableColumnPxWidthModel(5, 200)
         columnModel.setColumnWidth(0, 80)
-        columnModel.setColumnWidth(1, 120)
-        columnModel.setColumnWidth(2, 160)
-        columnModel.setColumnWidth(3, 250)
-        columnModel.setColumnWidth(4, 120)
-        columnModel.setColumnWidth(5, 300)
+        columnModel.setColumnWidth(1, 180)
+        columnModel.setColumnWidth(2, 350)
+        columnModel.setColumnWidth(3, 140)
+        columnModel.setColumnWidth(4, 350)
         tableView.columnModel = columnModel
 
 
@@ -146,7 +138,7 @@ class ShowAndEditPoints : AppCompatActivity(), TableDataClickListener<Array<Stri
 
         var temp: Vector<String>? = null
         data = mutableListOf()
-        temp = connector.getRow(0,6)
+        temp = connector.getRow(0,5)
         data.add(temp.toTypedArray())
         connector.closeQuery()
         return data
@@ -154,7 +146,7 @@ class ShowAndEditPoints : AppCompatActivity(), TableDataClickListener<Array<Stri
 
     private fun initData():MutableList<Array<String>>
     {
-        connector.prepareQuery("SELECT * FROM ev_test_event.punkty_kontrolne")
+        connector.prepareQuery("SELECT * FROM ev_test_event.punkty_kontrolne order by kilometr")
         connector.executeQuery()
         var temp: Vector<String>? = null
         var counter = 1
@@ -163,7 +155,7 @@ class ShowAndEditPoints : AppCompatActivity(), TableDataClickListener<Array<Stri
         while(true)
         {
             try {
-                temp = connector.getRow(counter,6)
+                temp = connector.getRow(counter,5)
                 data.add(temp.toTypedArray())
                 counter++;
             }
@@ -180,7 +172,7 @@ class ShowAndEditPoints : AppCompatActivity(), TableDataClickListener<Array<Stri
     private fun init_points()
     {
         connector.startConnection()
-        connector.prepareQuery("select nazwa, kolejność from punkty_kontrolne")
+        connector.prepareQuery("select nazwa, kilometr from punkty_kontrolne order by kilometr")
         connector.executeQuery()
 
         pointsList = ArrayList<String>()
@@ -192,7 +184,7 @@ class ShowAndEditPoints : AppCompatActivity(), TableDataClickListener<Array<Stri
         {
             try {
                 temp = connector.getRow(counter,2)
-                pointsList.add(temp[0] + " | " + temp[1])
+                pointsList.add(temp[0] + " | " + temp[1] + " km")
                 counter++;
             }
             catch (e: Exception)
@@ -231,32 +223,29 @@ class ShowAndEditPoints : AppCompatActivity(), TableDataClickListener<Array<Stri
 
                     getDialog()!!.getWindow()?.setBackgroundDrawableResource(R.drawable.round_corners);
                     dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-                    dialog?.window?.setLayout(1000,1000)
+                    dialog?.window?.setLayout(1000,1100)
                     var rootView : View = inflater.inflate(R.layout.dialog_zoom_point, container, false)
                     rootView.backb.setOnClickListener { dismiss() }
 
+
                     val online = rootView.findViewById<TextView>(R.id.imie)
                     val nazwa = rootView.findViewById<TextView>(R.id.nazwisko)
-                    val kolejnosc = rootView.findViewById<TextView>(R.id.nr_startowy)
                     val km = rootView.findViewById<TextView>(R.id.pseudonim)
                     val wsp = rootView.findViewById<TextView>(R.id.wsp)
 
-                    val onlineSpan = SpannableString(online?.text.toString() + (clickedData?.get(2)))
-                    val nazwaSpan = SpannableString(nazwa?.text.toString() + (clickedData?.get(3)))
-                    val kolejnoscSpan = SpannableString(kolejnosc?.text.toString() + (clickedData?.get(1)))
-                    val kmSpan = SpannableString(km?.text.toString() + (clickedData?.get(4)))
-                    val wspSpan = SpannableString(wsp?.text.toString() + (clickedData?.get(5)))
+                    val onlineSpan = SpannableString(online?.text.toString() + (clickedData?.get(1)))
+                    val nazwaSpan = SpannableString(nazwa?.text.toString() + (clickedData?.get(2)))
+                    val kmSpan = SpannableString(km?.text.toString() + (clickedData?.get(3)))
+                    val wspSpan = SpannableString(wsp?.text.toString() + (clickedData?.get(4)))
 
                     onlineSpan.setSpan(ForegroundColorSpan(Color.BLUE), online.text.length, onlineSpan.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
 
                     nazwaSpan.setSpan(ForegroundColorSpan(Color.BLUE),nazwa.text.length, nazwaSpan.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-                    kolejnoscSpan.setSpan(ForegroundColorSpan(Color.BLUE), kolejnosc.text.length, kolejnoscSpan.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
                     kmSpan.setSpan(ForegroundColorSpan(Color.BLUE), km.text.length, kmSpan.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
                     wspSpan.setSpan(ForegroundColorSpan(Color.BLUE), wsp.text.length, wspSpan.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
 
                     nazwa.text = nazwaSpan
                     online.text = onlineSpan
-                    kolejnosc.text = kolejnoscSpan
                     km.text = kmSpan
                     wsp.text = wspSpan
 
@@ -266,7 +255,7 @@ class ShowAndEditPoints : AppCompatActivity(), TableDataClickListener<Array<Stri
                 override fun onStart() {
                     super.onStart()
                     getDialog()!!.getWindow()?.setBackgroundDrawableResource(R.drawable.round_corners);
-                    dialog?.window?.setLayout(1000,1000)
+                    dialog?.window?.setLayout(1000,1100)
                 }
             }
 
@@ -290,6 +279,30 @@ class ShowAndEditPoints : AppCompatActivity(), TableDataClickListener<Array<Stri
                     var rootView : View = inflater.inflate(R.layout.dialog_edit_point, container, false)
                     rootView.backb.setOnClickListener { dismiss() }
 
+                    rootView.deleteButton.setOnClickListener {
+                        //usuwanie punktu
+                        var rowToEdit = 0;
+                        rowToEdit = clickedData!!.get(0).toInt()
+
+                        connector.prepareQuery("DELETE FROM wolontariusz_punkt WHERE id_punktu = ?")
+                        connector.setIntVar(rowToEdit, 1)
+                        try{connector.executeQuery()} catch (e: Exception){print("error")}
+                        connector.closeQuery()
+
+                        connector.prepareQuery("DELETE FROM punkty_online WHERE  id_punktu = ?")
+                        connector.setIntVar(rowToEdit, 1)
+                        try{connector.executeQuery()} catch (e: Exception){print("error")}
+                        connector.closeQuery()
+
+                        connector.prepareQuery("DELETE FROM punkty_kontrolne WHERE  id = ?")
+                        connector.setIntVar(rowToEdit, 1)
+                        try{connector.executeQuery()} catch (e: Exception){print("error")}
+                        connector.closeQuery()
+
+                        init_points()
+
+                        dismiss() }
+
                     rootView.editButton.setOnClickListener {
 
                         var editedName = edit_imie.text.toString()
@@ -299,7 +312,6 @@ class ShowAndEditPoints : AppCompatActivity(), TableDataClickListener<Array<Stri
 
                         var rowToEdit = 0;
                         rowToEdit = clickedData!!.get(0).toInt()
-                        var iskmedited = false;
 
 
 
@@ -321,7 +333,6 @@ class ShowAndEditPoints : AppCompatActivity(), TableDataClickListener<Array<Stri
                             }
                             else if (checkIfPresentInDB(editedkm, "kilometr", rowToEdit))
                             {
-                                iskmedited = true;
                                 Toast.makeText(
                                     this@ShowAndEditPoints,
                                     "Punkt na danym kilometrze już istnieje w bazie!",
@@ -350,36 +361,8 @@ class ShowAndEditPoints : AppCompatActivity(), TableDataClickListener<Array<Stri
                                 connector.setStrVar(editedwsp, 4)
                                 connector.setIntVar(rowToEdit, 5)
 
-                                //teraz trzeba zmienic jeszcze kolejnosc
 
-                                if (iskmedited)
-                                {
-                                    connector.prepareQuery("select * from punkty_kontrolne order by kilometr")
-                                    connector.executeQuery()
-                                    var temp: Vector<String>? = null
-                                    var counter = 1
-
-                                    data = mutableListOf()
-                                    while(true)
-                                    {
-                                        try {
-                                            temp = connector.getRow(counter,6)
-                                            val kol = temp[1]
-                                            connector.prepareQuery("update punkty_kontrolne set kolejność = $counter where id = $kol")
-                                            connector.executeQuery()
-                                            counter++;
-                                        }
-                                        catch (e: Exception)
-                                        {
-                                            break;
-                                        }
-                                    }
-                                    iskmedited = false;
-                                }
-
-
-
-                                try{connector.executeQuery()} catch (e: Exception){print("erorr")}
+                                try{connector.executeQuery()} catch (e: Exception){print("error")}
                                 connector.closeQuery()
 
 
@@ -401,10 +384,10 @@ class ShowAndEditPoints : AppCompatActivity(), TableDataClickListener<Array<Stri
                     val start_nr = rootView.findViewById<EditText>(R.id.nr_startowy_edit)
                     val pseudo = rootView.findViewById<EditText>(R.id.wsp_edit)
 
-                    name.setText(clickedData?.get(3))
-                    lastname.setText(clickedData?.get(2))
-                    start_nr.setText(clickedData?.get(4))
-                    pseudo.setText(clickedData?.get(5))
+                    name.setText(clickedData?.get(2))
+                    lastname.setText(clickedData?.get(1))
+                    start_nr.setText(clickedData?.get(3))
+                    pseudo.setText(clickedData?.get(4))
 
                     return rootView
                 }
@@ -412,7 +395,7 @@ class ShowAndEditPoints : AppCompatActivity(), TableDataClickListener<Array<Stri
                 override fun onStart() {
                     super.onStart()
                     getDialog()!!.getWindow()?.setBackgroundDrawableResource(R.drawable.round_corners);
-                    dialog?.window?.setLayout(1000,1000)
+                    dialog?.window?.setLayout(1000,1100)
                 }
             }
 

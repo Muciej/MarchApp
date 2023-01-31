@@ -19,7 +19,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import com.dreamteam.marchapp.R
 import com.dreamteam.marchapp.R.id.*
-import com.dreamteam.marchapp.R.id.nr_startowy_edit
 import com.dreamteam.marchapp.database.JDBCConnector
 import com.dreamteam.marchapp.logic.admin.AdministratorMain
 import com.dreamteam.marchapp.logic.organiser.OrganisatorMain
@@ -38,8 +37,6 @@ import kotlinx.android.synthetic.main.dialog_zoom_data.view.backb
 import java.util.*
 import kotlin.collections.ArrayList
 
-
-//doodać oba scrolle
 class ShowAndEditParticipant : AppCompatActivity(), TableDataClickListener<Array<String>> {
     var lastClickedRow = -1
     lateinit var data : MutableList<Array<String>>
@@ -156,8 +153,6 @@ class ShowAndEditParticipant : AppCompatActivity(), TableDataClickListener<Array
         var temp: Vector<String>? = null
         data = mutableListOf()
         temp = connector.getRow(0,5)
-        println("eloelo")
-        println(temp)
         data.add(temp.toTypedArray())
         connector.closeQuery()
         return data
@@ -358,7 +353,6 @@ class ShowAndEditParticipant : AppCompatActivity(), TableDataClickListener<Array
                                 isCorrect = false
                             }
 
-                            //tu jeszcze powinienem sprawidzc czy osoba o tym numerze starowym już mnie jest w bazie
 
                             //Po aktualizacji wracam do ekranu głównego administratora.
                             if (isCorrect) {
@@ -376,11 +370,6 @@ class ShowAndEditParticipant : AppCompatActivity(), TableDataClickListener<Array
 
                                 try{connector.executeQuery()} catch (e: Exception){print("erorr")}
                                 connector.closeQuery()
-
-                                //dane w bazie zmienione
-
-
-
 
                                 adapterData = SimpleTableDataAdapter(this@ShowAndEditParticipant, initData())
                                 adapterData.setTextSize(12)

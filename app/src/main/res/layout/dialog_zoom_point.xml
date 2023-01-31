@@ -16,16 +16,6 @@
         android:textStyle="bold"/>
 
     <TextView
-        android:textColor="@color/black"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Kolejność: "
-        android:layout_marginTop="10dp"
-        android:id="@+id/nr_startowy"
-        android:textSize="20sp"
-        android:textStyle="bold"/>
-
-    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Online: "

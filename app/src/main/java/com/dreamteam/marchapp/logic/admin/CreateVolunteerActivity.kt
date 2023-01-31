@@ -13,8 +13,6 @@ import com.dreamteam.marchapp.logic.validation.EmailValidator
 import com.dreamteam.marchapp.logic.validation.PasswordValidator
 import com.dreamteam.marchapp.logic.validation.PhoneValidator
 import com.dreamteam.marchapp.logic.validation.UsernameValidator
-import com.dreamteam.marchapp.database.User
-import kotlinx.android.synthetic.main.activity_login.*
 
 class CreateVolunteerActivity : AppCompatActivity() {
     var connector = JDBCConnector

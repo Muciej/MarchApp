@@ -10,7 +10,7 @@ object JDBCConnector : DBConnector {
 
     private var port: String = "3306"
     private var ip: String = "marchapp.sytes.net"
-//    private var ip: String = "192.168.8.123"
+    //    private var ip: String = "192.168.8.123"
     private var dbConnection: Connection? = null
     private var currQuery: PreparedStatement? = null
     private var currentRes: ResultSet? = null

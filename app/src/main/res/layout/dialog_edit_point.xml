@@ -133,25 +133,38 @@
             />
     </RelativeLayout>
 
-    <GridLayout android:layout_height="match_parent" android:layout_width="match_parent">
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
         <Button
             android:id="@+id/backb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:background="@drawable/edit_text_background"
             android:layout_marginTop="20dp"
+            android:background="@drawable/edit_text_background"
             android:text="Powrót" />
 
         <Button
             android:id="@+id/editButton"
-            android:layout_marginLeft="20dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/edit_text_background"
+            android:text="Zapisz" />
+
+        <Button
+            android:id="@+id/deleteButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/edit_text_background"
+            android:layout_marginLeft="10dp"
             android:layout_marginTop="20dp"
-            android:text="Zapisz zmiany" />
+            android:background="@drawable/edit_text_background"
+            android:text="Usuń" />
+
     </GridLayout>
+
+
 
 
 </LinearLayout>
