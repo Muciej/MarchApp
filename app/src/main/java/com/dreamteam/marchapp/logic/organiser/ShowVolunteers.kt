@@ -191,7 +191,9 @@ class ShowVolunteers : AppCompatActivity(), TableDataClickListener<Array<String>
         while(true)
         {
             try {
-                temp = connector.getRow(counter,5)
+                temp = connector.getCurrRow(5)
+                connector.moveRow()
+//                temp = connector.getRow(counter,5)
                 data.add(temp.toTypedArray())
                 counter++;
             }
@@ -228,7 +230,9 @@ class ShowVolunteers : AppCompatActivity(), TableDataClickListener<Array<String>
         while(true)
         {
             try {
-                temp = connector.getRow(counter,2)
+                temp = connector.getCurrRow(2)
+                connector.moveRow()
+//                temp = connector.getRow(counter,2)
                 volunteersList.add(temp[0] + " " + temp[1])
                 counter++;
             }

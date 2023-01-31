@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.Toast
 import com.dreamteam.marchapp.R
 import com.dreamteam.marchapp.database.JDBCConnector
+import com.dreamteam.marchapp.logic.shared.ChangePassword
 import com.dreamteam.marchapp.logic.shared.ChooseMarchActivity
 import com.dreamteam.marchapp.logic.shared.ShowAndEditParticipant
 import com.dreamteam.marchapp.logic.shared.ViewSt
@@ -66,7 +67,8 @@ class OrganisatorMain : AppCompatActivity() {
         }
 
         change_org_Pass.setOnClickListener{
-            Toast.makeText(this, "Tu będzie ekran zmiany hasła", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, ChangePassword::class.java)
+            startActivity(intent)
         }
 
         log_out_from_org_account.setOnClickListener{
