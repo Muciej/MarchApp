@@ -275,7 +275,7 @@ class AssignVolunteerToPoint : AppCompatActivity(), TableDataClickListener<Array
                 val myspinner= rootView.findViewById<Spinner>(R.id.spinner)
                 connector.prepareQuery("SELECT * FROM punkty_kontrolne;")
                 connector.executeQuery()
-                marches = connector.getCol(2)
+                marches = connector.getCol("id")
                 val aa = ArrayAdapter(this@AssignVolunteerToPoint, android.R.layout.simple_spinner_item, marches)
                 aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
