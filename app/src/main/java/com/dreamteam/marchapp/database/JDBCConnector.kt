@@ -77,7 +77,7 @@ object JDBCConnector : DBConnector {
 
     override fun moveRow() {
         if(!currentRes?.next()!!){
-
+            println("Reached end of the answer")
         }
     }
 
