@@ -30,22 +30,22 @@ class ViewSt : AppCompatActivity() {
         //TODO: za pomocą odpowiednich kwerend.
 
         Stat_by_point.setOnClickListener {
-            Toast.makeText(
-                this,
-                "To będzie podgląd statystyk dla punktu!",
-                Toast.LENGTH_SHORT
-            ).show()
+//            Toast.makeText(
+//                this,
+//                "To będzie podgląd statystyk dla punktu!",
+//                Toast.LENGTH_SHORT
+//            ).show()
             val Intent = Intent(this, ChoosePointToViewStat::class.java)
             startActivity(Intent)
 //            val intent = Intent(this, SelectPointToFollow::class.java)
         }
 
         overall_stats.setOnClickListener {
-            Toast.makeText(
-                this,
-                "To będzie podgląd ogólnych statystyk!",
-                Toast.LENGTH_SHORT
-            ).show()
+//            Toast.makeText(
+//                this,
+//                "To będzie podgląd ogólnych statystyk!",
+//                Toast.LENGTH_SHORT
+//            ).show()
             val Intent = Intent(this, MarchResults::class.java)
             startActivity(Intent)
         }
