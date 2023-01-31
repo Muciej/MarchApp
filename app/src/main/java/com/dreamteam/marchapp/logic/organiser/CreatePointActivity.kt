@@ -96,15 +96,15 @@ class CreatePointActivity : AppCompatActivity() {
                     isCorrect = false
                 }
 
-                else if (kilometr.toString().toInt() < 0)
-                {
-                    Toast.makeText(
-                        this@CreatePointActivity,
-                        "Kilometr nie może być ujemny",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    isCorrect = false
-                }
+//                else if (kilometr.toString().toInt() < 0)
+//                {
+//                    Toast.makeText(
+//                        this@CreatePointActivity,
+//                        "Kilometr nie może być ujemny",
+//                        Toast.LENGTH_SHORT
+//                    ).show()
+//                    isCorrect = false
+//                }
 
                 else if (online.toString().toInt() != 0 && online.toString().toInt() != 1)
                 {
