@@ -66,9 +66,7 @@ class LoginActivity : AppCompatActivity() {
                     "volounteer"-> intent = Intent(this, VolunteerMain::class.java)
                     "participant" -> Toast.makeText(this, "Zalogowano jako uczestnik!", Toast.LENGTH_SHORT).show()
                     "admin" -> intent = Intent(this, AdministratorMain::class.java)
-                    "register" -> {
-                        //Todo jakiś panel rejestracji?
-                    }
+
                 }
                 if(intent != null)
                     startActivity(intent)

@@ -8,40 +8,45 @@ import android.widget.TextView
 import android.widget.Toast
 import com.dreamteam.marchapp.R
 import com.dreamteam.marchapp.database.JDBCConnector
-import com.dreamteam.marchapp.logic.config.PasswordEncoder
-import com.dreamteam.marchapp.logic.shared.CodeQr.createCode
 import com.dreamteam.marchapp.logic.shared.LoginActivity
-import com.dreamteam.marchapp.logic.validation.NameValidator
-import com.dreamteam.marchapp.logic.validation.PasswordValidator
-import com.dreamteam.marchapp.logic.validation.LastNameValidator
-import com.dreamteam.marchapp.logic.validation.UsernameValidator
+import com.dreamteam.marchapp.logic.validation.*
+import kotlinx.android.synthetic.main.activity_update_volunteer_data.*
 
 class RegisterParticipant : AppCompatActivity(){
     var connector = JDBCConnector
     /**
      * Invoked when all data is checked and we need a query to create new participant account
      */
-    fun registerUser(){
+    fun registerUser() : Boolean{
 
         val username = findViewById<TextView>(R.id.username)
-        val password = findViewById<TextView>(R.id.password)
+        val phonenr = findViewById<TextView>(R.id.phonenr)
         val name = findViewById<TextView>(R.id.name)
         val lastname = findViewById<TextView>(R.id.lastname)
 
-        /**
-         * TODO: Kwerendy do bazy danych.
-         */
+        connector.startConnection()
+        connector.prepareQuery("insert into uczestnicy_do_akceptacji (imie, nazwisko, pseudonim, nr_telefonu) value (?,?,?,?);")
+        connector.setStrVar(name.text.toString(), 1)
+        connector.setStrVar(lastname.text.toString(), 2)
+        connector.setStrVar(username.text.toString(), 3)
+        connector.setStrVar(phonenr.text.toString(), 4)
 
+        try{
+            connector.executeQuery()
+        } catch (e : Exception){
+            Toast.makeText(this, "Nie udało się zarejestrować, spróbuj ponownie!", Toast.LENGTH_SHORT).show()
+            return false
+        }
+
+        return true
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_create_user)
-
+        setContentView(R.layout.activity_register_participant)
 
         val username = findViewById<TextView>(R.id.username)
-        val password = findViewById<TextView>(R.id.password)
-        val repPassword = findViewById<TextView>(R.id.repeatPassword)
+        val phonenr = findViewById<TextView>(R.id.phonenr)
         val name = findViewById<TextView>(R.id.name)
         val lastname = findViewById<TextView>(R.id.lastname)
         val registerBtn = findViewById<Button>(R.id.registerBtn)
@@ -53,8 +58,7 @@ class RegisterParticipant : AppCompatActivity(){
         }
 
         registerBtn.setOnClickListener {
-            if (username.text.isNullOrBlank() || password.text.isNullOrBlank() ||
-                repPassword.text.isNullOrBlank() || name.text.isNullOrBlank() ||
+            if (username.text.isNullOrBlank() || phonenr.text.isNullOrBlank() || name.text.isNullOrBlank() ||
                 lastname.text.isNullOrBlank()
             ) {
                 Toast.makeText(this, "Żadne z pól nie może być puste", Toast.LENGTH_SHORT).show()
@@ -66,7 +70,7 @@ class RegisterParticipant : AppCompatActivity(){
                  * TODO: Sprawdzić czy poniższe są okej.
                  */
                 connector.startConnection()
-                connector.prepareQuery("select * from konta where login = ?")
+                connector.prepareQuery("select * from uczestnicy_do_akceptacji where pseudonim = ?")
                 connector.setStrVar(username.text.toString(), 1)
                 connector.executeQuery()
                 try {
@@ -74,7 +78,6 @@ class RegisterParticipant : AppCompatActivity(){
                 } catch(e: Exception){
                     loginTaken = false
                 }
-
 
                 if (loginTaken) {
                     Toast.makeText(
@@ -87,27 +90,20 @@ class RegisterParticipant : AppCompatActivity(){
                 else if(!UsernameValidator.validate(username.text.toString())) {
                     Toast.makeText(
                         this,
-                        "Nieprawidlowy format nazwy uzytkownika (5-15 znakow, tylko litery i cyfry)",
+                        "Nieprawidlowy format nazwy uzytkownika (5-15 znakow, tylko litery i cyfry)!",
                         Toast.LENGTH_SHORT
                     ).show()
                     isCorrect = false
 
-                } else if (!PasswordValidator.validate(password.text.toString())) {
+                } else if (!PhoneValidator.validate(phonenr.text.toString())) {
                     Toast.makeText(
                         this,
-                        "Nienprawidlowa dlugosc hasla (8-64 znaki)",
+                        "Nienprawidlowy format numeru telefonu!",
                         Toast.LENGTH_SHORT
                     ).show()
                     isCorrect = false
                 }
-                else if (password.text.toString() != repPassword.text.toString()) {
-                    Toast.makeText(
-                        this,
-                        "Wprowadzone hasła muszą być identyczne!",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    isCorrect = false
-                } else if (!NameValidator.validate(name.text.toString())) {
+                 else if (!NameValidator.validate(name.text.toString())) {
                     Toast.makeText(
                         this,
                         "Imię nie może zawierać spacji oraz\n musi zaczynać się wielką literą!",
@@ -123,8 +119,7 @@ class RegisterParticipant : AppCompatActivity(){
                     isCorrect = false
                 }
 
-                if (isCorrect) {
-                    registerUser()
+                if (isCorrect && registerUser()) {
                     Toast.makeText(
                         this,
                         "Dziękujemy za rejestrację! Po wpłaceniu opłaty startowej konto zostanie utworzone.",
