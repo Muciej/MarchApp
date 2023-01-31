@@ -8,7 +8,9 @@ import android.widget.Toast
 import com.dreamteam.marchapp.R
 import com.dreamteam.marchapp.database.JDBCConnector
 import com.dreamteam.marchapp.logic.shared.ChooseMarchActivity
+import com.dreamteam.marchapp.logic.shared.ShowAndEditParticipant
 import com.dreamteam.marchapp.logic.shared.ViewSt
+import kotlinx.android.synthetic.main.activity_organisator_main.*
 
 class OrganisatorMain : AppCompatActivity() {
 
@@ -49,6 +51,12 @@ class OrganisatorMain : AppCompatActivity() {
         view_statistics.setOnClickListener {
             val Intent = Intent(this, ViewSt::class.java)
             startActivity(Intent)
+        }
+//tu
+        participant.setOnClickListener{
+            val intent = Intent(this, ShowAndEditParticipant::class.java)
+            intent.putExtra("accessLevel", "Organiser")
+            startActivity(intent)
         }
 
         volunteers.setOnClickListener{

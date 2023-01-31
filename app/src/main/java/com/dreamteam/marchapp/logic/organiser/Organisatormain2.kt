@@ -23,7 +23,7 @@ class Organisatormain2 : AppCompatActivity() {
         }
 
         modifyPoints.setOnClickListener{
-            val Intent = Intent(this, ModifyPoints::class.java)
+            val Intent = Intent(this, ShowAndEditPoints::class.java)
             startActivity(Intent)
         }
 
