@@ -1,33 +1,48 @@
 package com.dreamteam.marchapp.logic.shared.stats
 
+import android.content.Context
 import android.content.Intent
+import android.os.Build
+
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.Toast
+import androidx.annotation.RequiresApi
+
 import com.dreamteam.marchapp.R
 import com.dreamteam.marchapp.database.DBConnector
 import com.dreamteam.marchapp.database.JDBCConnector
 import com.jjoe64.graphview.GraphView
 import com.jjoe64.graphview.series.DataPoint
 import com.jjoe64.graphview.series.LineGraphSeries
+import java.time.LocalDateTime
+
 import java.util.*
-import kotlin.collections.HashMap
+
 
 /**
  * w tej klasie ciągły wykres: na osi pionowej czas uczestników na danym punkcie,
  * na osi poziomej uczestnicy według ich numerów startowych
  */
+//todo ogarnąć jakoś jak mierzyć czas i wstawiać go do wykresu
 class AvgTimeOfParOnPoint : AppCompatActivity() {
     lateinit var lineGraphView: GraphView
     private var connector: DBConnector = JDBCConnector
     private var participants = Vector<String>()
     private var timesOnPoint = Vector<String>()
     private var points = Vector<String>()
+    private var timesDifferences = Vector<LocalDateTime>()
 
+    private var dates = Vector<LocalDateTime>()
+//    @RequiresApi(Build.VERSION_CODES.O)
+//    private var startTime = LocalDateTime.parse("2023-01-30 08:00:00")
 
     private val choosePointToViewStat = ChoosePointToViewStat() // obiekt klasy ChoosepointToViewStat
-    private val spinnerValue = choosePointToViewStat.spinnerValue
+    private val spinnerVal = choosePointToViewStat.spinnerValue
 
+
+    //@RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_avg_time_of_par_on_point)
@@ -38,32 +53,39 @@ class AvgTimeOfParOnPoint : AppCompatActivity() {
          * Numery startowe uczestników z bazy danych - oś OX
          * Czas uczestników na punkcie - oś OY
          */
-        // dostajemy tabele w której 1-kolumna to nazwy marszów, 2 to nr_startowy uczestnika, 3 to czas na danym punkcie
-//        connector.prepareQuery("select *\n" +
-//                "from ev_test_event.punkty_kontrolne p\n" +
-//                "inner join ev_test_event.uczestnik_punkt up on p.id = up.id_punktu\n" +
-//                "inner join ev_test_event.uczestnicy u on up.id_uczestnika = u.nr_startowy\n" +
-//                "order by u.nr_startowy;\n")
 
         connector.prepareQuery("select * from czas_uczestnicy_punkt;")
         var answer : Vector<Vector<String>> = Vector<Vector<String>>()
         try {
             connector.executeQuery()
-//            points = connector.getCol(4) // puntky trasy
-//            participants = connector.getCol(10) //numer startowy uczestnika
-//            timesOnPoint = connector.getCol(9) // kolumna z czasami uczestników
-
             answer = connector.getAnswer()
         } catch (e : Exception){
-            //todo toast informujący o błędzie
+            showToast(applicationContext,"Nie udało się połączyć z bazą!")
         }
 
         for(row in answer){
-            points.add(row[3])
-            participants.add(row[9])
-            timesOnPoint.add(row[8])
+            points.add(row[3]) // puntky trasy
+            participants.add(row[9]) //numer startowy uczestnika
+            timesOnPoint.add(row[8]) // kolumna z czasami uczestników
             println(row[3] + " " + row[9] + " " + row[8])
         }
+
+        /**
+         * Zapisujemy daty w formacie LocalDataTime
+         * konwertujemy Stringa na LocalDataTime
+         */
+//        for (i in timesOnPoint){
+//            dates.add(LocalDateTime.parse(i))
+//        }
+
+        /**
+         * Obliczamy czas od jaki upłynął od startu
+         */
+//        for (i in dates){
+//            val hour8hoursBefore = i.minusHours(8)
+//            timesDifferences.add(hour8hoursBefore)
+//        }
+
 
         val btnBack = findViewById<Button>(R.id.btnBack)
 
@@ -83,25 +105,21 @@ class AvgTimeOfParOnPoint : AppCompatActivity() {
          */
 
         val dataPointList = Vector<DataPoint>()
-        val i = dataPointList.iterator()
-        if(points.size == participants.size && participants.size == timesOnPoint.size) {
 
-            i.forEach { _ ->
-                if (points[i.toString().toInt()] == spinnerValue) {
+        if (points.size == participants.size && participants.size == timesOnPoint.size) {
+            for (i in participants.indices) {
+                println("spinner: $spinnerVal")
+                println(points[i])
+                //if (points[i].equals(spinnerVal)) { //TODO poprawic porownywanie stringow zeby robic wykres dla jednego punktu
                     dataPointList.add(
                         DataPoint(
-                            participants[i.toString().toInt()].toDouble(),
-                            timesOnPoint[i.toString().toInt()].toDouble()
+                            participants[i].toDouble(),
+                            participants[i].toDouble()
                         )
                     )
-                }
+                //}
             }
-
         }
-
-//        for (i  in participants){
-//           dataPointList.add(DataPoint(i.toDouble(),i.toDouble()))
-//        }
 
         val series: LineGraphSeries<DataPoint> = LineGraphSeries(dataPointList.toTypedArray())
 
@@ -124,6 +142,9 @@ class AvgTimeOfParOnPoint : AppCompatActivity() {
         series.color = R.color.purple_500
 
         lineGraphView.addSeries(series)
+    }
+    private fun showToast(context: Context = applicationContext, message: String, duration: Int = Toast.LENGTH_LONG) {
+        Toast.makeText(context, message, duration).show()
     }
 
 }

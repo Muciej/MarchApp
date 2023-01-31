@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import com.dreamteam.marchapp.R
+import com.dreamteam.marchapp.logic.shared.ViewSt
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.data.PieData
@@ -101,7 +102,7 @@ class PieChartParWhoPassedAGivenPoint : AppCompatActivity() {
         pieChart.invalidate()
 
         backBtn.setOnClickListener{
-            val Intent = Intent(this, ParWhoPassedAGivenPoint::class.java)
+            val Intent = Intent(this, ViewSt::class.java)
             startActivity(Intent)
         }
     }
