@@ -32,6 +32,9 @@ object JDBCConnector : DBConnector {
     }
 
     override fun prepareQuery(query: String, varNo: Int) {
+        if (dbConnection?.isClosed == true){
+            startConnection()
+        }
         currQuery?.close()
         try {
             currQuery = dbConnection?.prepareStatement(query)
@@ -181,6 +184,9 @@ object JDBCConnector : DBConnector {
     }
 
     override fun executeQuery() {
+        if (dbConnection?.isClosed == true){
+            startConnection()
+        }
         try {
             println("Executing query")
             if(currQuery?.execute() == true){
