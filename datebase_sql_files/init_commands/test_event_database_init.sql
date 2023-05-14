@@ -188,5 +188,5 @@ create view ev_test_event.wolontariusze_info_view as
 select p.id_osoby, p.id_konta, wp.id_wolontariusza, wp.id_punktu, p.imie, p.nazwisko, p.nr_telefonu, p.mail, k.login, k.hasło
 from ev_test_event.personel p
 inner join ev_test_event.konta k on p.id_konta = k.id_konta
-inner join ev_test_event.wolontariusz_punkt wp on p.id_osoby = wp.id_wolontariusza;
+left join ev_test_event.wolontariusz_punkt wp on p.id_osoby = wp.id_wolontariusza;
 

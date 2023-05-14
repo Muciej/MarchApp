@@ -1,5 +1,6 @@
 package com.dreamteam.marchapp.database
 
+@Deprecated("No longer used")
 class User{
     var name: String
     var pass: String

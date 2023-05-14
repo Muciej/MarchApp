@@ -1,7 +1,7 @@
 package com.dreamteam.marchapp.database
 
 import java.util.Vector
-
+@Deprecated("We have new, viewmodel based implementation")
 interface DBConnector {
     fun setDBName(name: String)
     fun setCurrentUserID(id : Int)

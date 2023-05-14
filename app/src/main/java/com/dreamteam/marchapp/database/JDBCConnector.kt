@@ -5,7 +5,7 @@ import android.os.StrictMode.ThreadPolicy
 import java.sql.*
 import java.util.*
 
-
+@Deprecated("Will be moved to MySQLDatabase or AzureDatabase")
 object JDBCConnector : DBConnector {
 
     private var port: String = "3306"
