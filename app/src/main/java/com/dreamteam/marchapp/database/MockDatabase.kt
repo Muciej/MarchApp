@@ -22,6 +22,7 @@ class MockDatabase {
         }
     }
 
+    val eventsList: MutableLiveData<ArrayList<Event>> = MutableLiveData()
     val loggedAcount: MutableLiveData<Account?> = MutableLiveData()
     val allAccounts: MutableLiveData<ArrayList<Account>> = MutableLiveData()
     val allVolounteers: MutableLiveData<ArrayList<Volounteer>> = MutableLiveData()
@@ -36,10 +37,16 @@ class MockDatabase {
         allAdmins.postValue(ArrayList())
         checkPoints.postValue(ArrayList())
         allParticipants.postValue(ArrayList())
+        eventsList.postValue(ArrayList())
         fillWithSampleData()
     }
 
     private fun fillWithSampleData() {
+        //Adding fake events
+        eventsList.value?.add(Event(1,"Beskida", "ev_beskida", 1))
+        eventsList.value?.add(Event(2, "JFTTRun", "ev_jfttrun", 1))
+        eventsList.postValue(eventsList.value)
+
         //Adding fake accounts
         allAccounts.value?.add(Account(1, "Organizator", Roles.ORGANISER))
         allAccounts.value?.add(Account(2 , "Administrator", Roles.ADMIN))
@@ -78,27 +85,37 @@ class MockDatabase {
     }
 
     suspend fun addNewParticipant(participant: Participant){
-        //todo
+        allParticipants.value?.add(participant)
+        allParticipants.postValue(allParticipants.value)
     }
 
     suspend fun addNewAccount(account: Account){
-        //todo
-
+        allAccounts.value?.add(account)
+        allAccounts.postValue(allAccounts.value)
     }
 
     suspend fun addNewVolounteer(volounteer: Volounteer){
-        //todo
-
+        allVolounteers.value?.add(volounteer)
+        allVolounteers.postValue(allVolounteers.value)
     }
 
     suspend fun addNewAdmin(administrator: Administrator){
-        //todo
-
+        allAdmins.value?.add(administrator)
+        allAdmins.postValue(allAdmins.value)
     }
 
     suspend fun addNewCheckPoint(checkPoint: CheckPoint){
-        //todo
+        checkPoints.value?.add(checkPoint)
+        checkPoints.postValue(checkPoints.value)
+    }
 
+    fun loginUser(event: Event, login: String, password: String) {
+        for (u in allAccounts.value!!){
+            if(u.login == login) {
+                loggedAcount.postValue(u)
+                break
+            }
+        }
     }
 
 }

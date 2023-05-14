@@ -15,6 +15,7 @@ class DataViewModel(application: Application) : AndroidViewModel(application){
     val allAdmins: MutableLiveData<ArrayList<Administrator>>
     val allParticipants: MutableLiveData<ArrayList<Participant>>
     val checkPoints: MutableLiveData<ArrayList<CheckPoint>>
+    val eventsList: MutableLiveData<ArrayList<Event>>
     private val dbObject: MockDatabase
 
     init {
@@ -26,6 +27,7 @@ class DataViewModel(application: Application) : AndroidViewModel(application){
         allAdmins = dbObject.allAdmins
         allParticipants = dbObject.allParticipants
         checkPoints = dbObject.checkPoints
+        eventsList = dbObject.eventsList
     }
 
     fun addNewAccount(account: Account){
@@ -55,6 +57,12 @@ class DataViewModel(application: Application) : AndroidViewModel(application){
     fun addNewCheckPoint(checkPoint: CheckPoint){
         viewModelScope.launch(Dispatchers.IO){
             dbObject.addNewCheckPoint(checkPoint)
+        }
+    }
+
+    fun loginUser(event: Event, login: String, password: String){
+        viewModelScope.launch(Dispatchers.IO) {
+            dbObject.loginUser(event, login, password)
         }
     }
 }
