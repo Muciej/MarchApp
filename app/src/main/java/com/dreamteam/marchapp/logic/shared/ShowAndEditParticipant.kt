@@ -248,9 +248,9 @@ class ShowAndEditParticipant : AppCompatActivity(), TableDataClickListener<Array
                     var rootView : View = inflater.inflate(R.layout.dialog_zoom_data_user, container, false)
                     rootView.backb.setOnClickListener { dismiss() }
 
-                    val name = rootView.findViewById<TextView>(R.id.imie)
-                    val lastname = rootView.findViewById<TextView>(R.id.nazwisko)
-                    val start_nr = rootView.findViewById<TextView>(R.id.nr_startowy)
+                    val name = rootView.findViewById<TextView>(R.id.name)
+                    val lastname = rootView.findViewById<TextView>(R.id.lastname)
+                    val start_nr = rootView.findViewById<TextView>(R.id.start_no)
                     val pseudo = rootView.findViewById<TextView>(R.id.pseudonim)
 
                     val nameSpan = SpannableString(name?.text.toString() + (clickedData?.get(2)))

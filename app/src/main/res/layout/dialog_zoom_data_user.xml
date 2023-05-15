@@ -10,7 +10,7 @@
         android:textColor="@color/black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Dane Uczestnika"
+        android:text="@string/dane_uczestnika"
         android:layout_gravity="center"
         android:textSize="25sp"
         android:textStyle="bold"/>
@@ -19,17 +19,17 @@
         android:textColor="@color/black"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Nr startowy: "
+        android:text="@string/nr_startowy"
         android:layout_marginTop="10dp"
-        android:id="@+id/nr_startowy"
+        android:id="@+id/start_no"
         android:textSize="20sp"
         android:textStyle="bold"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Imie: "
-        android:id="@+id/imie"
+        android:text="@string/imie"
+        android:id="@+id/name"
         android:layout_marginTop="10dp"
         android:textColor="@color/black"
         android:textSize="20sp"
@@ -39,9 +39,9 @@
         android:textColor="@color/black"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Nazwisko: "
+        android:text="@string/nazwisko"
         android:layout_marginTop="10dp"
-        android:id="@+id/nazwisko"
+        android:id="@+id/lastname"
         android:textSize="20sp"
         android:textStyle="bold"/>
 
@@ -51,7 +51,7 @@
         android:textColor="@color/black"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Pseudonim: "
+        android:text="@string/pseudonim"
         android:id="@+id/pseudonim"
         android:layout_marginTop="10dp"
         android:textSize="20sp"
@@ -64,7 +64,7 @@
         android:layout_gravity="center"
         android:background="@drawable/edit_text_background"
         android:layout_marginTop="20dp"
-        android:text="Powrót" />
+        android:text="@string/powrot" />
 
 
 </LinearLayout>

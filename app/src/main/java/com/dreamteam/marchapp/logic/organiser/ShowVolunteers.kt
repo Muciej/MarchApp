@@ -268,9 +268,9 @@ class ShowVolunteers : AppCompatActivity(), TableDataClickListener<Array<String>
                     var rootView : View = inflater.inflate(R.layout.dialog_zoom_data, container, false)
                     rootView.backb.setOnClickListener { dismiss() }
 
-                    val name = rootView.findViewById<TextView>(R.id.imie)
-                    val lastname = rootView.findViewById<TextView>(R.id.nazwisko)
-                    val phone = rootView.findViewById<TextView>(R.id.tel)
+                    val name = rootView.findViewById<TextView>(R.id.name)
+                    val lastname = rootView.findViewById<TextView>(R.id.lastname)
+                    val phone = rootView.findViewById<TextView>(R.id.phone)
                     val mail = rootView.findViewById<TextView>(R.id.mail)
 
                     val nameSpan = SpannableString(name?.text.toString() + (clickedData?.get(1)))
