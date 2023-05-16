@@ -19,7 +19,7 @@
         android:background="@drawable/edit_text_background"
         android:drawableLeft="@drawable/ic_baseline_person_24"
         android:drawablePadding="20dp"
-        android:hint="Nazwisko"
+        android:hint="@string/lastname"
         android:inputType="textPersonName"
         android:padding="20dp"
         android:textColor="@color/black"
@@ -37,7 +37,7 @@
         android:background="@drawable/edit_text_background"
         android:drawableLeft="@drawable/ic_baseline_person_24"
         android:drawablePadding="20dp"
-        android:hint="Imie"
+        android:hint="@string/name"
         android:inputType="textPersonName"
         android:padding="20dp"
         android:textColor="@color/black"
@@ -55,7 +55,7 @@
         android:background="@drawable/edit_text_background"
         android:drawableLeft="@drawable/ic_baseline_person_24"
         android:drawablePadding="20dp"
-        android:hint="Login"
+        android:hint="@string/login"
         android:inputType="text"
         android:padding="20dp"
         android:textColor="@color/black"
@@ -81,8 +81,8 @@
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="30dp"
         android:gravity="center"
-        android:text="Rejestracja administratora"
-        android:textSize="20dp"
+        android:text="@string/administrator_registration"
+        android:textSize="20sp"
         android:textStyle="bold" />
 
     <EditText
@@ -97,7 +97,7 @@
         android:background="@drawable/edit_text_background"
         android:drawableLeft="@drawable/ic_baseline_lock_person_24"
         android:drawablePadding="20dp"
-        android:hint="Hasło"
+        android:hint="@string/password"
         android:inputType="textPassword"
         android:padding="20dp"
         android:textColor="@color/black"
@@ -115,7 +115,7 @@
         android:background="@drawable/edit_text_background"
         android:drawableLeft="@drawable/ic_baseline_lock_person_24"
         android:drawablePadding="20dp"
-        android:hint="Powtórz hasło"
+        android:hint="@string/repeat_password"
         android:inputType="textPassword"
         android:padding="20dp"
         android:textColor="@color/black"
@@ -133,7 +133,7 @@
         android:background="@drawable/edit_text_background"
         android:drawableLeft="@drawable/ic_baseline_alternate_email_24"
         android:drawablePadding="20dp"
-        android:hint="Email"
+        android:hint="@string/email"
         android:padding="20dp"
         android:textColor="@color/black"
         android:textColorHint="@color/black" />
@@ -150,7 +150,7 @@
         android:background="@drawable/edit_text_background"
         android:drawableLeft="@drawable/ic_baseline_local_phone_24"
         android:drawablePadding="20dp"
-        android:hint="Numer kontaktowy"
+        android:hint="@string/contact_number"
         android:inputType="phone"
         android:padding="20dp"
         android:textColor="@color/black"
@@ -167,5 +167,6 @@
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/edit_text_background"
-        android:text="Zarejestruj administratora" />
+        android:text="@string/register_administrator" />
+
 </RelativeLayout>

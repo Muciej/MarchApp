@@ -41,7 +41,7 @@
         android:layout_marginBottom="10dp"
         android:background="@drawable/edit_text_background"
         android:drawablePadding="20dp"
-        android:hint="Nazwa"
+        android:hint="@string/stage_name"
         android:padding="20dp"
         android:textColor="@color/black"
         android:textColorHint="@color/black" />
@@ -57,7 +57,7 @@
         android:layout_marginBottom="10dp"
         android:background="@drawable/edit_text_background"
         android:drawablePadding="20dp"
-        android:hint="Kilometr"
+        android:hint="@string/distance_from_origin"
         android:padding="20dp"
         android:textColor="@color/black"
         android:textColorHint="@color/black" />
@@ -73,7 +73,7 @@
         android:layout_marginBottom="10dp"
         android:background="@drawable/edit_text_background"
         android:drawablePadding="20dp"
-        android:hint="Online (1-tak, 0-nie)"
+        android:hint="@string/stage_type"
         android:inputType="textPassword"
         android:padding="20dp"
         android:textColor="@color/black"
@@ -90,7 +90,7 @@
         android:layout_marginBottom="10dp"
         android:background="@drawable/edit_text_background"
         android:drawablePadding="20dp"
-        android:hint="Współrzędne geograficzne"
+        android:hint="@string/geographic_coordinates"
         android:padding="20dp"
         android:textColor="@color/black"
         android:textColorHint="@color/black" />
@@ -107,5 +107,6 @@
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/edit_text_background"
-        android:text="Dodaj punkt kontrolny" />
+        android:text="@string/add_stage" />
+
 </RelativeLayout>
