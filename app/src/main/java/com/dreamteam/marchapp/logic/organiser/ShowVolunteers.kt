@@ -11,11 +11,13 @@ import android.text.SpannableString
 import android.text.Spanned
 import android.text.TextWatcher
 import android.text.style.ForegroundColorSpan
+import android.view.Display
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.hardware.display.DisplayManagerCompat
 import androidx.fragment.app.DialogFragment
 import com.dreamteam.marchapp.R
 import com.dreamteam.marchapp.R.id.*
@@ -294,8 +296,14 @@ class ShowVolunteers : AppCompatActivity(), TableDataClickListener<Array<String>
 
                 override fun onStart() {
                     super.onStart()
-                    getDialog()!!.getWindow()?.setBackgroundDrawableResource(R.drawable.round_corners);
-                    dialog?.window?.setLayout(1000,900)
+                    val defaultDisplay = DisplayManagerCompat.getInstance(requireContext()).getDisplay(
+                        Display.DEFAULT_DISPLAY
+                    )
+                    val displayContext = requireContext().createDisplayContext(defaultDisplay!!)
+                    val width = displayContext.resources.displayMetrics.widthPixels
+                    val height = displayContext.resources.displayMetrics.heightPixels
+
+                    dialog?.window?.setLayout((width*0.95).toInt(), (height * 0.5).toInt())
                 }
             }
 
@@ -462,7 +470,14 @@ class ShowVolunteers : AppCompatActivity(), TableDataClickListener<Array<String>
                 override fun onStart() {
                     super.onStart()
                     dialog!!.window?.setBackgroundDrawableResource(R.drawable.round_corners);
-                    dialog?.window?.setLayout(1000,1020)
+                    val defaultDisplay = DisplayManagerCompat.getInstance(requireContext()).getDisplay(
+                        Display.DEFAULT_DISPLAY
+                    )
+                    val displayContext = requireContext().createDisplayContext(defaultDisplay!!)
+                    val width = displayContext.resources.displayMetrics.widthPixels
+                    val height = displayContext.resources.displayMetrics.heightPixels
+
+                    dialog?.window?.setLayout((width*0.95).toInt(), (height * 0.6).toInt())
                 }
             }
 

@@ -31,7 +31,7 @@
         tools:ignore="SpeakableTextPresentCheck" />
 
     <EditText
-        android:id="@+id/nazwa"
+        android:id="@+id/name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/signInText"
@@ -47,10 +47,10 @@
         android:textColorHint="@color/black" />
 
     <EditText
-        android:id="@+id/kilometr"
+        android:id="@+id/km"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/nazwa"
+        android:layout_below="@+id/name"
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
@@ -66,7 +66,7 @@
         android:id="@+id/online"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/kilometr"
+        android:layout_below="@+id/km"
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
@@ -80,7 +80,7 @@
         android:textColorHint="@color/black" />
 
     <EditText
-        android:id="@+id/wspolrzedne"
+        android:id="@+id/coordinates"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/online"
@@ -100,7 +100,7 @@
         android:id="@+id/addPointButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/wspolrzedne"
+        android:layout_below="@+id/coordinates"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="40dp"
         android:layout_marginTop="40dp"

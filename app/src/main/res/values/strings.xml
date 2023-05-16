@@ -75,4 +75,6 @@
     <string name="stage_type">Online (1-tak, 0-nie)</string>
     <string name="geographic_coordinates">Współrzędne geograficzne</string>
     <string name="add_stage">Dodaj punkt kontrolny</string>
+    <string name="powtorz_haslo">Powtórz hasło</string>
+    <string name="wybierz_zajete_miejsca">Wyświetl zajęte miejsca</string>
 </resources>

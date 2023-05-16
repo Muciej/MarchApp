@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="16dp"
-    android:background="@color/white">
+    android:background="@drawable/insets">
     
     <TextView
         android:textColor="@color/black"
@@ -55,15 +55,20 @@
         android:id="@+id/newpoint"
         android:textSize="20sp"
         />
+
     <Spinner
         android:id="@+id/spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/newpoint"
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="20dp">
-    </Spinner>
+        android:layout_marginEnd="20dp"
+        android:alwaysDrawnWithCache="false"
+        android:background="@android:drawable/editbox_dropdown_dark_frame"
+        android:drawableEnd="@drawable/ic_baseline_arrow_drop_down_24"
+        android:scrollbarAlwaysDrawHorizontalTrack="false"
+        android:scrollbarAlwaysDrawVerticalTrack="false"
+        android:spinnerMode="dialog" />
 
     <GridLayout
         android:layout_height="match_parent"
