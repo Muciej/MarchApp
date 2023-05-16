@@ -3,10 +3,12 @@ package com.dreamteam.marchapp.logic.shared
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.dreamteam.marchapp.R
 import com.dreamteam.marchapp.database.DBConnector
@@ -25,6 +27,9 @@ class ChooseMarchActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_choose_march)
         dataViewModel = ViewModelProvider(this)[DataViewModel::class.java]
+        dataViewModel.eventsList.observe(this, Observer {
+            newEvents -> marchesUpdated(newEvents)
+        })
 
         val btnChoose = findViewById<Button>(R.id.chooseBtn)
         val backBtn = findViewById<Button>(R.id.btnForward)
@@ -32,12 +37,14 @@ class ChooseMarchActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
         //przycisk powrotu
         backBtn.setOnClickListener{
             val Intent = Intent(this, LoginActivity::class.java)
+            dataViewModel.logoutUser()
             startActivity(Intent)
         }
 
         // przycisk zatwierdzenia wybranego marszu
         btnChoose.setOnClickListener{
             val Intent = Intent(this, LoginActivity::class.java)
+            dataViewModel.logoutUser()
             startActivity(Intent)
         }
     }

@@ -2,6 +2,7 @@ package com.dreamteam.marchapp.logic.shared
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
@@ -23,7 +24,7 @@ import java.util.Vector
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var dataViewModel: DataViewModel
-    private var firstTime = true
+    private var btnPressed = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,6 +53,7 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(this, "Żadne z pól nie może być puste", Toast.LENGTH_SHORT).show()
             } else {
                 val hashedPassword = PasswordEncoder.hash(password.text.toString())
+                btnPressed = true
                 dataViewModel.loginUser(username.text.toString(), hashedPassword)
             }
         }
@@ -63,13 +65,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun updateLoggedUser(newLoggedUser: Account?){
-        if (newLoggedUser == null){
-            if (firstTime){
-                firstTime = false
-            } else {
-                Toast.makeText(this, "Niepoprawne dane, spróbuj ponownie!", Toast.LENGTH_SHORT).show()
-            }
-        } else {
+        if (newLoggedUser != null) {
             var intent: Intent? = null
             when(newLoggedUser.role){
                 Roles.ORGANISER -> intent = Intent(this, OrganisatorMain::class.java)
@@ -80,8 +76,10 @@ class LoginActivity : AppCompatActivity() {
             }
             if(intent != null)
                 startActivity(intent)
+        } else if(btnPressed){
+            Toast.makeText(this, "Niepoprawne dane logowania!", Toast.LENGTH_SHORT).show()
+            btnPressed = false
         }
-
     }
 
 }
