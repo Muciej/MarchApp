@@ -65,4 +65,16 @@ class DataViewModel(application: Application) : AndroidViewModel(application){
             dbObject.loginUser(login, password)
         }
     }
+
+    fun chooseEvent(event: Event?){
+        viewModelScope.launch(Dispatchers.IO){
+            dbObject.chooseEvent(event)
+        }
+    }
+
+    fun logoutUser(){
+        viewModelScope.launch(Dispatchers.IO){
+            dbObject.logout()
+        }
+    }
 }

@@ -1,6 +1,7 @@
 package com.dreamteam.marchapp.database
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.dreamteam.marchapp.database.dataclasses.*
 
@@ -34,56 +35,56 @@ class MockDatabase {
     init {
         loggedAcount.postValue(null)
         loggedEvent.postValue(null)
-        allAccounts.postValue(ArrayList())
-        allVolounteers.postValue(ArrayList())
-        allAdmins.postValue(ArrayList())
-        checkPoints.postValue(ArrayList())
-        allParticipants.postValue(ArrayList())
-        eventsList.postValue(ArrayList())
         fillWithSampleData()
     }
 
     private fun fillWithSampleData() {
         //Adding fake events
-        eventsList.value?.add(Event(1,"Beskida", "ev_beskida", 1))
-        eventsList.value?.add(Event(2, "JFTTRun", "ev_jfttrun", 1))
-        eventsList.postValue(eventsList.value)
+        val tempEv = ArrayList<Event>()
+        tempEv.add(Event(1,"Beskida", "ev_beskida", 1))
+        tempEv.add(Event(2, "JFTTRun", "ev_jfttrun", 1))
+        eventsList.postValue(tempEv)
 
         //Adding fake accounts
-        allAccounts.value?.add(Account(1, "Organizator", Roles.ORGANISER))
-        allAccounts.value?.add(Account(2 , "Administrator", Roles.ADMIN))
-        allAccounts.value?.add(Account(3 , "Wolontariusz", Roles.VOLOUNTEER))
-        allAccounts.value?.add(Account(4 , "Uczestnik", Roles.PARTICIPANT))
-        allAccounts.value?.add(Account(5 , "Muciej", Roles.ADMIN))
-        allAccounts.value?.add(Account(8 , "Bartek", Roles.UNKNOWN))
-        allAccounts.value?.add(Account(10 , "Wiktoria", Roles.PARTICIPANT))
-        allAccounts.value?.add(Account(11, "Tomekkkk", Roles.VOLOUNTEER))
-        allAccounts.postValue(allAccounts.value)
+        val tempAcc = ArrayList<Account>()
+        tempAcc.add(Account(1, "Organizator", Roles.ORGANISER))
+        tempAcc.add(Account(2 , "Administrator", Roles.ADMIN))
+        tempAcc.add(Account(3 , "Wolontariusz", Roles.VOLOUNTEER))
+        tempAcc.add(Account(4 , "Uczestnik", Roles.PARTICIPANT))
+        tempAcc.add(Account(5 , "Muciej", Roles.ADMIN))
+        tempAcc.add(Account(8 , "Bartek", Roles.UNKNOWN))
+        tempAcc.add(Account(10 , "Wiktoria", Roles.PARTICIPANT))
+        tempAcc.add(Account(11, "Tomekkkk", Roles.VOLOUNTEER))
+        allAccounts.postValue(tempAcc)
 
         //Adding face Volounteers
+        val tempVol = ArrayList<Volounteer>()
         var v = Volounteer(3, 1, "Wolon", "Wolontariuszowy", "629592394", "asdf@sldkf.pl", "Wolontariusz")
-        allVolounteers.value?.add(v)
+        tempVol.add(v)
         v = Volounteer(11, 3, "Tomasz", "Hołubczański", "654321666", "tome@asf.pl", "Tomekkkk")
         v.pointId = 1
-        allVolounteers.value?.add(v)
-        allVolounteers.postValue(allVolounteers.value)
+        tempVol.add(v)
+        allVolounteers.postValue(tempVol)
 
         //Adding fake checkpoints
-        checkPoints.value?.add(CheckPoint(1, true, "Start", 0, "20N, 50W"))
-        checkPoints.value?.add(CheckPoint(2, false, "Przełęcz rozpaczy", 10, "21N, 51W"))
-        checkPoints.value?.add(CheckPoint(3, true, "Skarpa przerażenia", 25, "19.5N, 52W"))
-        checkPoints.value?.add(CheckPoint(4, true, "Dyplom", 40, "19.32N, 53W"))
-        checkPoints.postValue(checkPoints.value)
+        val tempCheck = ArrayList<CheckPoint>()
+        tempCheck.add(CheckPoint(1, true, "Start", 0, "20N, 50W"))
+        tempCheck.add(CheckPoint(2, false, "Przełęcz rozpaczy", 10, "21N, 51W"))
+        tempCheck.add(CheckPoint(3, true, "Skarpa przerażenia", 25, "19.5N, 52W"))
+        tempCheck.add(CheckPoint(4, true, "Dyplom", 40, "19.32N, 53W"))
+        checkPoints.postValue(tempCheck)
 
         //Adding fake Admins
-        allAdmins.value?.add(Administrator(2, 2, "Admin", "Administratorski", "675849206", "asdf@lwekf.pl", "Administrator"))
-        allAdmins.value?.add(Administrator(5, 4, "Maciek", "Józefkwef", "666456555", "mauce@joz.com", "Muciej"))
-        allAdmins.postValue(allAdmins.value)
+        val tempAdmins = ArrayList<Administrator>()
+        tempAdmins.add(Administrator(2, 2, "Admin", "Administratorski", "675849206", "asdf@lwekf.pl", "Administrator"))
+        tempAdmins.add(Administrator(5, 4, "Maciek", "Józefkwef", "666456555", "mauce@joz.com", "Muciej"))
+        allAdmins.postValue(tempAdmins)
 
         //Adding fake participants
-        allParticipants.value?.add(Participant(4, 100, "Uczes", "Uczestnicki", "Ucznen", "wef342"))
-        allParticipants.value?.add(Participant(10, 101, "Wiktoria", "Paź", "WikPaź", "we23f2"))
-        allParticipants.postValue(allParticipants.value)
+        val tempPart = ArrayList<Participant>()
+        tempPart.add(Participant(4, 100, "Uczes", "Uczestnicki", "Ucznen", "wef342"))
+        tempPart.add(Participant(10, 101, "Wiktoria", "Paź", "WikPaź", "we23f2"))
+        allParticipants.postValue(tempPart)
     }
 
     suspend fun addNewParticipant(participant: Participant){
@@ -112,16 +113,25 @@ class MockDatabase {
     }
 
     fun loginUser(login: String, password: String) {
+        var found = false
         for (u in allAccounts.value!!){
             if(u.login == login) {
                 loggedAcount.postValue(u)
+                found = true
                 break
             }
         }
+        if(!found){
+            loggedAcount.postValue(null)
+        }
     }
 
-    fun chooseEvent(event: Event){
+    fun chooseEvent(event: Event?){
         loggedEvent.postValue(event)
+    }
+
+    fun logout() {
+        loggedAcount.postValue(null)
     }
 
 }
