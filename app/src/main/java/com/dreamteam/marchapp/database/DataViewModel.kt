@@ -60,9 +60,9 @@ class DataViewModel(application: Application) : AndroidViewModel(application){
         }
     }
 
-    fun loginUser(event: Event, login: String, password: String){
+    fun loginUser(login: String, password: String){
         viewModelScope.launch(Dispatchers.IO) {
-            dbObject.loginUser(event, login, password)
+            dbObject.loginUser(login, password)
         }
     }
 }

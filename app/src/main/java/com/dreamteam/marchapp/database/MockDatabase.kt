@@ -22,8 +22,9 @@ class MockDatabase {
         }
     }
 
-    val eventsList: MutableLiveData<ArrayList<Event>> = MutableLiveData()
     val loggedAcount: MutableLiveData<Account?> = MutableLiveData()
+    val loggedEvent: MutableLiveData<Event?> = MutableLiveData()
+    val eventsList: MutableLiveData<ArrayList<Event>> = MutableLiveData()
     val allAccounts: MutableLiveData<ArrayList<Account>> = MutableLiveData()
     val allVolounteers: MutableLiveData<ArrayList<Volounteer>> = MutableLiveData()
     val allAdmins: MutableLiveData<ArrayList<Administrator>> = MutableLiveData()
@@ -32,6 +33,7 @@ class MockDatabase {
 
     init {
         loggedAcount.postValue(null)
+        loggedEvent.postValue(null)
         allAccounts.postValue(ArrayList())
         allVolounteers.postValue(ArrayList())
         allAdmins.postValue(ArrayList())
@@ -109,13 +111,17 @@ class MockDatabase {
         checkPoints.postValue(checkPoints.value)
     }
 
-    fun loginUser(event: Event, login: String, password: String) {
+    fun loginUser(login: String, password: String) {
         for (u in allAccounts.value!!){
             if(u.login == login) {
                 loggedAcount.postValue(u)
                 break
             }
         }
+    }
+
+    fun chooseEvent(event: Event){
+        loggedEvent.postValue(event)
     }
 
 }
