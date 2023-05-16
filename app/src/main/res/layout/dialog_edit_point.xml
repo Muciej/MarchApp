@@ -15,57 +15,62 @@
         android:textSize="25sp"
         android:textStyle="bold"/>
 
-    <RelativeLayout
+
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="10"
         android:layout_marginTop="20dp">
 
         <TextView
             android:id="@+id/imie"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Nazwa: "
+            android:layout_weight="3"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold" />
 
         <EditText
             android:id="@+id/edit_imie"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="7"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginLeft="50dp"
             android:textStyle="bold"
-            android:layout_toRightOf="@+id/imie"
             android:background="@drawable/edit_text_background"
             android:textColor="@color/black"
             android:paddingBottom="3dp"
             android:paddingTop="3dp"
-            android:paddingLeft="15dp"
+            android:paddingLeft="10dp"
             />
 
-    </RelativeLayout>
+    </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="10"
         android:layout_marginTop="20dp">
 
         <TextView
             android:id="@+id/nazwisko"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Online: "
+            android:layout_weight="3"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold" />
 
         <EditText
             android:id="@+id/nazwisko_edit"
-            android:layout_width="match_parent"
-            android:layout_marginLeft="57dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/nazwisko"
+            android:layout_weight="7"
             android:background="@drawable/edit_text_background"
             android:textStyle="bold"
             android:textColor="@color/black"
@@ -73,16 +78,19 @@
             android:paddingTop="3dp"
             android:paddingLeft="10dp"
              />
-    </RelativeLayout>
+    </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="10"
         android:layout_marginTop="20dp">
 
         <TextView
             android:id="@+id/nr_startowy"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="3"
             android:layout_height="wrap_content"
             android:text="Kilometr: "
             android:textColor="@color/black"
@@ -91,27 +99,29 @@
 
         <EditText
             android:id="@+id/nr_startowy_edit"
-            android:layout_width="match_parent"
-            android:layout_marginLeft="40dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:paddingBottom="3dp"
             android:paddingTop="3dp"
-            android:layout_toRightOf="@+id/nr_startowy"
+            android:layout_weight="7"
             android:background="@drawable/edit_text_background"
             android:textColor="@color/black"
             android:paddingLeft="10dp"
             android:textStyle="bold"
              />
-    </RelativeLayout>
+    </LinearLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp">
+    <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:weightSum="10"
+    android:layout_marginTop="20dp">
 
         <TextView
             android:id="@+id/pseudonim"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="3"
             android:layout_height="wrap_content"
             android:text="Współrzędne: "
             android:textColor="@color/black"
@@ -120,26 +130,30 @@
 
         <EditText
             android:id="@+id/wsp_edit"
-            android:layout_width="match_parent"
-            android:layout_marginLeft="1dp"
+            android:layout_width="0dp"
+            android:layout_weight="7"
             android:layout_height="wrap_content"
             android:paddingBottom="2dp"
             android:paddingTop="2dp"
-            android:layout_toRightOf="@+id/pseudonim"
             android:background="@drawable/edit_text_background"
             android:paddingLeft="10dp"
             android:textStyle="bold"
             android:textColor="@color/black"
             />
-    </RelativeLayout>
+    </LinearLayout>
 
-    <GridLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="3"
+        android:layout_marginTop="20dp">
 
         <Button
             android:id="@+id/backb"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_marginLeft="20dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:background="@drawable/edit_text_background"
@@ -151,18 +165,22 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/edit_text_background"
-            android:text="Zapisz" />
+            android:text="Zapisz"
+            android:layout_width="0dp"
+            android:layout_weight="1"/>
 
         <Button
             android:id="@+id/deleteButton"
-            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginRight="20dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/edit_text_background"
             android:text="Usuń" />
 
-    </GridLayout>
+    </LinearLayout>
 
 
 

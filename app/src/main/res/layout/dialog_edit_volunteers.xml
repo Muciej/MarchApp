@@ -21,7 +21,7 @@
         android:layout_marginTop="20dp">
 
         <TextView
-            android:id="@+id/imie"
+            android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/imie"
@@ -30,19 +30,19 @@
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/edit_imie"
+            android:id="@+id/edit_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="65dp"
             android:textStyle="bold"
-            android:layout_toEndOf="@+id/imie"
+            android:layout_toEndOf="@+id/name"
             android:background="@drawable/edit_text_background"
             android:textColor="@color/black"
             android:paddingBottom="3dp"
             android:paddingTop="3dp"
             android:paddingStart="10dp"
-            />
+            android:autofillHints="" />
 
     </RelativeLayout>
 
@@ -52,7 +52,7 @@
         android:layout_marginTop="20dp">
 
         <TextView
-            android:id="@+id/nazwisko"
+            android:id="@+id/lastname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/nazwisko"
@@ -61,11 +61,11 @@
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/nazwisko_edit"
+            android:id="@+id/lastname_edit"
             android:layout_width="match_parent"
             android:layout_marginStart="18dp"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/nazwisko"
+            android:layout_toEndOf="@+id/lastname"
             android:background="@drawable/edit_text_background"
             android:textStyle="bold"
             android:textColor="@color/black"
@@ -81,7 +81,7 @@
         android:layout_marginTop="20dp">
 
         <TextView
-            android:id="@+id/nr_telefonu"
+            android:id="@+id/phone_no"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/nr_telefonu"
@@ -90,13 +90,13 @@
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/nr_telefonu_edit"
+            android:id="@+id/phone_no_edit"
             android:layout_width="match_parent"
             android:layout_marginStart="3dp"
             android:layout_height="wrap_content"
             android:paddingBottom="3dp"
             android:paddingTop="3dp"
-            android:layout_toEndOf="@+id/nr_telefonu"
+            android:layout_toEndOf="@+id/phone_no"
             android:background="@drawable/edit_text_background"
             android:textColor="@color/black"
             android:paddingStart="10dp"

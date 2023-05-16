@@ -316,17 +316,17 @@ class ShowVolunteers : AppCompatActivity(), TableDataClickListener<Array<String>
 
 
                     dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-                    var rootView : View = inflater.inflate(R.layout.dialog_edit_volunteers, container, false)
+                    val rootView : View = inflater.inflate(R.layout.dialog_edit_volunteers, container, false)
                     rootView.backb.setOnClickListener { dismiss() }
 
                     rootView.editButton.setOnClickListener {
                         //chcemy do bazy danych i do tabeli wklepać wartości z edycji
 
                         //nowe wartości
-                        var editedName = edit_imie.text.toString()
-                        var editedLastName = nazwisko_edit.text.toString()
-                        var editedPhone = nr_telefonu_edit.text.toString()
-                        var editedMail = mail_edit.text.toString()
+                        val editedName = edit_name.text.toString()
+                        val editedLastName = lastname_edit.text.toString()
+                        val editedPhone = phone_no_edit.text.toString()
+                        val editedMail = mail_edit.text.toString()
 
                         var rowToEdit = 0;
                         rowToEdit = clickedData!!.get(0).toInt()
@@ -446,9 +446,9 @@ class ShowVolunteers : AppCompatActivity(), TableDataClickListener<Array<String>
                     }
 
 
-                    val name = rootView.findViewById<EditText>(R.id.edit_imie)
-                    val lastname = rootView.findViewById<EditText>(R.id.nazwisko_edit)
-                    val phone = rootView.findViewById<EditText>(R.id.nr_telefonu_edit)
+                    val name = rootView.findViewById<EditText>(R.id.edit_name)
+                    val lastname = rootView.findViewById<EditText>(R.id.lastname_edit)
+                    val phone = rootView.findViewById<EditText>(R.id.phone_no_edit)
                     val mail = rootView.findViewById<EditText>(R.id.mail_edit)
 
                     name.setText(clickedData?.get(1))
@@ -461,7 +461,7 @@ class ShowVolunteers : AppCompatActivity(), TableDataClickListener<Array<String>
 
                 override fun onStart() {
                     super.onStart()
-                    getDialog()!!.getWindow()?.setBackgroundDrawableResource(R.drawable.round_corners);
+                    dialog!!.window?.setBackgroundDrawableResource(R.drawable.round_corners);
                     dialog?.window?.setLayout(1000,1020)
                 }
             }
