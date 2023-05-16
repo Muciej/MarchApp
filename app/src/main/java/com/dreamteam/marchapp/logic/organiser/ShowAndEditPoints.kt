@@ -11,11 +11,13 @@ import android.text.SpannableString
 import android.text.Spanned
 import android.text.TextWatcher
 import android.text.style.ForegroundColorSpan
+import android.view.Display
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.hardware.display.DisplayManagerCompat
 import androidx.fragment.app.DialogFragment
 import com.dreamteam.marchapp.R
 import com.dreamteam.marchapp.R.id.*
@@ -28,9 +30,6 @@ import de.codecrafters.tableview.toolkit.SimpleTableHeaderAdapter
 import de.codecrafters.tableview.toolkit.TableDataRowBackgroundProviders
 import kotlinx.android.synthetic.main.dialog_edit_point.*
 import kotlinx.android.synthetic.main.dialog_edit_point.view.*
-import kotlinx.android.synthetic.main.dialog_edit_user.edit_imie
-import kotlinx.android.synthetic.main.dialog_edit_user.nazwisko_edit
-import kotlinx.android.synthetic.main.dialog_edit_user.nr_startowy_edit
 import kotlinx.android.synthetic.main.dialog_edit_user.view.editButton
 import kotlinx.android.synthetic.main.dialog_zoom_data.view.backb
 import java.util.*
@@ -230,23 +229,23 @@ class ShowAndEditPoints : AppCompatActivity(), TableDataClickListener<Array<Stri
                     rootView.backb.setOnClickListener { dismiss() }
 
 
-                    val online = rootView.findViewById<TextView>(R.id.imie)
-                    val nazwa = rootView.findViewById<TextView>(R.id.nazwisko)
-                    val km = rootView.findViewById<TextView>(R.id.pseudonim)
-                    val wsp = rootView.findViewById<TextView>(R.id.wsp)
+                    val online = rootView.findViewById<TextView>(R.id.online)
+                    val name = rootView.findViewById<TextView>(R.id.name)
+                    val km = rootView.findViewById<TextView>(R.id.km)
+                    val wsp = rootView.findViewById<TextView>(R.id.coordinates)
 
                     val onlineSpan = SpannableString(online?.text.toString() + (clickedData?.get(1)))
-                    val nazwaSpan = SpannableString(nazwa?.text.toString() + (clickedData?.get(2)))
+                    val nazwaSpan = SpannableString(name?.text.toString() + (clickedData?.get(2)))
                     val kmSpan = SpannableString(km?.text.toString() + (clickedData?.get(3)))
                     val wspSpan = SpannableString(wsp?.text.toString() + (clickedData?.get(4)))
 
                     onlineSpan.setSpan(ForegroundColorSpan(Color.BLUE), online.text.length, onlineSpan.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
 
-                    nazwaSpan.setSpan(ForegroundColorSpan(Color.BLUE),nazwa.text.length, nazwaSpan.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                    nazwaSpan.setSpan(ForegroundColorSpan(Color.BLUE),name.text.length, nazwaSpan.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
                     kmSpan.setSpan(ForegroundColorSpan(Color.BLUE), km.text.length, kmSpan.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
                     wspSpan.setSpan(ForegroundColorSpan(Color.BLUE), wsp.text.length, wspSpan.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
 
-                    nazwa.text = nazwaSpan
+                    name.text = nazwaSpan
                     online.text = onlineSpan
                     km.text = kmSpan
                     wsp.text = wspSpan
@@ -257,7 +256,14 @@ class ShowAndEditPoints : AppCompatActivity(), TableDataClickListener<Array<Stri
                 override fun onStart() {
                     super.onStart()
                     getDialog()!!.getWindow()?.setBackgroundDrawableResource(R.drawable.round_corners);
-                    dialog?.window?.setLayout(1000,1100)
+                    val defaultDisplay = DisplayManagerCompat.getInstance(requireContext()).getDisplay(
+                        Display.DEFAULT_DISPLAY
+                    )
+                    val displayContext = requireContext().createDisplayContext(defaultDisplay!!)
+                    val width = displayContext.resources.displayMetrics.widthPixels
+                    val height = displayContext.resources.displayMetrics.heightPixels
+
+                    dialog?.window?.setLayout((width*0.95).toInt(), (height * 0.6).toInt())
                 }
             }
 
@@ -307,10 +313,10 @@ class ShowAndEditPoints : AppCompatActivity(), TableDataClickListener<Array<Stri
 
                     rootView.editButton.setOnClickListener {
 
-                        var editedName = edit_imie.text.toString()
-                        var editedOnline = nazwisko_edit.text.toString()
-                        var editedkm = nr_startowy_edit.text.toString()
-                        var editedwsp = wsp_edit.text.toString()
+                        var editedName = edit_name.text.toString()
+                        var editedOnline = online_edit.text.toString()
+                        var editedkm = km_edit.text.toString()
+                        var editedwsp = coordinates_edit.text.toString()
 
                         var rowToEdit = 0;
                         rowToEdit = clickedData!!.get(0).toInt()
@@ -381,10 +387,10 @@ class ShowAndEditPoints : AppCompatActivity(), TableDataClickListener<Array<Stri
 
                     }
 
-                    val name = rootView.findViewById<EditText>(R.id.edit_imie)
-                    val lastname = rootView.findViewById<EditText>(R.id.nazwisko_edit)
-                    val start_nr = rootView.findViewById<EditText>(R.id.nr_startowy_edit)
-                    val pseudo = rootView.findViewById<EditText>(R.id.wsp_edit)
+                    val name = rootView.findViewById<EditText>(R.id.edit_name)
+                    val lastname = rootView.findViewById<EditText>(R.id.online_edit)
+                    val start_nr = rootView.findViewById<EditText>(R.id.km_edit)
+                    val pseudo = rootView.findViewById<EditText>(R.id.coordinates_edit)
 
                     name.setText(clickedData?.get(2))
                     lastname.setText(clickedData?.get(1))
@@ -396,8 +402,14 @@ class ShowAndEditPoints : AppCompatActivity(), TableDataClickListener<Array<Stri
 
                 override fun onStart() {
                     super.onStart()
-                    getDialog()!!.getWindow()?.setBackgroundDrawableResource(R.drawable.round_corners);
-                    dialog?.window?.setLayout(1000,1100)
+                    val defaultDisplay = DisplayManagerCompat.getInstance(requireContext()).getDisplay(
+                        Display.DEFAULT_DISPLAY
+                    )
+                    val displayContext = requireContext().createDisplayContext(defaultDisplay!!)
+                    val width = displayContext.resources.displayMetrics.widthPixels
+                    val height = displayContext.resources.displayMetrics.heightPixels
+
+                    dialog?.window?.setLayout((width*0.95).toInt(), (height * 0.6).toInt())
                 }
             }
 

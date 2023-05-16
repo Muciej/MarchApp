@@ -97,12 +97,12 @@ class CreateAdminInMarchAccount : AppCompatActivity() {
         setContentView(R.layout.activity_create_admin_in_march_account)
 
         val name = findViewById<TextView>(R.id.name)
-        val lastname = findViewById<TextView>(R.id.lastname3)
-        val username = findViewById<TextView>(R.id.username2)
+        val lastname = findViewById<TextView>(R.id.lastname)
+        val username = findViewById<TextView>(R.id.username)
         val password = findViewById<TextView>(R.id.password)
         val repPassword = findViewById<TextView>(R.id.repeatPassword)
         val email = findViewById<TextView>(R.id.email)
-        val phoneNr = findViewById<TextView>(R.id.number)
+        val phoneNr = findViewById<TextView>(R.id.phone)
         val registerBtn = findViewById<Button>(R.id.registerBtn)
         val backBtn = findViewById<Button>(R.id.btnBack)
 

@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".logic.admin.AdministratorMain">
-
 
     <TextView
         android:id="@+id/screenTitle"
@@ -13,8 +11,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:gravity="center"
-        android:text="Ekran Administratora"
-        android:textSize="20dp"
+        android:text="@string/administrator_screen"
+        android:textSize="20sp"
         android:textStyle="bold" />
 
     <Button
@@ -28,7 +26,7 @@
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/edit_text_background"
-        android:text="Stwórz konto wolontariusza" />
+        android:text="@string/create_volunteer_account" />
 
     <Button
         android:id="@+id/createParticipant"
@@ -41,7 +39,7 @@
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="15dp"
         android:background="@drawable/edit_text_background"
-        android:text="Stwórz konto uczestnika" />
+        android:text="@string/create_contestant_account" />
 
     <Button
         android:id="@+id/view_statistics"
@@ -54,7 +52,7 @@
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="15dp"
         android:background="@drawable/edit_text_background"
-        android:text="Zobacz statystyki" />
+        android:text="@string/see_statistics" />
 
     <Button
         android:id="@+id/updateVolunteer"
@@ -67,7 +65,7 @@
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="15dp"
         android:background="@drawable/edit_text_background"
-        android:text="Zaktualizuj konto wolontariusza" />
+        android:text="@string/update_volunteer_account" />
 
     <Button
         android:id="@+id/addPointToVolunteer"
@@ -80,9 +78,7 @@
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="15dp"
         android:background="@drawable/edit_text_background"
-        android:text="Przypisz wolontariusza do punktu" />
-
-<!--        android:text="Wolontariusze" />-->
+        android:text="@string/assign_volunteer_to_stage" />
 
     <Button
         android:id="@+id/updateParticipant"
@@ -95,7 +91,7 @@
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/edit_text_background"
-        android:text="Uczestnicy" />
+        android:text="@string/contestants" />
 
     <Button
         android:id="@+id/changePass"
@@ -108,7 +104,7 @@
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="15dp"
         android:background="@drawable/edit_text_background"
-        android:text="Zmień hasło" />
+        android:text="@string/change_password" />
 
     <Button
         android:id="@+id/logOut"
@@ -121,6 +117,6 @@
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="15dp"
         android:background="@drawable/edit_text_background"
-        android:text="Wyloguj się" />
+        android:text="@string/log_out" />
 
 </RelativeLayout>

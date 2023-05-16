@@ -16,6 +16,7 @@
         android:layout_marginBottom="20dp"
         android:background="@drawable/ic_baseline_arrow_back_24"
         tools:ignore="SpeakableTextPresentCheck" />
+
     <TextView
         android:id="@+id/view_statistics"
         android:layout_width="match_parent"
@@ -25,9 +26,10 @@
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="30dp"
         android:gravity="center"
-        android:text="Wybierz punkt"
-        android:textSize="30dp"
+        android:text="@string/choose_stage"
+        android:textSize="30sp"
         android:textStyle="bold" />
+
     <Spinner
         android:id="@+id/spinner2"
         android:layout_width="match_parent"
@@ -37,29 +39,6 @@
         android:layout_marginTop="1dp"
         android:layout_marginEnd="20dp">
     </Spinner>
-
-<!--    <TextView-->
-<!--        android:id="@+id/view_statistics_2"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_below="@+id/spinner2"-->
-<!--        android:layout_marginStart="30dp"-->
-<!--        android:layout_marginTop="160dp"-->
-<!--        android:layout_marginEnd="30dp"-->
-<!--        android:layout_marginBottom="30dp"-->
-<!--        android:gravity="center"-->
-<!--        android:text="Wybierz kategorię"-->
-<!--        android:textSize="20dp"-->
-<!--        android:textStyle="bold" />-->
-<!--    <Spinner-->
-<!--        android:id="@+id/spinner3"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_below="@+id/view_statistics_2"-->
-<!--        android:layout_marginStart="20dp"-->
-<!--        android:layout_marginTop="1dp"-->
-<!--        android:layout_marginEnd="20dp">-->
-<!--    </Spinner>-->
 
     <ImageView
         android:id="@+id/imageChoose"
@@ -82,15 +61,6 @@
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
         android:background="@drawable/edit_text_background"
-        android:text="Zatwierdź" />
-
-
-
-
-
-
-
-
-
+        android:text="@string/confirm" />
 
 </RelativeLayout>

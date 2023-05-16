@@ -18,7 +18,7 @@
         tools:ignore="SpeakableTextPresentCheck" />
 
     <TextView
-        android:id="@+id/view_statistics"
+        android:id="@+id/textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
@@ -37,31 +37,22 @@
         android:id="@+id/chooseBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/view_statistics"
+        android:layout_below="@+id/textview"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="20dp"
         android:layout_marginTop="187dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
         android:background="@drawable/edit_text_background"
-        android:text="Wyświetl zajęte miejsca" />
+        android:text="@string/wybierz_zajete_miejsca" />
 
     <ImageView
-        android:id="@+id/imageSignUp"
+        android:id="@+id/image"
         android:layout_width="321dp"
         android:layout_height="251dp"
         android:layout_below="@+id/chooseBtn"
         android:layout_centerInParent="true"
         android:layout_marginTop="-13dp"
+        android:alpha="0.7"
         android:src="@drawable/vecteezy_flat_design_trophy_trophy_vector_isolated_on_white_background_6425320" />
-
-
-
-
-
-
-
-
-
-
 </RelativeLayout>

@@ -4,11 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".logic.admin.CreateVolunteerActivity"
-    android:background="@color/organiser_background_color">
+    tools:context=".logic.admin.CreateVolunteerActivity">
 
     <EditText
-        android:id="@+id/lastname3"
+        android:id="@+id/lastname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/name"
@@ -19,7 +18,7 @@
         android:background="@drawable/edit_text_background"
         android:drawableLeft="@drawable/ic_baseline_person_24"
         android:drawablePadding="20dp"
-        android:hint="Nazwisko"
+        android:hint="@string/lastname"
         android:inputType="textPersonName"
         android:padding="20dp"
         android:textColor="@color/black"
@@ -29,7 +28,7 @@
         android:id="@+id/name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/signInText"
+        android:layout_below="@+id/registerText"
         android:layout_marginStart="20dp"
         android:layout_marginTop="2dp"
         android:layout_marginEnd="20dp"
@@ -37,17 +36,17 @@
         android:background="@drawable/edit_text_background"
         android:drawableLeft="@drawable/ic_baseline_person_24"
         android:drawablePadding="20dp"
-        android:hint="Imie"
+        android:hint="@string/name"
         android:inputType="textPersonName"
         android:padding="20dp"
         android:textColor="@color/black"
         android:textColorHint="@color/black" />
 
     <EditText
-        android:id="@+id/username2"
+        android:id="@+id/username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/lastname3"
+        android:layout_below="@+id/lastname"
         android:layout_marginStart="20dp"
         android:layout_marginTop="2dp"
         android:layout_marginEnd="20dp"
@@ -55,7 +54,7 @@
         android:background="@drawable/edit_text_background"
         android:drawableLeft="@drawable/ic_baseline_person_24"
         android:drawablePadding="20dp"
-        android:hint="Login"
+        android:hint="@string/login"
         android:inputType="text"
         android:padding="20dp"
         android:textColor="@color/black"
@@ -73,7 +72,7 @@
         tools:ignore="SpeakableTextPresentCheck" />
 
     <TextView
-        android:id="@+id/signInText"
+        android:id="@+id/registerText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
@@ -81,15 +80,15 @@
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="30dp"
         android:gravity="center"
-        android:text="Rejestracja administratora"
-        android:textSize="20dp"
+        android:text="@string/administrator_registration"
+        android:textSize="20sp"
         android:textStyle="bold" />
 
     <EditText
         android:id="@+id/password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/username2"
+        android:layout_below="@+id/username"
         android:layout_marginStart="20dp"
         android:layout_marginTop="2dp"
         android:layout_marginEnd="20dp"
@@ -97,7 +96,7 @@
         android:background="@drawable/edit_text_background"
         android:drawableLeft="@drawable/ic_baseline_lock_person_24"
         android:drawablePadding="20dp"
-        android:hint="Hasło"
+        android:hint="@string/password"
         android:inputType="textPassword"
         android:padding="20dp"
         android:textColor="@color/black"
@@ -115,7 +114,7 @@
         android:background="@drawable/edit_text_background"
         android:drawableLeft="@drawable/ic_baseline_lock_person_24"
         android:drawablePadding="20dp"
-        android:hint="Powtórz hasło"
+        android:hint="@string/repeat_password"
         android:inputType="textPassword"
         android:padding="20dp"
         android:textColor="@color/black"
@@ -133,13 +132,13 @@
         android:background="@drawable/edit_text_background"
         android:drawableLeft="@drawable/ic_baseline_alternate_email_24"
         android:drawablePadding="20dp"
-        android:hint="Email"
+        android:hint="@string/email"
         android:padding="20dp"
         android:textColor="@color/black"
         android:textColorHint="@color/black" />
 
     <EditText
-        android:id="@+id/number"
+        android:id="@+id/phone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/email"
@@ -150,7 +149,7 @@
         android:background="@drawable/edit_text_background"
         android:drawableLeft="@drawable/ic_baseline_local_phone_24"
         android:drawablePadding="20dp"
-        android:hint="Numer kontaktowy"
+        android:hint="@string/contact_number"
         android:inputType="phone"
         android:padding="20dp"
         android:textColor="@color/black"
@@ -160,12 +159,13 @@
         android:id="@+id/registerBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/number"
+        android:layout_below="@+id/phone"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="40dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/edit_text_background"
-        android:text="Zarejestruj administratora" />
+        android:text="@string/register_administrator" />
+
 </RelativeLayout>
