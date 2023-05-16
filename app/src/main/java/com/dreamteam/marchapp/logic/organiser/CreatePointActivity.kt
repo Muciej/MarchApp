@@ -21,10 +21,10 @@ class CreatePointActivity : AppCompatActivity() {
     var connector = JDBCConnector
 
     fun addPoint(){
-        val nazwa = findViewById<TextView>(R.id.nazwa)
+        val nazwa = findViewById<TextView>(R.id.name)
         val online = findViewById<TextView>(R.id.online)
-        val km = findViewById<TextView>(R.id.kilometr)
-        val wsp = findViewById<TextView>(R.id.wspolrzedne)
+        val km = findViewById<TextView>(R.id.km)
+        val wsp = findViewById<TextView>(R.id.coordinates)
         val addBtn = findViewById<Button>(R.id.addPointButton)
         val backBtn = findViewById<Button>(R.id.btnBack)
 
@@ -33,8 +33,8 @@ class CreatePointActivity : AppCompatActivity() {
                     " value (?, ?, ?, ?);")
             connector.setStrVar(nazwa.text.toString(), 2)
             connector.setStrVar(online.text.toString(), 1)
-            connector.setStrVar(kilometr.text.toString(), 3)
-            connector.setStrVar(wspolrzedne.text.toString(), 4)
+            connector.setStrVar(km.text.toString(), 3)
+            connector.setStrVar(wsp.text.toString(), 4)
 
             connector.executeQuery()
         } catch (e : Exception){
@@ -55,10 +55,10 @@ class CreatePointActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_point)
 
-        val nazwa = findViewById<TextView>(R.id.nazwa)
+        val nazwa = findViewById<TextView>(R.id.name)
         val online = findViewById<TextView>(R.id.online)
-        val km = findViewById<TextView>(R.id.kilometr)
-        val wsp = findViewById<TextView>(R.id.wspolrzedne)
+        val km = findViewById<TextView>(R.id.km)
+        val wsp = findViewById<TextView>(R.id.coordinates)
         val addBtn = findViewById<Button>(R.id.addPointButton)
         val backBtn = findViewById<Button>(R.id.btnBack)
 
@@ -86,7 +86,7 @@ class CreatePointActivity : AppCompatActivity() {
                     isCorrect = false
                 }
 
-                else if (checkIfPresentInDB(kilometr.toString(), "kilometr" ))
+                else if (checkIfPresentInDB(km.toString(), "kilometr" ))
                 {
                     Toast.makeText(
                         this@CreatePointActivity,
@@ -116,7 +116,7 @@ class CreatePointActivity : AppCompatActivity() {
                     isCorrect = false
                 }
 
-                else if (checkIfPresentInDB(wspolrzedne.toString(), "współrzędne_geograficzne" ))
+                else if (checkIfPresentInDB(wsp.toString(), "współrzędne_geograficzne" ))
                 {
                     Toast.makeText(
                         this@CreatePointActivity,

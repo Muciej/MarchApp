@@ -31,7 +31,7 @@
         tools:ignore="SpeakableTextPresentCheck" />
 
     <EditText
-        android:id="@+id/nazwa"
+        android:id="@+id/name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/signInText"
@@ -41,23 +41,23 @@
         android:layout_marginBottom="10dp"
         android:background="@drawable/edit_text_background"
         android:drawablePadding="20dp"
-        android:hint="Nazwa"
+        android:hint="@string/stage_name"
         android:padding="20dp"
         android:textColor="@color/black"
         android:textColorHint="@color/black" />
 
     <EditText
-        android:id="@+id/kilometr"
+        android:id="@+id/km"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/nazwa"
+        android:layout_below="@+id/name"
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/edit_text_background"
         android:drawablePadding="20dp"
-        android:hint="Kilometr"
+        android:hint="@string/distance_from_origin"
         android:padding="20dp"
         android:textColor="@color/black"
         android:textColorHint="@color/black" />
@@ -66,21 +66,21 @@
         android:id="@+id/online"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/kilometr"
+        android:layout_below="@+id/km"
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/edit_text_background"
         android:drawablePadding="20dp"
-        android:hint="Online (1-tak, 0-nie)"
+        android:hint="@string/stage_type"
         android:inputType="textPassword"
         android:padding="20dp"
         android:textColor="@color/black"
         android:textColorHint="@color/black" />
 
     <EditText
-        android:id="@+id/wspolrzedne"
+        android:id="@+id/coordinates"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/online"
@@ -90,7 +90,7 @@
         android:layout_marginBottom="10dp"
         android:background="@drawable/edit_text_background"
         android:drawablePadding="20dp"
-        android:hint="Współrzędne geograficzne"
+        android:hint="@string/geographic_coordinates"
         android:padding="20dp"
         android:textColor="@color/black"
         android:textColorHint="@color/black" />
@@ -100,12 +100,13 @@
         android:id="@+id/addPointButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/wspolrzedne"
+        android:layout_below="@+id/coordinates"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="40dp"
         android:layout_marginTop="40dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/edit_text_background"
-        android:text="Dodaj punkt kontrolny" />
+        android:text="@string/add_stage" />
+
 </RelativeLayout>

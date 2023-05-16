@@ -62,7 +62,7 @@
             android:padding="4dp"
             android:text="M20"
             android:textAlignment="center"
-            android:textColor="@color/black" />
+            android:textColor="@color/white" />
 
         <TextView
             android:layout_width="0dp"
@@ -75,7 +75,7 @@
             android:padding="4dp"
             android:text="K20"
             android:textAlignment="center"
-            android:textColor="@color/black" />
+            android:textColor="@color/white" />
 
         <TextView
             android:layout_width="0dp"
@@ -88,7 +88,7 @@
             android:padding="4dp"
             android:text="M50"
             android:textAlignment="center"
-            android:textColor="@color/black" />
+            android:textColor="@color/white" />
 
     </LinearLayout>
 

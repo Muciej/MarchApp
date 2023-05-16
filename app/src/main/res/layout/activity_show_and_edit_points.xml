@@ -50,7 +50,7 @@
         android:layout_below="@+id/ChooseVolonteersTextView"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="15dp"
-        android:background="@android:drawable/editbox_background"
+        android:background="@android:drawable/editbox_dropdown_dark_frame"
         android:drawableEnd="@drawable/ic_baseline_arrow_drop_down_24"
         android:gravity="center_vertical"
         android:hint="Wybierz punkt"
