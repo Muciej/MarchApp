@@ -5,10 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
-import android.widget.ScrollView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.dreamteam.marchapp.R
 import com.dreamteam.marchapp.database.DBConnector
 import com.dreamteam.marchapp.database.JDBCConnector
@@ -34,7 +32,7 @@ class ModifyPoints : AppCompatActivity() {
         //TODO a jak to dodać do listy?
 
         btnBack.setOnClickListener{
-            val Intent = Intent(this, Organisatormain2::class.java)
+            val Intent = Intent(this, OrganisatorModifyEventMenu::class.java)
             startActivity(Intent)
         }
 

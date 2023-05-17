@@ -177,7 +177,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".logic.organiser.Organisatormain2"
+            android:name=".logic.organiser.OrganisatorModifyEventMenu"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

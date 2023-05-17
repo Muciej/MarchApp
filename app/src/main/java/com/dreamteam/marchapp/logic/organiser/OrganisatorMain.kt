@@ -4,8 +4,9 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
-import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import com.dreamteam.marchapp.R
+import com.dreamteam.marchapp.database.DataViewModel
 import com.dreamteam.marchapp.database.JDBCConnector
 import com.dreamteam.marchapp.logic.shared.ChangePassword
 import com.dreamteam.marchapp.logic.shared.ChooseMarchActivity
@@ -14,10 +15,12 @@ import com.dreamteam.marchapp.logic.shared.ViewSt
 import kotlinx.android.synthetic.main.activity_organisator_main.*
 
 class OrganisatorMain : AppCompatActivity() {
+    private lateinit var dataViewModel: DataViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_organisator_main)
+        dataViewModel = ViewModelProvider(this)[DataViewModel::class.java]
 
         /*
 
@@ -40,7 +43,7 @@ class OrganisatorMain : AppCompatActivity() {
 
 
         modify_event_btn.setOnClickListener {
-            val Intent = Intent(this, Organisatormain2::class.java)
+            val Intent = Intent(this, OrganisatorModifyEventMenu::class.java)
             startActivity(Intent)
         }
 
@@ -56,13 +59,13 @@ class OrganisatorMain : AppCompatActivity() {
 //tu
         participant.setOnClickListener{
             val intent = Intent(this, ShowAndEditParticipant::class.java)
-            intent.putExtra("accessLevel", "Organiser")
+//            intent.putExtra("accessLevel", "Organiser")   //chyba teraz niepotrzebne
             startActivity(intent)
         }
 
         volunteers.setOnClickListener{
             val Intent = Intent(this, ShowVolunteers::class.java)
-            Intent.putExtra("accessLevel", "Organiser")
+//            Intent.putExtra("accessLevel", "Organiser")   //chyba teraz niepotrzebne
             startActivity(Intent)
         }
 
@@ -72,7 +75,7 @@ class OrganisatorMain : AppCompatActivity() {
         }
 
         log_out_from_org_account.setOnClickListener{
-            JDBCConnector.closeConnection()
+            dataViewModel.logoutUser()
             val Intent = Intent(this, ChooseMarchActivity::class.java)
             startActivity(Intent)
         }

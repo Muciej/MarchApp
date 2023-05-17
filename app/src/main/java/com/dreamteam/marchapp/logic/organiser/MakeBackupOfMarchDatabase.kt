@@ -16,7 +16,7 @@ class MakeBackupOfMarchDatabase : AppCompatActivity() {
         val backupButton = findViewById<Button>(R.id.backupButton)
 
         btnBack.setOnClickListener{
-            val Intent = Intent(this, Organisatormain2::class.java)
+            val Intent = Intent(this, OrganisatorModifyEventMenu::class.java)
             startActivity(Intent)
         }
         //TODO: tutaj znajdować się będzie zapytanie, tworzące backup bazy.

@@ -8,13 +8,6 @@ import android.widget.TextView
 import android.widget.Toast
 import com.dreamteam.marchapp.R
 import com.dreamteam.marchapp.database.JDBCConnector
-import com.dreamteam.marchapp.logic.config.PasswordEncoder
-import com.dreamteam.marchapp.logic.shared.CodeQr.createCode
-import com.dreamteam.marchapp.logic.validation.NameValidator
-import com.dreamteam.marchapp.logic.validation.PasswordValidator
-import com.dreamteam.marchapp.logic.validation.LastNameValidator
-import com.dreamteam.marchapp.logic.validation.UsernameValidator
-import kotlinx.android.synthetic.main.activity_create_point.*
 
 class CreatePointActivity : AppCompatActivity() {
 
@@ -64,7 +57,7 @@ class CreatePointActivity : AppCompatActivity() {
 
 
         backBtn.setOnClickListener {
-            val Intent = Intent(this, Organisatormain2::class.java)
+            val Intent = Intent(this, OrganisatorModifyEventMenu::class.java)
             startActivity(Intent)
         }
 
@@ -133,7 +126,7 @@ class CreatePointActivity : AppCompatActivity() {
                         "Dodanie punktu przebiegło poprawnie!",
                         Toast.LENGTH_SHORT
                     ).show()
-                    val intent = Intent(this, Organisatormain2::class.java)
+                    val intent = Intent(this, OrganisatorModifyEventMenu::class.java)
                     startActivity(intent)
                 }
             }
