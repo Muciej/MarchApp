@@ -291,6 +291,13 @@
                 android:value="" />
         </activity>
         <activity
+            android:name=".logic.participant.ParticipantStatistics"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".logic.shared.ChangePassword"
             android:exported="false">
             <meta-data
