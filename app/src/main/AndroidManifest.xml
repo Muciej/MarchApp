@@ -87,7 +87,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".logic.organiser.ShowVolunteers"
+            android:name=".logic.organiser.ShowAndEditVolunteers"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

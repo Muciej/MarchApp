@@ -11,17 +11,17 @@ import android.text.SpannableString
 import android.text.Spanned
 import android.text.TextWatcher
 import android.text.style.ForegroundColorSpan
-import android.view.Display
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.hardware.display.DisplayManagerCompat
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.ViewModelProvider
 import com.dreamteam.marchapp.R
 import com.dreamteam.marchapp.R.id.*
+import com.dreamteam.marchapp.database.DataViewModel
 import com.dreamteam.marchapp.database.JDBCConnector
+import com.dreamteam.marchapp.database.dataclasses.Participant
 import com.dreamteam.marchapp.logic.admin.AdministratorMain
 import com.dreamteam.marchapp.logic.organiser.OrganisatorMain
 import com.dreamteam.marchapp.logic.validation.LastNameValidator
@@ -38,65 +38,79 @@ import kotlinx.android.synthetic.main.dialog_edit_user.view.*
 import kotlinx.android.synthetic.main.dialog_zoom_data.view.backb
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.reflect.KProperty1
 
-class ShowAndEditParticipant : AppCompatActivity(), TableDataClickListener<Array<String>> {
-    var lastClickedRow = -1
-    lateinit var data : MutableList<Array<String>>
+class ShowAndEditParticipant : AppCompatActivity(), TableDataClickListener<Array<String>>{
+    private var lastClickedRow = -1
+    var data : MutableList<Array<String>> = mutableListOf()
     lateinit var adapterData: SimpleTableDataAdapter
     lateinit var tableView : TableView<Array<String>>
-    lateinit var editModeCheckbox : CheckBox
-    lateinit var volunteersList : ArrayList<String>
-    var connector = JDBCConnector
+    private lateinit var editModeCheckbox : CheckBox
+    private lateinit var backBtn : Button
+    private lateinit var adapter : ArrayAdapter<String>
     lateinit var customSpinner : TextView
+    private lateinit var participantList :MutableList<Participant>
+    var participantNames = Vector<String>()
+    private lateinit var dataViewModel: DataViewModel
+
+    private fun participantUpdated(newParticipants: ArrayList<Participant>) {
+        participantList = newParticipants
+        participantNames.clear()
+        participantNames.add("wszyscy")
+        for(participant in newParticipants){
+            participantNames.add("${participant.name} ${participant.surname}")
+        }
+        participantNames.add("nie wybrano")
+
+        adapter = ArrayAdapter(this@ShowAndEditParticipant, android.R.layout.simple_list_item_1, participantNames)
+
+        adapterData = SimpleTableDataAdapter(this@ShowAndEditParticipant, initData())
+        adapterData.setTextSize(12)
+        adapterData.setTextColor(Color.BLACK)
+        tableView.dataAdapter = adapterData
+    }
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_organiser_show_volunteers)
-        var accessLevel = intent.getStringExtra("accessLevel")
-        val backBtn = findViewById<Button>(btnBack)
-        val adapterHead = SimpleTableHeaderAdapter(this@ShowAndEditParticipant, "Id","Nr", "Imie", "Nazwisko", "Pseudonim")
+
+        dataViewModel = ViewModelProvider(this)[DataViewModel::class.java]
+        dataViewModel.allParticipants.observe(this, androidx.lifecycle.Observer {
+                newParticipants -> participantUpdated(newParticipants)
+        })
+
+        customSpinner = findViewById(textView)
+        backBtn = findViewById(btnBack)
+        editModeCheckbox = findViewById(editCheckbox)
+        val title = findViewById<TextView>(ChooseVolonteersTextView)
+        val hint = findViewById<TextView>(textView)
+
+        hint.text = "Wybierz uczestnika"
+        title.text = "Wybierz uczestnika"
+
+
+        //inicjalizacja tabeli
         tableView = findViewById<View>(volunteersTable) as TableView<Array<String>>
         tableView.addDataClickListener(this)
         tableView.setHeaderBackgroundColor(Color.rgb(		98, 0, 238))
+
+        //kolory wierszy na przemian
         val colorEvenRows = Color.rgb(224,224,224)
         val colorOddRows = Color.WHITE
-        customSpinner = findViewById<TextView>(textView)
         tableView.setDataRowBackgroundProvider(
             TableDataRowBackgroundProviders.alternatingRowColors(
                 colorEvenRows,
                 colorOddRows
             )
         )
-        editModeCheckbox = findViewById<CheckBox>(editCheckbox)
-        if (accessLevel == "Organiser" || accessLevel == "Volunteer")
-        {
-            editModeCheckbox.isClickable=false
-            editModeCheckbox.visibility=View.INVISIBLE
-        }
 
-        val title = findViewById<TextView>(R.id.ChooseVolonteersTextView)
-        title.text = "Wybierz uczestnika"
-
-        val hint = findViewById<TextView>(R.id.textView)
-        hint.text = "Wybierz uczestnika"
-
-        init_volunteers()
-
-
-        backBtn.setOnClickListener{
-            lateinit var intent : Intent
-            if (accessLevel == "Organiser") intent = Intent(this, OrganisatorMain::class.java)
-            else if (accessLevel == "Admin") intent = Intent(this, AdministratorMain::class.java)
-            else if (accessLevel == "Volunteer") intent = Intent(this, VolunteerMain::class.java)
-            startActivity(intent)
-        }
-
+        val adapterHead = SimpleTableHeaderAdapter(this@ShowAndEditParticipant, "Id","Nr", "Imie", "Nazwisko", "Pseudonim")
         tableView.headerAdapter = adapterHead
         adapterHead.setTextSize(15)
         adapterHead.setTextColor(Color.WHITE)
         tableView.dataAdapter = SimpleTableDataAdapter(this, arrayOf())
-
-
 
         val columnModel = TableColumnPxWidthModel(5, 200)
         columnModel.setColumnWidth(0, 80)
@@ -108,126 +122,112 @@ class ShowAndEditParticipant : AppCompatActivity(), TableDataClickListener<Array
 
 
 
-        customSpinner.setOnClickListener{
-            val dialog = Dialog(this@ShowAndEditParticipant)
-            dialog.setContentView(R.layout.dialog_searchable_spinner)
-            dialog.window?.setLayout(800,800)
-            dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-            dialog.show()
 
-            val edittext = dialog.findViewById<EditText>(edit_text)
-            val listview = dialog.findViewById<ListView>(listView)
-            val adapter = ArrayAdapter(this@ShowAndEditParticipant, android.R.layout.simple_list_item_1, volunteersList)
-
-            listview.adapter = adapter
-
-            edittext.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-
-                override fun onTextChanged(charSequence: CharSequence, p1: Int, p2: Int, p3: Int) {
-                    adapter.filter.filter(charSequence)
-                }
-                override fun afterTextChanged(p0: Editable?) {}})
+        val accessLevel = intent.getStringExtra("accessLevel")
+        if (accessLevel == "Organiser" || accessLevel == "Volunteer")
+        {
+            editModeCheckbox.isClickable=false
+            editModeCheckbox.visibility=View.INVISIBLE
+        }
 
 
-            listview.onItemClickListener =
-                AdapterView.OnItemClickListener { p0, p1, p2, p3 ->
-                    customSpinner.text = adapter.getItem(p2)
+        backBtn.setOnClickListener{
+            lateinit var intent : Intent
+            when (accessLevel) {
+                "Organiser" -> intent = Intent(this, OrganisatorMain::class.java)
+                "Admin" -> intent = Intent(this, AdministratorMain::class.java)
+                "Volunteer" -> intent = Intent(this, VolunteerMain::class.java)
+            }
+            startActivity(intent)
+        }
 
-                    adapterData = if (listview.getItemAtPosition(p2).toString().lowercase() == "wszyscy") SimpleTableDataAdapter(this@ShowAndEditParticipant, initData())
-                    else if (listview.getItemAtPosition(p2).toString().lowercase()!="nie wybrano") SimpleTableDataAdapter(this@ShowAndEditParticipant, selectData(listview.getItemAtPosition(p2).toString()))
-                    else SimpleTableDataAdapter(this@ShowAndEditParticipant, arrayOf())
-                    adapterData.setTextSize(12)
-                    adapterData.setTextColor(Color.BLACK)
-                    tableView.dataAdapter = adapterData
-                    dialog.dismiss()
-                }
+
+        customSpinner.setOnClickListener{ show_dialog() }
+    }
+
+
+
+    private fun show_dialog() {
+        val dialog = Dialog(this@ShowAndEditParticipant)
+        dialog.setContentView(R.layout.dialog_searchable_spinner)
+        dialog.window?.setLayout(800,800)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.show()
+
+        val edittext = dialog.findViewById<EditText>(edit_text)
+        val listview = dialog.findViewById<ListView>(listView)
+
+        listview.adapter = adapter
+
+        edittext.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun onTextChanged(charSequence: CharSequence, p1: Int, p2: Int, p3: Int) {
+                adapter.filter.filter(charSequence)
+            }
+            override fun afterTextChanged(p0: Editable?) {}})
+
+
+        listview.onItemClickListener =
+            AdapterView.OnItemClickListener { _, _, p2, _ ->
+                customSpinner.text = adapter.getItem(p2)
+
+                adapterData = if (listview.getItemAtPosition(p2).toString().lowercase() == "wszyscy") SimpleTableDataAdapter(this@ShowAndEditParticipant, initData())
+                else if (listview.getItemAtPosition(p2).toString().lowercase()!="nie wybrano") SimpleTableDataAdapter(this@ShowAndEditParticipant, selectData(listview.getItemAtPosition(p2).toString()))
+                else SimpleTableDataAdapter(this@ShowAndEditParticipant, arrayOf())
+                adapterData.setTextSize(12)
+                adapterData.setTextColor(Color.BLACK)
+                tableView.dataAdapter = adapterData
+                dialog.dismiss()
+            }
 
     }
-    }
+
     private fun selectData(name: String):MutableList<Array<String>>
     {
         val dataa = name.split(" ")
-        connector.prepareQuery("select id_konta, nr_startowy,imie, nazwisko, pseudonim from uczestnicy  where imie='" + dataa[0] + "' and nazwisko = '" + dataa[1] + "';")
-        connector.executeQuery()
+        val participant:Participant = participantList!!.filter { it.name == dataa[0] && it.surname == dataa[1] }.first()
 
+        data.clear()
+        data.add(arrayOf(
+            participant.accId.toString(),
+            participant.startNumber.toString(),
+            participant.name,
+            participant.surname,
+            participant.nickname))
 
-        var temp: Vector<String>? = null
-        data = mutableListOf()
-        temp = connector.getRow(0,5)
-        data.add(temp.toTypedArray())
-        connector.closeQuery()
         return data
     }
 
     private fun initData():MutableList<Array<String>>
     {
-        connector.prepareQuery("select id_konta, nr_startowy,imie, nazwisko, pseudonim from uczestnicy;")
-        connector.executeQuery()
-        var temp: Vector<String>? = null
-        var counter = 1
-
-        //należy zainicjalizować
-        data = mutableListOf()
-        while(true)
-        {
-            try {
-                temp = connector.getCurrRow(5)
-                connector.moveRow()
-//                temp = connector.getRow(counter,5)
-                data.add(temp.toTypedArray())
-                counter++;
-            }
-            catch (e: Exception)
-            {
-                break;
-            }
-        }
-        connector.closeQuery()
+        data.clear()
+        participantList.forEach { data.add(arrayOf(
+            it.accId.toString(),
+            it.startNumber.toString(),
+            it.name,
+            it.surname,
+            it.nickname)) }
         return data
     }
 
     private fun checkIfPresentInDB(obj : String, field : String, id:Int) : Boolean {
-        connector.prepareQuery("SELECT count(id_konta) FROM uczestnicy where $field = '$obj' and id_konta!=$id;")
-        connector.executeQuery()
-        //tzn ze nikt w bazie (poza obecna osoba) nie ma takiego pola
-        if (connector.getColInts(1)[0] == 0){
-            return false
-        }
-        return true
+        /*
+        return participantList.any { participant ->
+            val fieldValue = participant::class.members
+                .filterIsInstance<KProperty1<Participant, Any?>>()
+                .find { it.name == field }
+                ?.get(participant)
+                ?.toString()
+
+            fieldValue == obj}
+
+         */
+
+        if (field == "nr_startowy") return participantList.any { participant -> participant.startNumber == obj.toInt()}
+        else if (field == "pseudonim") return participantList.any { participant -> participant.nickname == obj}
+        return false
     }
-
-
-    private fun init_volunteers()
-    {
-        connector.startConnection()
-        connector.prepareQuery("select imie, nazwisko from uczestnicy")
-        connector.executeQuery()
-
-        volunteersList = ArrayList<String>()
-        volunteersList.add("Nie wybrano")
-        var temp: Vector<String>? = null
-        var counter = 1
-
-        while(true)
-        {
-            try {
-                temp = connector.getCurrRow(2)
-                connector.moveRow()
-                volunteersList.add(temp[0] + " " + temp[1])
-                counter++;
-            }
-            catch (e: Exception)
-            {
-                break;
-            }
-        }
-        connector.closeQuery()
-        volunteersList.add("Wszyscy")
-    }
-
-
-
 
     override fun onDataClicked(rowIndex: Int, clickedData: Array<String>?) {
 
@@ -242,12 +242,12 @@ class ShowAndEditParticipant : AppCompatActivity(), TableDataClickListener<Array
                     inflater: LayoutInflater,
                     container: ViewGroup?,
                     savedInstanceState: Bundle?
-                ): View? {
+                ): View {
 
-                    getDialog()!!.getWindow()?.setBackgroundDrawableResource(R.drawable.round_corners);
+                    dialog!!.window?.setBackgroundDrawableResource(R.drawable.round_corners)
                     dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
                     dialog?.window?.setLayout(1000,900)
-                    var rootView : View = inflater.inflate(R.layout.dialog_zoom_data_user, container, false)
+                    val rootView : View = inflater.inflate(R.layout.dialog_zoom_data_user, container, false)
                     rootView.backb.setOnClickListener { dismiss() }
 
                     val name = rootView.findViewById<TextView>(R.id.name)
@@ -276,7 +276,7 @@ class ShowAndEditParticipant : AppCompatActivity(), TableDataClickListener<Array
 
                 override fun onStart() {
                     super.onStart()
-                    getDialog()!!.getWindow()?.setBackgroundDrawableResource(R.drawable.round_corners);
+                    dialog!!.window?.setBackgroundDrawableResource(R.drawable.round_corners)
                     val defaultDisplay = DisplayManagerCompat.getInstance(requireContext()).getDisplay(
                         Display.DEFAULT_DISPLAY
                     )
@@ -301,29 +301,31 @@ class ShowAndEditParticipant : AppCompatActivity(), TableDataClickListener<Array
                     inflater: LayoutInflater,
                     container: ViewGroup?,
                     savedInstanceState: Bundle?
-                ): View? {
+                ): View {
 
 
                     dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-                    var rootView : View = inflater.inflate(R.layout.dialog_edit_user, container, false)
+                    val rootView : View = inflater.inflate(R.layout.dialog_edit_user, container, false)
                     rootView.backb.setOnClickListener { dismiss() }
 
                     rootView.editButton.setOnClickListener {
                         //chcemy do bazy danych i do tabeli wklepać wartości z edycji
 
                         //nowe wartości
-                        var editedName = edit_name.text.toString()
-                        var editedLastName = lastname_edit.text.toString()
-                        var editedStartNr = start_no_edit.text.toString()
-                        var editedPsudonim = pseudonim_edit.text.toString()
+                        val editedName = edit_name.text.toString()
+                        val editedLastName = lastname_edit.text.toString()
+                        val editedStartNr = start_no_edit.text.toString()
+                        val editedPsudonim = pseudonim_edit.text.toString()
 
-                        var rowToEdit = 0;
-                        rowToEdit = clickedData!!.get(0).toInt()
+                        val rowToEdit: Int
+                        rowToEdit = clickedData!![0].toInt()
+                        val qrCode = participantList.find { participant ->
+                            participant.accId == clickedData[0].toInt()
+                        }?.qrCodeData
 
 
-
-                        if (editedName.isNullOrBlank() || editedLastName.isNullOrBlank() ||
-                            editedPsudonim.isNullOrBlank() || editedStartNr.isNullOrBlank()
+                        if (editedName.isBlank() || editedLastName.isBlank() ||
+                            editedPsudonim.isBlank() || editedStartNr.isBlank()
                         ) {
                             Toast.makeText(this@ShowAndEditParticipant, "Żadne z pól nie może być puste", Toast.LENGTH_SHORT).show()
                         } else {
@@ -367,33 +369,16 @@ class ShowAndEditParticipant : AppCompatActivity(), TableDataClickListener<Array
 
 
                             //Po aktualizacji wracam do ekranu głównego administratora.
+
                             if (isCorrect) {
 
+                                val editedParticipant = Participant(rowToEdit, editedStartNr.toInt(), editedName, editedLastName, editedPsudonim, qrCode!!)
 
-                                connector.prepareQuery("UPDATE uczestnicy SET imie = ?, nazwisko = ?, pseudonim = ? " +
-                                        ", nr_startowy = ? WHERE id_konta = ?;")
-                                connector.setStrVar(editedName, 1)
-                                connector.setStrVar(editedLastName, 2)
-                                connector.setStrVar(editedPsudonim, 3)
-                                connector.setStrVar(editedStartNr, 4)
-                                connector.setIntVar(rowToEdit, 5)
-
-
-
-                                try{connector.executeQuery()} catch (e: Exception){print("erorr")}
-                                connector.closeQuery()
-
-                                adapterData = SimpleTableDataAdapter(this@ShowAndEditParticipant, initData())
-                                adapterData.setTextSize(12)
-                                adapterData.setTextColor(Color.BLACK)
-                                tableView.dataAdapter = adapterData
-                                init_volunteers()
+                                dataViewModel.updateParticipant(editedParticipant)
                                 customSpinner.text = ""
                                 dismiss()
-
                             }
-                            }
-
+                        }
                     }
 
 
@@ -412,7 +397,7 @@ class ShowAndEditParticipant : AppCompatActivity(), TableDataClickListener<Array
 
                 override fun onStart() {
                     super.onStart()
-                    getDialog()!!.getWindow()?.setBackgroundDrawableResource(R.drawable.round_corners);
+                    dialog!!.window?.setBackgroundDrawableResource(R.drawable.round_corners)
                     val defaultDisplay = DisplayManagerCompat.getInstance(requireContext()).getDisplay(
                         Display.DEFAULT_DISPLAY
                     )

@@ -39,7 +39,7 @@ import kotlinx.android.synthetic.main.dialog_zoom_data.view.backb
 import java.util.Vector
 
 
-class ShowVolunteers : AppCompatActivity(), TableDataClickListener<Array<String>> {
+class ShowAndEditVolunteers : AppCompatActivity(), TableDataClickListener<Array<String>> {
     var lastClickedRow = -1
     lateinit var data : MutableList<Array<String>>
     lateinit var adapterData: SimpleTableDataAdapter
@@ -59,7 +59,7 @@ class ShowVolunteers : AppCompatActivity(), TableDataClickListener<Array<String>
         val colorOddRows = Color.WHITE
         customSpinner = findViewById<TextView>(textView)
 
-        val adapterHead = SimpleTableHeaderAdapter(this@ShowVolunteers, "Id", "Imie", "Nazwisko", "telefon", "Email")
+        val adapterHead = SimpleTableHeaderAdapter(this@ShowAndEditVolunteers, "Id", "Imie", "Nazwisko", "telefon", "Email")
 
         tableView = findViewById<View>(volunteersTable) as TableView<Array<String>>
         tableView.addDataClickListener(this)
@@ -106,7 +106,7 @@ class ShowVolunteers : AppCompatActivity(), TableDataClickListener<Array<String>
         tableView.columnModel = columnModel
 
         customSpinner.setOnClickListener{
-            val dialog = Dialog(this@ShowVolunteers)
+            val dialog = Dialog(this@ShowAndEditVolunteers)
             dialog.setContentView(R.layout.dialog_searchable_spinner)
             dialog.window?.setLayout(800,800)
             dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -114,7 +114,7 @@ class ShowVolunteers : AppCompatActivity(), TableDataClickListener<Array<String>
 
             val edittext = dialog.findViewById<EditText>(edit_text)
             val listview = dialog.findViewById<ListView>(listView)
-            val adapter = ArrayAdapter(this@ShowVolunteers, android.R.layout.simple_list_item_1, volunteersList)
+            val adapter = ArrayAdapter(this@ShowAndEditVolunteers, android.R.layout.simple_list_item_1, volunteersList)
 
             listview.adapter = adapter
 
@@ -132,9 +132,9 @@ class ShowVolunteers : AppCompatActivity(), TableDataClickListener<Array<String>
                     customSpinner.text = adapter.getItem(p2)
 
                     //teraz po zmianie za każdym razem są najaktualniejsze informacje (tabela pobierana jest dopiero na tym poziomie)
-                    adapterData = if (listview.getItemAtPosition(p2).toString().lowercase() == "wszyscy") SimpleTableDataAdapter(this@ShowVolunteers, initData())
-                    else if (listview.getItemAtPosition(p2).toString().lowercase()!="nie wybrano") SimpleTableDataAdapter(this@ShowVolunteers, selectData(listview.getItemAtPosition(p2).toString())/*arrayOf(getData(data, listview.getItemAtPosition(p2) as String))*/)
-                    else SimpleTableDataAdapter(this@ShowVolunteers, arrayOf())
+                    adapterData = if (listview.getItemAtPosition(p2).toString().lowercase() == "wszyscy") SimpleTableDataAdapter(this@ShowAndEditVolunteers, initData())
+                    else if (listview.getItemAtPosition(p2).toString().lowercase()!="nie wybrano") SimpleTableDataAdapter(this@ShowAndEditVolunteers, selectData(listview.getItemAtPosition(p2).toString())/*arrayOf(getData(data, listview.getItemAtPosition(p2) as String))*/)
+                    else SimpleTableDataAdapter(this@ShowAndEditVolunteers, arrayOf())
                     adapterData.setTextSize(12)
                     adapterData.setTextColor(Color.BLACK)
                     tableView.dataAdapter = adapterData
@@ -344,20 +344,20 @@ class ShowVolunteers : AppCompatActivity(), TableDataClickListener<Array<String>
                         if (editedName.isNullOrBlank() || editedLastName.isNullOrBlank() ||
                             editedMail.isNullOrBlank() || editedPhone.isNullOrBlank()
                         ) {
-                            Toast.makeText(this@ShowVolunteers, "Żadne z pól nie może być puste", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this@ShowAndEditVolunteers, "Żadne z pól nie może być puste", Toast.LENGTH_SHORT).show()
                         } else {
                             var isCorrect = true
 
                             if (!EmailValidator.validate(editedMail)) {
                                 Toast.makeText(
-                                    this@ShowVolunteers,
+                                    this@ShowAndEditVolunteers,
                                     "Nieprawidłowy format email!",
                                     Toast.LENGTH_SHORT
                                 ).show()
                                 isCorrect = false
                             } else if (!PhoneValidator.validate(editedPhone)) {
                                 Toast.makeText(
-                                    this@ShowVolunteers,
+                                    this@ShowAndEditVolunteers,
                                     "Nieprawidłowy format numeru!",
                                     Toast.LENGTH_SHORT
                                 ).show()
@@ -366,14 +366,14 @@ class ShowVolunteers : AppCompatActivity(), TableDataClickListener<Array<String>
 
                             else if (!NameValidator.validate(editedName)) {
                                 Toast.makeText(
-                                    this@ShowVolunteers,
+                                    this@ShowAndEditVolunteers,
                                     "Nieprawidłowy format imienia!",
                                     Toast.LENGTH_SHORT
                                 ).show()
                                 isCorrect = false
                             } else if (!LastNameValidator.validate(editedLastName)) {
                                 Toast.makeText(
-                                    this@ShowVolunteers,
+                                    this@ShowAndEditVolunteers,
                                     "Nieprawidłowy format nazwiska!",
                                     Toast.LENGTH_SHORT
                                 ).show()
@@ -382,7 +382,7 @@ class ShowVolunteers : AppCompatActivity(), TableDataClickListener<Array<String>
                             else if (checkIfPresentInDB(editedPhone, "nr_telefonu", rowToEdit ))
                             {
                                 Toast.makeText(
-                                    this@ShowVolunteers,
+                                    this@ShowAndEditVolunteers,
                                     "Osoba o podanym nr telefonu już istnieje w bazie!",
                                     Toast.LENGTH_SHORT
                                 ).show()
@@ -391,7 +391,7 @@ class ShowVolunteers : AppCompatActivity(), TableDataClickListener<Array<String>
                             else if (checkIfPresentInDB(editedMail, "mail", rowToEdit))
                             {
                                 Toast.makeText(
-                                    this@ShowVolunteers,
+                                    this@ShowAndEditVolunteers,
                                     "Osoba o podanym mailu już istnieje w bazie!",
                                     Toast.LENGTH_SHORT
                                 ).show()
@@ -440,7 +440,7 @@ class ShowVolunteers : AppCompatActivity(), TableDataClickListener<Array<String>
                                 //dane w bazie zmienione
 
 
-                                adapterData = SimpleTableDataAdapter(this@ShowVolunteers,initData())
+                                adapterData = SimpleTableDataAdapter(this@ShowAndEditVolunteers,initData())
                                 adapterData.setTextSize(12)
                                 adapterData.setTextColor(Color.BLACK)
                                 tableView.dataAdapter = adapterData

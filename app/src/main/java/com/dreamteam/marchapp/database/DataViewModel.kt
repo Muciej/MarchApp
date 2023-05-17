@@ -42,6 +42,12 @@ class DataViewModel(application: Application) : AndroidViewModel(application){
         }
     }
 
+    fun updateParticipant(participant: Participant){
+        viewModelScope.launch(Dispatchers.IO){
+            dbObject.updateParticipant(participant)
+        }
+    }
+
     fun addNewVolounteer(volounteer: Volounteer){
         viewModelScope.launch(Dispatchers.IO){
             dbObject.addNewVolounteer(volounteer)

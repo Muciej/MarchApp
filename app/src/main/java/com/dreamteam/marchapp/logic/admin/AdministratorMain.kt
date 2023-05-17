@@ -4,10 +4,9 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
-import android.widget.Toast
 import com.dreamteam.marchapp.R
 import com.dreamteam.marchapp.database.JDBCConnector
-import com.dreamteam.marchapp.logic.organiser.ShowVolunteers
+import com.dreamteam.marchapp.logic.organiser.ShowAndEditVolunteers
 import com.dreamteam.marchapp.logic.shared.ChangePassword
 import com.dreamteam.marchapp.logic.shared.ChooseMarchActivity
 import com.dreamteam.marchapp.logic.shared.ViewSt
@@ -43,7 +42,7 @@ class AdministratorMain : AppCompatActivity() {
         }
 
         updVolBtn.setOnClickListener{
-            val intent = Intent(this, ShowVolunteers::class.java)
+            val intent = Intent(this, ShowAndEditVolunteers::class.java)
             intent.putExtra("accessLevel", "Admin")
             startActivity(intent)
         }
