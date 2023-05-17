@@ -9,7 +9,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/wybierz_wolontariusza"
+        android:text="@string/volunteers_data"
         android:textSize="20sp"
         android:textColor="@color/white"
         android:textStyle="bold" />
@@ -21,7 +21,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:background="@android:drawable/editbox_dropdown_dark_frame"
-        android:hint="@string/wybierz"
+        android:hint="@string/choose"
         android:padding="12dp"
         android:singleLine="true" />
 
@@ -29,6 +29,5 @@
         android:id="@+id/listView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-
 
 </LinearLayout>

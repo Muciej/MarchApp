@@ -12,8 +12,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="30dp"
         android:gravity="center"
-        android:text="Ekran wolontariusza"
-        android:textSize="20dp"
+        android:text="@string/volunteer_screen"
+        android:textSize="20sp"
         android:textStyle="bold" />
 
     <Button
@@ -27,7 +27,7 @@
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="15dp"
         android:background="@drawable/edit_text_background"
-        android:text="Statystyki uczestników" />
+        android:text="@string/contestants_statistics" />
 
     <Button
         android:id="@+id/myPoint"
@@ -40,7 +40,7 @@
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="15dp"
         android:background="@drawable/edit_text_background"
-        android:text="Punkt kontrolny" />
+        android:text="@string/stage" />
 
     <Button
         android:id="@+id/view_statistics"
@@ -53,7 +53,7 @@
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="15dp"
         android:background="@drawable/edit_text_background"
-        android:text="Zobacz statystyki" />
+        android:text="@string/see_statistics" />
 
     <Button
         android:id="@+id/scanner"
@@ -66,7 +66,7 @@
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="15dp"
         android:background="@drawable/edit_text_background"
-        android:text="Zeskanuj uczestnika" />
+        android:text="@string/scan_contestant" />
 
     <Button
         android:id="@+id/changePass"
@@ -79,7 +79,7 @@
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/edit_text_background"
-        android:text="Zmień hasło" />
+        android:text="@string/change_password" />
 
     <Button
         android:id="@+id/logOut"
@@ -92,6 +92,6 @@
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="15dp"
         android:background="@drawable/edit_text_background"
-        android:text="Wyloguj się" />
+        android:text="@string/log_out" />
 
 </RelativeLayout>

@@ -10,7 +10,7 @@
         android:textColor="@color/black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/edycja_danych"
+        android:text="Edycja danych"
         android:layout_gravity="center"
         android:textSize="25sp"
         android:textStyle="bold"/>
@@ -24,7 +24,7 @@
             android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/imie"
+            android:text="@string/name_colon"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -41,8 +41,7 @@
             android:textColor="@color/black"
             android:paddingBottom="3dp"
             android:paddingTop="3dp"
-            android:paddingLeft="10dp"
-            />
+            android:paddingLeft="10dp" />
 
     </RelativeLayout>
 
@@ -55,7 +54,7 @@
             android:id="@+id/lastname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/nazwisko"
+            android:text="@string/lastname_colon"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -71,8 +70,7 @@
             android:textColor="@color/black"
             android:paddingBottom="3dp"
             android:paddingTop="3dp"
-            android:paddingLeft="10dp"
-             />
+            android:paddingLeft="10dp" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -84,7 +82,7 @@
             android:id="@+id/start_no"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Nr startowy: "
+            android:text="@string/starting_number"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -113,7 +111,7 @@
             android:id="@+id/pseudonim"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Psudonim: "
+            android:text="@string/pseudonim_colon"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -129,13 +127,13 @@
             android:background="@drawable/edit_text_background"
             android:paddingLeft="10dp"
             android:textStyle="bold"
-            android:textColor="@color/black"
-            />
+            android:textColor="@color/black" />
     </RelativeLayout>
 
     <GridLayout
         android:layout_height="match_parent"
         android:layout_width="match_parent">
+
         <Button
             android:id="@+id/backb"
             android:layout_width="wrap_content"
@@ -143,7 +141,7 @@
             android:layout_marginStart="30dp"
             android:background="@drawable/edit_text_background"
             android:layout_marginTop="20dp"
-            android:text="@string/powrot" />
+            android:text="@string/return_button" />
 
         <Button
             android:id="@+id/editButton"
@@ -152,8 +150,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/edit_text_background"
             android:layout_marginTop="20dp"
-            android:text="@string/zapisz_zmiany" />
+            android:text="@string/save_changes" />
     </GridLayout>
-
 
 </LinearLayout>
