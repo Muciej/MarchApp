@@ -17,7 +17,7 @@ class DeletePoint : AppCompatActivity() {
         val noBtn = findViewById<Button>(R.id.no_btn)
 
         btnBack.setOnClickListener{
-            val Intent = Intent(this, Organisatormain2::class.java)
+            val Intent = Intent(this, OrganisatorModifyEventMenu::class.java)
             startActivity(Intent)
         }
 
@@ -26,12 +26,12 @@ class DeletePoint : AppCompatActivity() {
             //TODO: Tu będzie lecieć zapytanie odnośnie usunięcia punktu
             Toast.makeText(this, "Punkt został usunięty", Toast.LENGTH_SHORT)
                 .show()
-            val Intent = Intent(this, Organisatormain2::class.java)
+            val Intent = Intent(this, OrganisatorModifyEventMenu::class.java)
             startActivity(Intent)
         }
 
         noBtn.setOnClickListener {
-            val Intent = Intent(this, Organisatormain2::class.java)
+            val Intent = Intent(this, OrganisatorModifyEventMenu::class.java)
             startActivity(Intent)
         }
 

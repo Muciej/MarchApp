@@ -13,7 +13,7 @@ class ModifyParticipantsData : AppCompatActivity() {
 
         val btn_back = findViewById<Button>(R.id.btnForward)
         btn_back.setOnClickListener{
-            val Intent = Intent(this, Organisatormain2::class.java)
+            val Intent = Intent(this, OrganisatorModifyEventMenu::class.java)
             startActivity(Intent)
         }
     }

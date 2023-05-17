@@ -70,7 +70,7 @@ class ShowAndEditPoints : AppCompatActivity(), TableDataClickListener<Array<Stri
 
         backBtn.setOnClickListener{
             lateinit var intent : Intent
-            intent = Intent(this, Organisatormain2::class.java)
+            intent = Intent(this, OrganisatorModifyEventMenu::class.java)
             startActivity(intent)
         }
 
