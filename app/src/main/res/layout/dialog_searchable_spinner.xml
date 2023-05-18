@@ -6,13 +6,6 @@
     android:background="#939090"
     android:padding="16dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/wybierz_wolontariusza"
-        android:textSize="20sp"
-        android:textColor="@color/white"
-        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/edit_text"
