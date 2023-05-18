@@ -1,6 +1,7 @@
 package com.dreamteam.marchapp.logic.organiser
 
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
@@ -19,9 +20,11 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.hardware.display.DisplayManagerCompat
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.ViewModelProvider
 import com.dreamteam.marchapp.R
 import com.dreamteam.marchapp.R.id.*
-import com.dreamteam.marchapp.database.JDBCConnector
+import com.dreamteam.marchapp.database.DataViewModel
+import com.dreamteam.marchapp.database.dataclasses.Volounteer
 import com.dreamteam.marchapp.logic.admin.AdministratorMain
 import com.dreamteam.marchapp.logic.validation.EmailValidator
 import com.dreamteam.marchapp.logic.validation.LastNameValidator
@@ -37,27 +40,130 @@ import kotlinx.android.synthetic.main.dialog_edit_volunteers.*
 import kotlinx.android.synthetic.main.dialog_edit_volunteers.view.*
 import kotlinx.android.synthetic.main.dialog_zoom_data.view.backb
 import java.util.Vector
+import com.dreamteam.marchapp.databinding.ActivityOrganiserShowVolunteersBinding
 
 
 class ShowAndEditVolunteers : AppCompatActivity(), TableDataClickListener<Array<String>> {
-    var lastClickedRow = -1
-    lateinit var data : MutableList<Array<String>>
-    lateinit var adapterData: SimpleTableDataAdapter
-    lateinit var tableView : TableView<Array<String>>
-    lateinit var editModeCheckbox : CheckBox
-    lateinit var volunteersList : ArrayList<String>
-    var connector = JDBCConnector
-    lateinit var customSpinner : TextView
+    private var lastClickedRow = -1
+    var data : MutableList<Array<String>> = mutableListOf()
+    private lateinit var tableView : TableView<Array<String>>
+    private lateinit var adapter : ArrayAdapter<String>
+    private lateinit var volunteersList :MutableList<Volounteer>
+    private var volunteersNames = Vector<String>()
+    private lateinit var dataViewModel: DataViewModel
+    private lateinit var binding: ActivityOrganiserShowVolunteersBinding
+    private lateinit var dataAdapter : SimpleTableDataAdapter
 
+    private lateinit var volunteersToShow : MutableList<Array<String>>
+    private var accessLevel = ""
+
+
+
+    private fun volunteerUpdated(newVolunteers: ArrayList<Volounteer>) {
+        volunteersList = newVolunteers
+        volunteersNames.clear()
+        volunteersNames.add("wszyscy")
+        volunteersNames.addAll(newVolunteers.map { "${it.name} ${it.surname}" })
+        volunteersNames.add("nie wybrano")
+
+        init_spinner_and_table()
+    }
+
+    private fun init_spinner_and_table() {
+        adapter = ArrayAdapter(this@ShowAndEditVolunteers, android.R.layout.simple_list_item_1, volunteersNames)
+        volunteersToShow = initData()
+
+        dataAdapter.data.clear()
+        dataAdapter.addAll(volunteersToShow)
+        dataAdapter.notifyDataSetChanged()
+    }
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_organiser_show_volunteers)
+        binding = ActivityOrganiserShowVolunteersBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        var accessLevel = intent.getStringExtra("accessLevel")
-        val backBtn = findViewById<Button>(btnBack)
+        dataViewModel = ViewModelProvider(this)[DataViewModel::class.java]
+        dataViewModel.allVolounteers.observe(this) { newVolunteers ->
+            volunteerUpdated(newVolunteers)
+        }
+
+        //inicjalizacja tabeli
+        setTable()
+
+        accessLevel = intent.getStringExtra("accessLevel")!!
+
+        if (accessLevel == "Organiser")
+        {
+            binding.editCheckbox.isClickable=false
+            binding.editCheckbox.visibility=View.INVISIBLE
+        }
+
+
+        binding.btnBack.setOnClickListener{
+            goBack()
+        }
+
+        binding.customSpinner.setOnClickListener{
+            show_dialog() }
+    }
+
+    private fun show_dialog() {
+        val dialog = Dialog(this@ShowAndEditVolunteers)
+        dialog.setContentView(R.layout.dialog_searchable_spinner)
+        dialog.show()
+
+        val edittext = dialog.findViewById<EditText>(edit_text)
+        val listview = dialog.findViewById<ListView>(listView)
+
+        listview.adapter = adapter
+
+        edittext.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun onTextChanged(charSequence: CharSequence, p1: Int, p2: Int, p3: Int) {
+                adapter.filter.filter(charSequence)
+            }
+            override fun afterTextChanged(p0: Editable?) {}})
+
+
+        listview.onItemClickListener =
+            AdapterView.OnItemClickListener { _, _, clicked, _ ->
+                binding.customSpinner.text = adapter.getItem(clicked)
+
+                if (listview.getItemAtPosition(clicked).toString().lowercase() == "wszyscy") volunteersToShow = initData()
+                else if (listview.getItemAtPosition(clicked).toString().lowercase()!="nie wybrano") volunteersToShow = selectData(listview.getItemAtPosition(clicked).toString())
+                else volunteersToShow.clear()
+
+                dataAdapter.data.clear()
+                dataAdapter.addAll(volunteersToShow)
+                dataAdapter.notifyDataSetChanged()
+
+                dialog.dismiss()
+            }
+    }
+
+    private fun goBack() {
+        lateinit var intent : Intent
+        if (accessLevel == "Organiser") intent = Intent(this, OrganisatorMain::class.java)
+        else if (accessLevel == "Admin") intent = Intent(this, AdministratorMain::class.java)
+        startActivity(intent)
+    }
+
+    private fun setTable() {
+        tableView = findViewById<View>(volunteersTable) as TableView<Array<String>>
+        tableView.addDataClickListener(this)
+        tableView.setHeaderBackgroundColor(Color.rgb(		98, 0, 238))
+
+        //kolory wierszy na przemian
         val colorEvenRows = Color.rgb(224,224,224)
         val colorOddRows = Color.WHITE
-        customSpinner = findViewById<TextView>(textView)
+        tableView.setDataRowBackgroundProvider(
+            TableDataRowBackgroundProviders.alternatingRowColors(
+                colorEvenRows,
+                colorOddRows
+            )
+        )
 
         val adapterHead = SimpleTableHeaderAdapter(this@ShowAndEditVolunteers, "Id", "Imie", "Nazwisko", "telefon", "Email")
 
@@ -65,37 +171,9 @@ class ShowAndEditVolunteers : AppCompatActivity(), TableDataClickListener<Array<
         tableView.addDataClickListener(this)
         tableView.setHeaderBackgroundColor(Color.rgb(		98, 0, 238))
 
-        tableView.setDataRowBackgroundProvider(
-            TableDataRowBackgroundProviders.alternatingRowColors(
-                colorEvenRows,
-                colorOddRows
-            )
-        )
-        editModeCheckbox = findViewById<CheckBox>(editCheckbox)
-        if (accessLevel == "Organiser")
-        {
-            editModeCheckbox.isClickable=false
-            editModeCheckbox.visibility=View.INVISIBLE
-        }
-
-
-
-
-        init_volunteers()
-
-        backBtn.setOnClickListener{
-            lateinit var intent : Intent
-            if (accessLevel == "Organiser") intent = Intent(this, OrganisatorMain::class.java)
-            else if (accessLevel == "Admin") intent = Intent(this, AdministratorMain::class.java)
-            startActivity(intent)
-        }
-
         tableView.headerAdapter = adapterHead
         adapterHead.setTextSize(15)
         adapterHead.setTextColor(Color.WHITE)
-        tableView.dataAdapter = SimpleTableDataAdapter(this, arrayOf())
-
-
 
         val columnModel = TableColumnPxWidthModel(5, 200)
         columnModel.setColumnWidth(0, 80)
@@ -105,155 +183,56 @@ class ShowAndEditVolunteers : AppCompatActivity(), TableDataClickListener<Array<
         columnModel.setColumnWidth(4, 350)
         tableView.columnModel = columnModel
 
-        customSpinner.setOnClickListener{
-            val dialog = Dialog(this@ShowAndEditVolunteers)
-            dialog.setContentView(R.layout.dialog_searchable_spinner)
-            dialog.window?.setLayout(800,800)
-            dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-            dialog.show()
 
-            val edittext = dialog.findViewById<EditText>(edit_text)
-            val listview = dialog.findViewById<ListView>(listView)
-            val adapter = ArrayAdapter(this@ShowAndEditVolunteers, android.R.layout.simple_list_item_1, volunteersList)
+        volunteersToShow = arrayListOf()
+        dataAdapter = SimpleTableDataAdapter(this@ShowAndEditVolunteers, volunteersToShow)
 
-            listview.adapter = adapter
-
-            edittext.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-
-                override fun onTextChanged(charSequence: CharSequence, p1: Int, p2: Int, p3: Int) {
-                    adapter.filter.filter(charSequence)
-                }
-                override fun afterTextChanged(p0: Editable?) {}})
-
-
-            listview.onItemClickListener =
-                AdapterView.OnItemClickListener { p0, p1, p2, p3 ->
-                    customSpinner.text = adapter.getItem(p2)
-
-                    //teraz po zmianie za każdym razem są najaktualniejsze informacje (tabela pobierana jest dopiero na tym poziomie)
-                    adapterData = if (listview.getItemAtPosition(p2).toString().lowercase() == "wszyscy") SimpleTableDataAdapter(this@ShowAndEditVolunteers, initData())
-                    else if (listview.getItemAtPosition(p2).toString().lowercase()!="nie wybrano") SimpleTableDataAdapter(this@ShowAndEditVolunteers, selectData(listview.getItemAtPosition(p2).toString())/*arrayOf(getData(data, listview.getItemAtPosition(p2) as String))*/)
-                    else SimpleTableDataAdapter(this@ShowAndEditVolunteers, arrayOf())
-                    adapterData.setTextSize(12)
-                    adapterData.setTextColor(Color.BLACK)
-                    tableView.dataAdapter = adapterData
-                    dialog.dismiss()
-                }
-
+        dataAdapter.setTextSize(12)
+        dataAdapter.setTextColor(Color.BLACK)
+        tableView.dataAdapter = dataAdapter
     }
-    }
-
-
-    //funkcja zwracająca odpowiedni wiersz tabeli (potrzebne ponieważ podczas dopasowywania wzorców zmienia się
-    // wielkość listy a co za tym idzie także id)
-
-    //po dodaniu id można to zrobić lepiej
-    /*
-    private fun getData(list: MutableList<Array<String>>, name: String ): Array<String> {
-        val data = name.split(" ")
-        for (row in list)
-        {
-            if((row.contains(data[0])) && row.contains(data[1]))
-            {
-                return row
-            }
-        }
-        return arrayOf()
-    }
-
-     */
-
     private fun selectData(name: String):MutableList<Array<String>>
     {
-        val dataa = name.split(" ")
-        var imie = dataa[0]
-        var nazwisko = dataa[1]
-        connector.prepareQuery("select id_osoby, imie, nazwisko, nr_telefonu, mail from personel inner join konta on personel.id_konta = konta.id_konta where rola_id=2" +
-                " and imie= '$imie' and nazwisko =  '$nazwisko';")
-        connector.executeQuery()
+        val tmp = name.split(" ")
+        val volounteer: Volounteer =
+            volunteersList.first { it.name == tmp[0] && it.surname == tmp[1] }
 
-        var temp: Vector<String>? = null
-        data = mutableListOf()
-        temp = connector.getRow(0,5)
-        data.add(temp.toTypedArray())
-        connector.closeQuery()
+        data.clear()
+
+        data.add(arrayOf(
+            volounteer.accountId.toString(),
+            volounteer.name,
+            volounteer.surname,
+            volounteer.phoneNumber,
+            volounteer.mail)
+        )
         return data
     }
 
     private fun initData():MutableList<Array<String>>
     {
-        connector.prepareQuery("select id_osoby, imie, nazwisko, nr_telefonu, mail from personel inner join konta on personel.id_konta = konta.id_konta where rola_id=2;")
-        connector.executeQuery()
-        var temp: Vector<String>? = null
-        var counter = 1
-
-        //należy zainicjalizować
-        data = mutableListOf()
-        while(true)
-        {
-            try {
-                temp = connector.getCurrRow(5)
-                connector.moveRow()
-//                temp = connector.getRow(counter,5)
-                data.add(temp.toTypedArray())
-                counter++;
-            }
-            catch (e: Exception)
-            {
-                break;
-            }
-        }
-        connector.closeQuery()
+        data.clear()
+        volunteersList.forEach { data.add(arrayOf(
+            it.accountId.toString(),
+            it.name,
+            it.surname,
+            it.phoneNumber,
+            it.mail)
+        ) }
         return data
     }
 
     private fun checkIfPresentInDB(obj : String, field : String, id:Int) : Boolean {
-        connector.prepareQuery("SELECT count(id_osoby) FROM personel where $field = '$obj' and id_osoby!=$id;")
-        connector.executeQuery()
-        //tzn ze nikt w bazie (poza obecna osoba) nie ma takiego pola
-        if (connector.getColInts(1)[0] == 0){
-            return false
-        }
-        return true
+        if (field == "nr_telefonu") return volunteersList.any { volunteer -> volunteer.phoneNumber == obj && volunteer.accountId != id}
+        else if (field == "mail") return volunteersList.any { volunteer -> volunteer.mail == obj && volunteer.accountId != id}
+        return false
     }
-
-    private fun init_volunteers()
-    {
-        connector.startConnection()
-        connector.prepareQuery("select imie, nazwisko from personel inner join konta on personel.id_konta = konta.id_konta where rola_id=2;")
-        connector.executeQuery()
-
-        volunteersList = ArrayList<String>()
-        volunteersList.add("Nie wybrano")
-        var temp: Vector<String>? = null
-        var counter = 1
-
-        while(true)
-        {
-            try {
-                temp = connector.getCurrRow(2)
-                connector.moveRow()
-//                temp = connector.getRow(counter,2)
-                volunteersList.add(temp[0] + " " + temp[1])
-                counter++;
-            }
-            catch (e: Exception)
-            {
-                break;
-            }
-        }
-        connector.closeQuery()
-        volunteersList.add("Wszyscy")
-    }
-
-
 
     override fun onDataClicked(rowIndex: Int, clickedData: Array<String>?) {
 
         lastClickedRow = rowIndex
 
-        if (!editModeCheckbox.isChecked)
+        if (!binding.editCheckbox.isChecked)
         {
             class MyCustomDialog: DialogFragment() {
 
@@ -262,12 +241,10 @@ class ShowAndEditVolunteers : AppCompatActivity(), TableDataClickListener<Array<
                     inflater: LayoutInflater,
                     container: ViewGroup?,
                     savedInstanceState: Bundle?
-                ): View? {
+                ): View {
 
-                    getDialog()!!.getWindow()?.setBackgroundDrawableResource(R.drawable.round_corners);
-                    dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-                    dialog?.window?.setLayout(1000,900)
-                    var rootView : View = inflater.inflate(R.layout.dialog_zoom_data, container, false)
+                    dialog!!.window?.setBackgroundDrawableResource(R.drawable.round_corners)
+                    val rootView : View = inflater.inflate(R.layout.dialog_zoom_data, container, false)
                     rootView.backb.setOnClickListener { dismiss() }
 
                     val name = rootView.findViewById<TextView>(R.id.name)
@@ -320,7 +297,7 @@ class ShowAndEditVolunteers : AppCompatActivity(), TableDataClickListener<Array<
                     inflater: LayoutInflater,
                     container: ViewGroup?,
                     savedInstanceState: Bundle?
-                ): View? {
+                ): View {
 
 
                     dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -336,121 +313,26 @@ class ShowAndEditVolunteers : AppCompatActivity(), TableDataClickListener<Array<
                         val editedPhone = phone_no_edit.text.toString()
                         val editedMail = mail_edit.text.toString()
 
-                        var rowToEdit = 0;
-                        rowToEdit = clickedData!!.get(0).toInt()
+                        val editedVolunteerId: Int = clickedData!![0].toInt()
+                        
+                        //wartości nie do edycji
+                        val staffId = volunteersList.find { volunteer ->
+                            volunteer.accountId == clickedData[0].toInt()
+                        }?.staffId
+
+                        val login = volunteersList.find { volunteer ->
+                            volunteer.accountId == clickedData[0].toInt()
+                        }?.login
 
 
+                        val isCorrect = validateEditedData(editedName, editedLastName, editedPhone, editedMail, editedVolunteerId)
 
-                        if (editedName.isNullOrBlank() || editedLastName.isNullOrBlank() ||
-                            editedMail.isNullOrBlank() || editedPhone.isNullOrBlank()
-                        ) {
-                            Toast.makeText(this@ShowAndEditVolunteers, "Żadne z pól nie może być puste", Toast.LENGTH_SHORT).show()
-                        } else {
-                            var isCorrect = true
-
-                            if (!EmailValidator.validate(editedMail)) {
-                                Toast.makeText(
-                                    this@ShowAndEditVolunteers,
-                                    "Nieprawidłowy format email!",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                                isCorrect = false
-                            } else if (!PhoneValidator.validate(editedPhone)) {
-                                Toast.makeText(
-                                    this@ShowAndEditVolunteers,
-                                    "Nieprawidłowy format numeru!",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                                isCorrect = false
-                            }
-
-                            else if (!NameValidator.validate(editedName)) {
-                                Toast.makeText(
-                                    this@ShowAndEditVolunteers,
-                                    "Nieprawidłowy format imienia!",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                                isCorrect = false
-                            } else if (!LastNameValidator.validate(editedLastName)) {
-                                Toast.makeText(
-                                    this@ShowAndEditVolunteers,
-                                    "Nieprawidłowy format nazwiska!",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                                isCorrect = false
-                            }
-                            else if (checkIfPresentInDB(editedPhone, "nr_telefonu", rowToEdit ))
-                            {
-                                Toast.makeText(
-                                    this@ShowAndEditVolunteers,
-                                    "Osoba o podanym nr telefonu już istnieje w bazie!",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                                isCorrect = false
-                            }
-                            else if (checkIfPresentInDB(editedMail, "mail", rowToEdit))
-                            {
-                                Toast.makeText(
-                                    this@ShowAndEditVolunteers,
-                                    "Osoba o podanym mailu już istnieje w bazie!",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                                isCorrect = false
-                            }
-
-                            //Po aktualizacji wracam do ekranu głównego administratora.
-                            if (isCorrect) {
-                                //pobiera
-
-
-                                //zamiast tego bedzie zapytanie do bazy
-                                /*
-                                for (row in data)
-                                {
-                                    if (row[0] == rowToEdit)
-                                    {
-                                        row[1] = editedName
-                                        row[2] = editedLastName
-                                        row[3] = editedPhone
-                                        row[4] = editedMail
-                                        break
-                                    }
-                                }
-
-                                 */
-
-                                //jesli zmieniane dane prawidłowe to zmień w bazie danych a następnie odśwież tabele
-
-                                connector.prepareQuery("UPDATE personel SET imie = ?, nazwisko = ?, nr_telefonu = ? " +
-                                        ", mail = ? WHERE id_osoby = ?;")
-                                connector.setStrVar(editedName, 1)
-                                connector.setStrVar(editedLastName, 2)
-                                connector.setStrVar(editedPhone, 3)
-                                connector.setStrVar(editedMail, 4)
-
-                                //connector.prepareQuery("UPDATE personel SET imie = '" + editedName + "', nazwisko = '" + editedLastName + "', nr_telefonu = '" + editedPhone + "', mail = '" + editedMail + "' WHERE id_osoby = " + rowToEdit)
-
-                                connector.setIntVar(rowToEdit, 5)
-
-
-
-                                try{connector.executeQuery()} catch (e: Exception){print("erorr")}
-                                connector.closeQuery()
-
-                                //dane w bazie zmienione
-
-
-                                adapterData = SimpleTableDataAdapter(this@ShowAndEditVolunteers,initData())
-                                adapterData.setTextSize(12)
-                                adapterData.setTextColor(Color.BLACK)
-                                tableView.dataAdapter = adapterData
-
-                                init_volunteers()
-                                customSpinner.text = ""
-                                dismiss()
-                            }
-                            }
-
+                        if (isCorrect) {
+                            val editedVolunteer = Volounteer(editedVolunteerId, staffId!!.toInt(), editedName, editedLastName, editedPhone, editedMail, login!!)
+                            dataViewModel.updateVolunteer(editedVolunteer)
+                            binding.customSpinner.text = ""
+                            dismiss()
+                        }
                     }
 
 
@@ -467,9 +349,61 @@ class ShowAndEditVolunteers : AppCompatActivity(), TableDataClickListener<Array<
                     return rootView
                 }
 
+                private fun validateEditedData(
+                    editedName: String,
+                    editedLastName: String,
+                    editedPhone: String,
+                    editedMail: String,
+                    editedVolunteerId: Int
+                ): Boolean {
+                    if (editedName.isBlank() || editedLastName.isBlank() ||
+                        editedMail.isBlank() || editedPhone.isBlank()
+                    ) {
+                        Toast.makeText(this@ShowAndEditVolunteers, "Żadne z pól nie może być puste", Toast.LENGTH_SHORT).show()
+                        return false
+                    }
+
+                    if (!NameValidator.validate(editedName)) {
+                        showInfo("Nieprawidłowy format imienia!")
+                        return false
+                    }
+
+                    if (!LastNameValidator.validate(editedLastName)) {
+                        showInfo("Nieprawidłowy format nazwiska!")
+                        return false
+                    }
+
+                    if (!EmailValidator.validate(editedMail)) {
+                        showInfo("Nieprawidłowy format maila!")
+                        return false
+                    }
+
+                    if (!PhoneValidator.validate(editedPhone)) {
+                        showInfo("Nieprawidłowy format nr telefonu!")
+                        return false
+                    }
+
+                    if (checkIfPresentInDB(editedPhone, "nr_telefonu", editedVolunteerId )) {
+                        showInfo("Osoba o podanym nr telefonu już istnieje w bazie!")
+                        return false
+                    }
+
+                    if (checkIfPresentInDB(editedMail, "mail", editedVolunteerId)) {
+                        showInfo("Osoba o podanym mailu już istnieje w bazie!")
+                        return false
+                    }
+
+                    return true
+
+                }
+
+                private fun showInfo(mess: String) {
+                    Toast.makeText(this@ShowAndEditVolunteers, mess, Toast.LENGTH_SHORT).show()
+                }
+
                 override fun onStart() {
                     super.onStart()
-                    dialog!!.window?.setBackgroundDrawableResource(R.drawable.round_corners);
+                    dialog!!.window?.setBackgroundDrawableResource(R.drawable.round_corners)
                     val defaultDisplay = DisplayManagerCompat.getInstance(requireContext()).getDisplay(
                         Display.DEFAULT_DISPLAY
                     )

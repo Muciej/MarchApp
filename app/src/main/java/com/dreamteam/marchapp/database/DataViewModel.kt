@@ -83,4 +83,10 @@ class DataViewModel(application: Application) : AndroidViewModel(application){
             dbObject.logout()
         }
     }
+
+    fun updateVolunteer(editedVolunteer: Volounteer) {
+        viewModelScope.launch(Dispatchers.IO){
+            dbObject.updateVolunteer(editedVolunteer)
+        }
+    }
 }

@@ -105,6 +105,14 @@ class MockDatabase {
         allAccounts.postValue(allAccounts.value)
     }
 
+    fun updateVolunteer(editedVolunteer: Volounteer) {
+        val indexToUpdate = allVolounteers.value?.indexOfFirst { existingVolunteer->
+            existingVolunteer.accountId == editedVolunteer.accountId}!!
+
+        allVolounteers.value?.set(indexToUpdate, editedVolunteer)
+        allVolounteers.postValue(allVolounteers.value)
+    }
+
     suspend fun addNewVolounteer(volounteer: Volounteer){
         allVolounteers.value?.add(volounteer)
         allVolounteers.postValue(allVolounteers.value)
@@ -141,6 +149,7 @@ class MockDatabase {
     fun logout() {
         loggedAcount.postValue(null)
     }
+
 
 
 

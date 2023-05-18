@@ -42,7 +42,7 @@ import com.dreamteam.marchapp.databinding.ActivityOrganiserShowVolunteersBinding
 class ShowAndEditParticipant : AppCompatActivity(), TableDataClickListener<Array<String>>{
     private var lastClickedRow = -1
     var data : MutableList<Array<String>> = mutableListOf()
-    lateinit var tableView : TableView<Array<String>>
+    private lateinit var tableView : TableView<Array<String>>
     private lateinit var adapter : ArrayAdapter<String>
     private lateinit var participantList :MutableList<Participant>
     private var participantNames = Vector<String>()
@@ -52,7 +52,7 @@ class ShowAndEditParticipant : AppCompatActivity(), TableDataClickListener<Array
 
     //lista uczestników do pokazania w tabeli
     private lateinit var participantsToShow : MutableList<Array<String>>
-    var accessLevel = ""
+    private var accessLevel = ""
 
     private fun participantUpdated(newParticipants: ArrayList<Participant>) {
         participantList = newParticipants
@@ -189,7 +189,7 @@ class ShowAndEditParticipant : AppCompatActivity(), TableDataClickListener<Array
     private fun selectData(name: String):MutableList<Array<String>>
     {
         val tmp = name.split(" ")
-        val participant:Participant = participantList!!.filter { it.name == tmp[0] && it.surname == tmp[1] }.first()
+        val participant:Participant = participantList.filter { it.name == tmp[0] && it.surname == tmp[1] }.first()
 
         data.clear()
         data.add(arrayOf(
