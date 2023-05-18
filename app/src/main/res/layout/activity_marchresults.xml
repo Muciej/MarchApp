@@ -26,12 +26,9 @@
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="30dp"
         android:gravity="center"
-        android:text="Wyniki marszu"
-        android:textSize="40dp"
+        android:text="@string/march_result"
+        android:textSize="40sp"
         android:textStyle="bold" />
-
-
-
 
     <Button
         android:id="@+id/chooseBtn"
@@ -55,4 +52,5 @@
         android:layout_marginTop="-13dp"
         android:alpha="0.7"
         android:src="@drawable/vecteezy_flat_design_trophy_trophy_vector_isolated_on_white_background_6425320" />
+
 </RelativeLayout>

@@ -10,12 +10,10 @@
         android:textColor="@color/black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Edycja punktu"
+        android:text="@string/stage_edit"
         android:layout_gravity="center"
         android:textSize="25sp"
         android:textStyle="bold"/>
-
-
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -28,7 +26,7 @@
             android:id="@+id/name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Nazwa: "
+            android:text="@string/stage_name_colon"
             android:layout_weight="9"
             android:textColor="@color/black"
             android:textSize="20sp"
@@ -44,8 +42,7 @@
             android:textColor="@color/black"
             android:paddingBottom="3dp"
             android:paddingTop="3dp"
-            android:paddingLeft="10dp"
-            />
+            android:paddingLeft="10dp" />
 
     </LinearLayout>
 
@@ -60,7 +57,7 @@
             android:id="@+id/online"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Online: "
+            android:text="@string/online_colon"
             android:layout_weight="9"
             android:textColor="@color/black"
             android:textSize="20sp"
@@ -76,8 +73,8 @@
             android:textColor="@color/black"
             android:paddingBottom="3dp"
             android:paddingTop="3dp"
-            android:paddingLeft="10dp"
-             />
+            android:paddingLeft="10dp" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -92,7 +89,7 @@
             android:layout_width="0dp"
             android:layout_weight="9"
             android:layout_height="wrap_content"
-            android:text="Kilometr: "
+            android:text="@string/distance_from_origin_colon"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -107,8 +104,8 @@
             android:background="@drawable/edit_text_background"
             android:textColor="@color/black"
             android:paddingLeft="10dp"
-            android:textStyle="bold"
-             />
+            android:textStyle="bold" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -123,7 +120,7 @@
             android:layout_width="0dp"
             android:layout_weight="9"
             android:layout_height="wrap_content"
-            android:text="Współrzędne: "
+            android:text="@string/coordinates_colon"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -138,8 +135,8 @@
             android:background="@drawable/edit_text_background"
             android:paddingLeft="10dp"
             android:textStyle="bold"
-            android:textColor="@color/black"
-            />
+            android:textColor="@color/black" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -157,7 +154,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:background="@drawable/edit_text_background"
-            android:text="Powrót" />
+            android:text="@string/return_button" />
 
         <Button
             android:id="@+id/editButton"
@@ -165,7 +162,7 @@
             android:layout_marginLeft="5dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/edit_text_background"
-            android:text="Zapisz"
+            android:text="@string/save"
             android:layout_width="0dp"
             android:layout_weight="7"/>
 
@@ -178,11 +175,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/edit_text_background"
-            android:text="Usuń" />
+            android:text="@string/delete" />
 
     </LinearLayout>
-
-
-
-
 </LinearLayout>

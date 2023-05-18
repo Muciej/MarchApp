@@ -10,7 +10,7 @@
         android:textColor="@color/black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/dane_wolontariusza"
+        android:text="@string/volunteer_data"
         android:layout_gravity="center"
         android:textSize="25sp"
         android:textStyle="bold"/>
@@ -18,7 +18,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/imie"
+        android:text="@string/name"
         android:id="@+id/name"
         android:layout_marginTop="30dp"
         android:textColor="@color/black"
@@ -29,7 +29,7 @@
         android:textColor="@color/black"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/nazwisko"
+        android:text="@string/lastname"
         android:layout_marginTop="10dp"
         android:id="@+id/lastname"
         android:textSize="20sp"
@@ -39,7 +39,7 @@
         android:textColor="@color/black"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/nr_telefonu"
+        android:text="@string/contact_number"
         android:layout_marginTop="10dp"
         android:id="@+id/phone"
         android:textSize="20sp"
@@ -49,7 +49,7 @@
         android:textColor="@color/black"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/mail"
+        android:text="@string/email"
         android:id="@+id/mail"
         android:layout_marginTop="10dp"
         android:textSize="20sp"
@@ -62,7 +62,6 @@
         android:layout_gravity="center"
         android:background="@drawable/edit_text_background"
         android:layout_marginTop="20dp"
-        android:text="@string/powrot" />
-
+        android:text="@string/return_button" />
 
 </LinearLayout>

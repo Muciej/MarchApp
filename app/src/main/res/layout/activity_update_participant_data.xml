@@ -13,8 +13,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="30dp"
         android:gravity="center"
-        android:text="Aktualizacja danych uczestnika"
-        android:textSize="20dp"
+        android:text="@string/update_of_user_data"
+        android:textSize="20sp"
         android:textStyle="bold" />
 
     <Button
@@ -40,7 +40,7 @@
         android:background="@drawable/edit_text_background"
         android:drawableLeft="@drawable/ic_baseline_person_24"
         android:drawablePadding="20dp"
-        android:hint="Nazwa użytkownika"
+        android:hint="@string/username"
         android:padding="20dp"
         android:textColor="@color/black"
         android:textColorHint="@color/black" />
@@ -56,7 +56,7 @@
         android:layout_marginBottom="10dp"
         android:background="@drawable/edit_text_background"
         android:drawablePadding="20dp"
-        android:hint="Imię"
+        android:hint="@string/name"
         android:padding="20dp"
         android:textColor="@color/black"
         android:textColorHint="@color/black" />
@@ -72,7 +72,7 @@
         android:layout_marginBottom="10dp"
         android:background="@drawable/edit_text_background"
         android:drawablePadding="20dp"
-        android:hint="Nazwisko"
+        android:hint="@string/lastname"
         android:padding="20dp"
         android:textColor="@color/black"
         android:textColorHint="@color/black" />
@@ -88,6 +88,6 @@
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/edit_text_background"
-        android:text="Zaktualizuj dane" />
+        android:text="@string/update_data" />
 
 </RelativeLayout>

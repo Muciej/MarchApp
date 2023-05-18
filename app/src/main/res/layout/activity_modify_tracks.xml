@@ -26,10 +26,9 @@
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="30dp"
         android:gravity="center"
-        android:text="Modyfikuj trasę"
-        android:textSize="40dp"
+        android:text="@string/modify_route"
+        android:textSize="40sp"
         android:textStyle="bold" />
-
 
     <Button
         android:id="@+id/upload_map"
@@ -42,7 +41,7 @@
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="15dp"
         android:background="@drawable/edit_text_background"
-        android:text="Upload map" />
+        android:text="@string/upload_map" />
 
     <Button
         android:id="@+id/assign_point"
@@ -55,7 +54,7 @@
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="15dp"
         android:background="@drawable/edit_text_background"
-        android:text="Assign points" />
+        android:text="@string/assign_points" />
 
     <com.google.android.gms.maps.MapView
         android:id="@+id/mapView"
@@ -65,6 +64,5 @@
         android:layout_marginStart="50dp"
         android:layout_marginTop="41dp"
         android:layout_marginEnd="50dp" />
-
 
 </RelativeLayout>
