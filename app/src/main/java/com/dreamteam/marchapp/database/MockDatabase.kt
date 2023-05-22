@@ -1,7 +1,6 @@
 package com.dreamteam.marchapp.database
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.dreamteam.marchapp.database.dataclasses.*
 
@@ -124,6 +123,10 @@ class MockDatabase {
         if(!found){
             loggedAcount.postValue(null)
         }
+    }
+
+    fun changeUserPassword(userId: Int, newPassword: String) {
+       //TODO: Implement
     }
 
     fun chooseEvent(event: Event?){

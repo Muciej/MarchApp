@@ -66,6 +66,12 @@ class DataViewModel(application: Application) : AndroidViewModel(application){
         }
     }
 
+    fun changeUserPassword(id: Int, newPassword: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            dbObject.changeUserPassword(id, newPassword)
+        }
+    }
+
     fun chooseEvent(event: Event?){
         viewModelScope.launch(Dispatchers.IO){
             dbObject.chooseEvent(event)
