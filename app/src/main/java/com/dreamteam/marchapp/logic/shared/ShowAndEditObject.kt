@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -32,7 +33,7 @@ import kotlinx.android.synthetic.main.dialog_edit_user.view.*
 import kotlinx.android.synthetic.main.dialog_zoom_data.view.*
 import java.util.*
 
-abstract class ShowAndEditPerson: AppCompatActivity(), TableDataClickListener<Array<String>> {
+abstract class ShowAndEditObject: AppCompatActivity(), TableDataClickListener<Array<String>> {
     var data : MutableList<Array<String>> = mutableListOf()
     lateinit var tableView : TableView<Array<String>>
     private lateinit var adapter : ArrayAdapter<String>
@@ -57,7 +58,7 @@ abstract class ShowAndEditPerson: AppCompatActivity(), TableDataClickListener<Ar
 
 
     fun init_spinner_and_table() {
-        adapter = ArrayAdapter(this@ShowAndEditPerson, R.layout.simple_list_item_1, peopleNames)
+        adapter = ArrayAdapter(this@ShowAndEditObject, R.layout.simple_list_item_1, peopleNames)
         peopleToShow = initData()
 
         dataAdapter.data.clear()
@@ -119,7 +120,7 @@ abstract class ShowAndEditPerson: AppCompatActivity(), TableDataClickListener<Ar
         tableView.columnModel = columnModel
 
         peopleToShow = arrayListOf()
-        dataAdapter = SimpleTableDataAdapter(this@ShowAndEditPerson, peopleToShow)
+        dataAdapter = SimpleTableDataAdapter(this@ShowAndEditObject, peopleToShow)
 
         dataAdapter.setTextSize(12)
         dataAdapter.setTextColor(Color.BLACK)
@@ -129,7 +130,7 @@ abstract class ShowAndEditPerson: AppCompatActivity(), TableDataClickListener<Ar
 
 
     private fun show_dialog() {
-        val dialog = Dialog(this@ShowAndEditPerson)
+        val dialog = Dialog(this@ShowAndEditObject)
         dialog.setContentView(com.dreamteam.marchapp.R.layout.dialog_searchable_spinner)
         dialog.show()
 
@@ -169,13 +170,15 @@ abstract class ShowAndEditPerson: AppCompatActivity(), TableDataClickListener<Ar
 
         override fun onStart() {
             super.onStart()
+
+            dialog!!.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             val defaultDisplay = DisplayManagerCompat.getInstance(requireContext()).getDisplay(
                 Display.DEFAULT_DISPLAY)
             val displayContext = requireContext().createDisplayContext(defaultDisplay!!)
             val width = displayContext.resources.displayMetrics.widthPixels
             val height = displayContext.resources.displayMetrics.heightPixels
 
-            dialog?.window?.setLayout((width * 0.95).toInt(), (height * 0.55).toInt())
+            dialog?.window?.setLayout((width * 0.99).toInt(), (height * 0.55).toInt())
         }
 
         protected fun showInfo(message: String) {

@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.dialog_edit_user.*
 import kotlinx.android.synthetic.main.dialog_edit_user.view.*
 import kotlinx.android.synthetic.main.dialog_zoom_data.view.backb
 
-class ShowAndEditParticipant : ShowAndEditPerson() {
+class ShowAndEditParticipant : ShowAndEditObject() {
     private lateinit var participantList: ArrayList<Participant>
 
     private fun participantUpdated(newPeople: ArrayList<Participant>) {

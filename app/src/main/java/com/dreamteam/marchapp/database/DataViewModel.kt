@@ -48,6 +48,18 @@ class DataViewModel(application: Application) : AndroidViewModel(application){
         }
     }
 
+    fun updatePoint(editedPoint: CheckPoint) {
+        viewModelScope.launch(Dispatchers.IO){
+            dbObject.updatePoint(editedPoint)
+        }
+    }
+
+    fun deletePoint(pointToDelete: Int) {
+        viewModelScope.launch(Dispatchers.IO){
+            dbObject.deletePoint(pointToDelete)
+        }
+    }
+
     fun addNewVolounteer(volounteer: Volounteer){
         viewModelScope.launch(Dispatchers.IO){
             dbObject.addNewVolounteer(volounteer)
@@ -89,4 +101,6 @@ class DataViewModel(application: Application) : AndroidViewModel(application){
             dbObject.updateVolunteer(editedVolunteer)
         }
     }
+
+
 }

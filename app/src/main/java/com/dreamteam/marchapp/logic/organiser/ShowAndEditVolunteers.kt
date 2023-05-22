@@ -18,10 +18,10 @@ import de.codecrafters.tableview.toolkit.SimpleTableHeaderAdapter
 import kotlinx.android.synthetic.main.dialog_edit_volunteers.*
 import kotlinx.android.synthetic.main.dialog_edit_volunteers.view.*
 import kotlinx.android.synthetic.main.dialog_zoom_data.view.backb
-import com.dreamteam.marchapp.logic.shared.ShowAndEditPerson
+import com.dreamteam.marchapp.logic.shared.ShowAndEditObject
 
 
-class ShowAndEditVolunteers : ShowAndEditPerson() {
+class ShowAndEditVolunteers : ShowAndEditObject() {
     private lateinit var volunteersList: ArrayList<Volounteer>
 
     private fun volunteerUpdated(newVolunteers: ArrayList<Volounteer>) {

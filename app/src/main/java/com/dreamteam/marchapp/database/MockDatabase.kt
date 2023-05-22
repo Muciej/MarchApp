@@ -1,7 +1,6 @@
 package com.dreamteam.marchapp.database
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.dreamteam.marchapp.database.dataclasses.*
 
@@ -113,6 +112,24 @@ class MockDatabase {
         allVolounteers.postValue(allVolounteers.value)
     }
 
+    fun updatePoint(editedPoint: CheckPoint) {
+        val indexToUpdate = checkPoints.value?.indexOfFirst { existingPoint->
+            existingPoint.id == editedPoint.id}!!
+
+        checkPoints.value?.set(indexToUpdate, editedPoint)
+        checkPoints.postValue(checkPoints.value)
+    }
+
+    fun deletePoint(point: Int){
+        //znajdz na liscie punkt o podanym id
+        val pointToDelete = checkPoints.value?.indexOfFirst { existingPoint->
+            existingPoint.id == point}!!
+
+        checkPoints.value?.removeAt(pointToDelete)
+        checkPoints.postValue(checkPoints.value)
+    }
+
+
     suspend fun addNewVolounteer(volounteer: Volounteer){
         allVolounteers.value?.add(volounteer)
         allVolounteers.postValue(allVolounteers.value)
@@ -149,7 +166,6 @@ class MockDatabase {
     fun logout() {
         loggedAcount.postValue(null)
     }
-
 
 
 
