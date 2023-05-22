@@ -270,6 +270,14 @@
                 android:value="" />
         </activity>
         <activity
+            android:name=".logic.shared.ShowAndEditParticipantOLD"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+
+        <activity
             android:name=".logic.shared.ShowAndEditParticipant"
             android:exported="false">
             <meta-data

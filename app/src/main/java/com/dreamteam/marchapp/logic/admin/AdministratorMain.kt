@@ -7,10 +7,7 @@ import android.widget.Button
 import com.dreamteam.marchapp.R
 import com.dreamteam.marchapp.database.JDBCConnector
 import com.dreamteam.marchapp.logic.organiser.ShowAndEditVolunteers
-import com.dreamteam.marchapp.logic.shared.ChangePassword
-import com.dreamteam.marchapp.logic.shared.ChooseMarchActivity
-import com.dreamteam.marchapp.logic.shared.ViewSt
-import com.dreamteam.marchapp.logic.shared.ShowAndEditParticipant
+import com.dreamteam.marchapp.logic.shared.*
 
 class AdministratorMain : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
