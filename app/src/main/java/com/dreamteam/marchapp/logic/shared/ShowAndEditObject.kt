@@ -44,11 +44,11 @@ abstract class ShowAndEditObject: AppCompatActivity(), TableDataClickListener<Ar
     private lateinit var peopleToShow : MutableList<Array<String>>
     var accessLevel = ""
 
-    abstract fun setAccesssLevel()
+    open fun setAccesssLevel(){}
     abstract fun setHeader()
     abstract fun selectData(name: String):MutableList<Array<String>>
     abstract fun initData():MutableList<Array<String>>
-    abstract fun checkIfPresentInDB(obj : String, field : String, id:Int) : Boolean
+    open fun checkIfPresentInDB(obj : String, field : String, id:Int) : Boolean {return false}
 
 
     open fun setDataViewModel() {
