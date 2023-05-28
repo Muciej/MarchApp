@@ -5,12 +5,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import com.dreamteam.marchapp.R
-import kotlinx.android.synthetic.main.activity_organisatormain2.*
 
-class Organisatormain2 : AppCompatActivity() {
+class OrganisatorModifyEventMenu : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_organisatormain2)
+        setContentView(R.layout.activity_organisator_modify_event_menu)
 
         val btnForward = findViewById<Button>(R.id.btnForward)
         val modifyPoints = findViewById<Button>(R.id.modify_points)

@@ -10,7 +10,7 @@
         android:textColor="@color/black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Dane wolontariusza"
+        android:text="@string/volunteer_data"
         android:layout_gravity="center"
         android:textSize="25sp"
         android:textStyle="bold"/>
@@ -18,7 +18,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Imie: "
+        android:text="@string/name_colon"
         android:id="@+id/imie"
         android:layout_marginTop="30dp"
         android:textColor="@color/black"
@@ -29,7 +29,7 @@
         android:textColor="@color/black"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Nazwisko: "
+        android:text="@string/lastname_colon"
         android:layout_marginTop="10dp"
         android:id="@+id/nazwisko"
         android:textSize="20sp"
@@ -39,7 +39,7 @@
         android:textColor="@color/black"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Punkt: "
+        android:text="@string/stage_colon"
         android:layout_marginTop="10dp"
         android:id="@+id/point"
         android:textSize="20sp"
@@ -49,12 +49,11 @@
         android:textColor="@color/black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Wybierz nowy punkt "
+        android:text="@string/choose_new_stage"
         android:layout_gravity="center"
         android:layout_marginTop="30dp"
         android:id="@+id/newpoint"
-        android:textSize="20sp"
-        />
+        android:textSize="20sp" />
 
     <Spinner
         android:id="@+id/spinner"
@@ -80,7 +79,7 @@
             android:layout_marginLeft="50dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/edit_text_background"
-            android:text="Powrót" />
+            android:text="@string/return_button" />
 
         <Button
             android:id="@+id/edit_button"
@@ -89,7 +88,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:background="@drawable/edit_text_background"
-            android:text="Zapisz" />
+            android:text="@string/save" />
     </GridLayout>
 
 

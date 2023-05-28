@@ -66,7 +66,7 @@ class ShowAndEditPoints : ShowAndEditObject(){
 
     override fun goBack()
     {
-        var intent =  Intent(this, Organisatormain2::class.java)
+        var intent =  Intent(this, OrganisatorModifyEventMenu::class.java)
         startActivity(intent)
     }
 

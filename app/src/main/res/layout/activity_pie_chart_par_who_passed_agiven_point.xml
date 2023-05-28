@@ -20,8 +20,6 @@
         android:background="@drawable/ic_baseline_arrow_back_24"
         tools:ignore="SpeakableTextPresentCheck" />
 
-    <!--Ui component for our pie chart-->
-
     <TextView
         android:id="@+id/view_statistics"
         android:layout_width="match_parent"
@@ -31,8 +29,8 @@
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="30dp"
         android:gravity="center"
-        android:text="Uczestnicy, którym udało się ukończyć zawody"
-        android:textSize="30dp"
+        android:text="@string/contestants_who_managed_to_complete_the_competition"
+        android:textSize="30sp"
         android:textStyle="bold" />
 
     <com.github.mikephil.charting.charts.PieChart
@@ -60,7 +58,7 @@
             android:drawableTint="@color/purple_200"
             android:gravity="center"
             android:padding="4dp"
-            android:text="M20"
+            android:text="@string/m20"
             android:textAlignment="center"
             android:textColor="@color/white" />
 
@@ -73,7 +71,7 @@
             android:drawableTint="@color/yellow"
             android:gravity="center"
             android:padding="4dp"
-            android:text="K20"
+            android:text="@string/k20"
             android:textAlignment="center"
             android:textColor="@color/white" />
 
@@ -86,7 +84,7 @@
             android:drawableTint="@color/red"
             android:gravity="center"
             android:padding="4dp"
-            android:text="M50"
+            android:text="@string/m50"
             android:textAlignment="center"
             android:textColor="@color/white" />
 

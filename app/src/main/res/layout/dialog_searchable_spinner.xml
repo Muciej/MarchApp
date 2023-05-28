@@ -14,7 +14,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:background="@android:drawable/editbox_dropdown_dark_frame"
-        android:hint="@string/wybierz"
+        android:hint="@string/choose"
         android:padding="12dp"
         android:singleLine="true" />
 
