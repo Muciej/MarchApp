@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.Toast
 import com.dreamteam.marchapp.R
 import com.dreamteam.marchapp.database.JDBCConnector
 import com.dreamteam.marchapp.logic.shared.ChangePassword
