@@ -15,8 +15,8 @@
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="30dp"
         android:gravity="center"
-        android:text="Rejestracja uczestnika"
-        android:textSize="20dp"
+        android:text="@string/registration_of_user"
+        android:textSize="20sp"
         android:textStyle="bold" />
 
     <Button
@@ -42,7 +42,7 @@
         android:background="@drawable/edit_text_background"
         android:drawableLeft="@drawable/ic_baseline_person_24"
         android:drawablePadding="20dp"
-        android:hint="Login"
+        android:hint="@string/login"
         android:padding="20dp"
         android:textColor="@color/black"
         android:textColorHint="@color/black" />
@@ -59,7 +59,7 @@
         android:background="@drawable/edit_text_background"
         android:drawableLeft="@drawable/ic_baseline_local_phone_24"
         android:drawablePadding="20dp"
-        android:hint="Nr telefonu"
+        android:hint="@string/phone_number"
         android:inputType="phone"
         android:padding="20dp"
         android:textColor="@color/black"
@@ -76,7 +76,7 @@
         android:layout_marginBottom="10dp"
         android:background="@drawable/edit_text_background"
         android:drawablePadding="20dp"
-        android:hint="Imię"
+        android:hint="@string/name"
         android:padding="20dp"
         android:textColor="@color/black"
         android:textColorHint="@color/black" />
@@ -92,7 +92,7 @@
         android:layout_marginBottom="10dp"
         android:background="@drawable/edit_text_background"
         android:drawablePadding="20dp"
-        android:hint="Nazwisko"
+        android:hint="@string/lastname"
         android:padding="20dp"
         android:textColor="@color/black"
         android:textColorHint="@color/black" />
@@ -108,5 +108,6 @@
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/edit_text_background"
-        android:text="Zarejestruj się" />
+        android:text="@string/register" />
+
 </RelativeLayout>

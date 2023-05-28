@@ -26,8 +26,8 @@
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="30dp"
         android:gravity="center"
-        android:text="Modyfikuj dane uczestników"
-        android:textSize="40dp"
+        android:text="@string/modify_contestants_data"
+        android:textSize="40sp"
         android:textStyle="bold" />
 
     <EditText
@@ -39,7 +39,8 @@
         android:layout_below="@+id/modifyData"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Wyszukaj uczestnika" />
+        android:text="@string/search_contestants" />
+
     <Spinner
         android:id="@+id/spinner"
         android:layout_width="match_parent"
@@ -58,7 +59,7 @@
         android:layout_marginEnd="30dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Imię" />
+        android:text="@string/name" />
 
     <EditText
         android:id="@+id/editTextTextPersonName4"
@@ -70,7 +71,7 @@
         android:layout_marginEnd="30dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Nazwisko" />
+        android:text="@string/lastname" />
 
     <EditText
         android:id="@+id/editTextPhone"
@@ -93,6 +94,5 @@
         android:layout_marginEnd="30dp"
         android:ems="10"
         android:inputType="date" />
-
 
 </RelativeLayout>

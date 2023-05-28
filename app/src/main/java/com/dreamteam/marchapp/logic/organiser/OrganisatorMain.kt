@@ -40,7 +40,7 @@ class OrganisatorMain : AppCompatActivity() {
 
 
         modify_event_btn.setOnClickListener {
-            val Intent = Intent(this, Organisatormain2::class.java)
+            val Intent = Intent(this, OrganisatorModifyEventMenu::class.java)
             startActivity(Intent)
         }
 

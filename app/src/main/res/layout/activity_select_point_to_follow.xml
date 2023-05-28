@@ -25,8 +25,8 @@
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="30dp"
         android:gravity="center"
-        android:text="Wybierz punkt"
-        android:textSize="40dp"
+        android:text="@string/choose_stage"
+        android:textSize="40sp"
         android:textStyle="bold" />
 
     <Spinner
@@ -48,6 +48,6 @@
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
         android:background="@drawable/edit_text_background"
-        android:text="Wybierz" />
+        android:text="@string/choose" />
 
 </RelativeLayout>

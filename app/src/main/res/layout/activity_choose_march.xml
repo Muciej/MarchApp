@@ -62,5 +62,4 @@
         android:background="@drawable/edit_text_background"
         android:text="@string/choose" />
 
-
 </RelativeLayout>
