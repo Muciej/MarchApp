@@ -6,5 +6,5 @@ data class Participant(
     val name: String,
     val surname: String,
     val nickname: String,
-    val qrCodeData: String,
+    val qrCodeData: String
 )

@@ -68,7 +68,7 @@ class MockDatabase {
 
         //Adding fake checkpoints
         val tempCheck = ArrayList<CheckPoint>()
-        tempCheck.add(CheckPoint(1, true, "Start", 0, "20N, 50W"))
+        tempCheck.add(CheckPoint(1, true, "Start", 0, "20N, 50W",))
         tempCheck.add(CheckPoint(2, false, "Przełęcz rozpaczy", 10, "21N, 51W"))
         tempCheck.add(CheckPoint(3, true, "Skarpa przerażenia", 25, "19.5N, 52W"))
         tempCheck.add(CheckPoint(4, true, "Dyplom", 40, "19.32N, 53W"))

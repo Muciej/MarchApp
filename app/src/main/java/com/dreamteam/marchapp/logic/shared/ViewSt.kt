@@ -22,32 +22,19 @@ class ViewSt : AppCompatActivity() {
         val btnOvlRes = findViewById<Button>(R.id.showOverallRes)
 
         btnForward.setOnClickListener {
-            JDBCConnector.closeConnection()
             val Intent = Intent(this, ChooseMarchActivity::class.java)
             startActivity(Intent)
         }
 
-        //TODO: W późniejszych wersjach aplikacji poniższe przyciski będą przenosić
-        //TODO: użytkownika do ekranów ze statystykami, które będą pobierać statystyki
-        //TODO: za pomocą odpowiednich kwerend.
-
         Stat_by_point.setOnClickListener {
-//            Toast.makeText(
-//                this,
-//                "To będzie podgląd statystyk dla punktu!",
-//                Toast.LENGTH_SHORT
-//            ).show()
+
             val Intent = Intent(this, ChoosePointToViewStat::class.java)
             startActivity(Intent)
-//            val intent = Intent(this, SelectPointToFollow::class.java)
+
         }
 
         overall_stats.setOnClickListener {
-//            Toast.makeText(
-//                this,
-//                "To będzie podgląd ogólnych statystyk!",
-//                Toast.LENGTH_SHORT
-//            ).show()
+
             val Intent = Intent(this, MarchResults::class.java)
             startActivity(Intent)
         }

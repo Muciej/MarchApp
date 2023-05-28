@@ -19,7 +19,7 @@ import java.util.Vector
 
 class ChooseMarchActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     private lateinit var dataViewModel: DataViewModel
-    var eventList: List<Event>? = null
+    var eventList: List<Event>? = null // lista punktów
     var dbNames = Vector<String>()
     var marchNames = Vector<String>()
 

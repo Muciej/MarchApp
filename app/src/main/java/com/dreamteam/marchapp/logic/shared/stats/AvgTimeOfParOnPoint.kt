@@ -7,6 +7,7 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 
@@ -25,9 +26,10 @@ import java.util.*
  * w tej klasie ciągły wykres: na osi pionowej czas uczestników na danym punkcie,
  * na osi poziomej uczestnicy według ich numerów startowych
  */
-//todo ogarnąć jakoś jak mierzyć czas i wstawiać go do wykresu
+//TODO zrobic pobieranie danych z bazy i wyswietlanie ich na wykresie
 class AvgTimeOfParOnPoint : AppCompatActivity() {
-    lateinit var lineGraphView: GraphView
+    private lateinit var lineGraphView: GraphView
+    private lateinit var chosenPoint: TextView
     private var connector: DBConnector = JDBCConnector
     private var participants = Vector<String>()
     private var timesOnPoint = Vector<String>()
@@ -35,62 +37,28 @@ class AvgTimeOfParOnPoint : AppCompatActivity() {
     private var timesDifferences = Vector<LocalDateTime>()
 
     private var dates = Vector<LocalDateTime>()
-//    @RequiresApi(Build.VERSION_CODES.O)
-//    private var startTime = LocalDateTime.parse("2023-01-30 08:00:00")
-
-    private val choosePointToViewStat = ChoosePointToViewStat() // obiekt klasy ChoosepointToViewStat
-    private val spinnerVal = choosePointToViewStat.spinnerValue
 
 
-    //@RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_avg_time_of_par_on_point)
+        chosenPoint = findViewById<TextView>(R.id.textView2)
+        val spinnerVal = intent.getStringExtra("selectedPoint")
 
-        connector.startConnection()
+        chosenPoint.text = spinnerVal
 
         /**
          * Numery startowe uczestników z bazy danych - oś OX
          * Czas uczestników na punkcie - oś OY
          */
 
-        connector.prepareQuery("select * from czas_uczestnicy_punkt;")
-        var answer : Vector<Vector<String>> = Vector<Vector<String>>()
-        try {
-            connector.executeQuery()
-            answer = connector.getAnswer()
-        } catch (e : Exception){
-            showToast(applicationContext,"Nie udało się połączyć z bazą!")
-        }
+//        connector.prepareQuery("select * from czas_uczestnicy_punkt;")
 
-        for(row in answer){
-            points.add(row[3]) // puntky trasy
-            participants.add(row[9]) //numer startowy uczestnika
-            timesOnPoint.add(row[8]) // kolumna z czasami uczestników
-            println(row[3] + " " + row[9] + " " + row[8])
-        }
-
-        /**
-         * Zapisujemy daty w formacie LocalDataTime
-         * konwertujemy Stringa na LocalDataTime
-         */
-//        for (i in timesOnPoint){
-//            dates.add(LocalDateTime.parse(i))
-//        }
-
-        /**
-         * Obliczamy czas od jaki upłynął od startu
-         */
-//        for (i in dates){
-//            val hour8hoursBefore = i.minusHours(8)
-//            timesDifferences.add(hour8hoursBefore)
-//        }
 
 
         val btnBack = findViewById<Button>(R.id.btnBack)
 
         btnBack.setOnClickListener {
-            connector.closeConnection()
             val intent = Intent(this, ChoosePointToViewStat::class.java)
             startActivity(intent)
         }
@@ -106,20 +74,13 @@ class AvgTimeOfParOnPoint : AppCompatActivity() {
 
         val dataPointList = Vector<DataPoint>()
 
-        if (points.size == participants.size && participants.size == timesOnPoint.size) {
-            for (i in participants.indices) {
-                println("spinner: $spinnerVal")
-                println(points[i])
-                //if (points[i].equals(spinnerVal)) { //TODO poprawic porownywanie stringow zeby robic wykres dla jednego punktu
-                    dataPointList.add(
-                        DataPoint(
-                            participants[i].toDouble(),
-                            participants[i].toDouble()
-                        )
-                    )
-                //}
-            }
-        }
+        dataPointList.add(DataPoint(2.0, 40.0))
+        dataPointList.add(DataPoint(4.0, 80.0))
+        dataPointList.add(DataPoint(6.0, 35.0))
+        dataPointList.add(DataPoint(8.0, 60.0))
+        dataPointList.add(DataPoint(10.0, 68.0))
+
+
 
         val series: LineGraphSeries<DataPoint> = LineGraphSeries(dataPointList.toTypedArray())
 
