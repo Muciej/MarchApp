@@ -4,9 +4,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
-import androidx.lifecycle.ViewModelProvider
+import android.widget.Toast
 import com.dreamteam.marchapp.R
-import com.dreamteam.marchapp.database.DataViewModel
 import com.dreamteam.marchapp.database.JDBCConnector
 import com.dreamteam.marchapp.logic.shared.ChangePassword
 import com.dreamteam.marchapp.logic.shared.ChooseMarchActivity
@@ -15,12 +14,10 @@ import com.dreamteam.marchapp.logic.shared.ViewSt
 import kotlinx.android.synthetic.main.activity_organisator_main.*
 
 class OrganisatorMain : AppCompatActivity() {
-    private lateinit var dataViewModel: DataViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_organisator_main)
-        dataViewModel = ViewModelProvider(this)[DataViewModel::class.java]
 
         /*
 
@@ -59,13 +56,13 @@ class OrganisatorMain : AppCompatActivity() {
 //tu
         participant.setOnClickListener{
             val intent = Intent(this, ShowAndEditParticipant::class.java)
-//            intent.putExtra("accessLevel", "Organiser")   //chyba teraz niepotrzebne
+            intent.putExtra("accessLevel", "Organiser")
             startActivity(intent)
         }
 
         volunteers.setOnClickListener{
-            val Intent = Intent(this, ShowVolunteers::class.java)
-//            Intent.putExtra("accessLevel", "Organiser")   //chyba teraz niepotrzebne
+            val Intent = Intent(this, ShowAndEditVolunteers::class.java)
+            Intent.putExtra("accessLevel", "Organiser")
             startActivity(Intent)
         }
 
@@ -75,7 +72,7 @@ class OrganisatorMain : AppCompatActivity() {
         }
 
         log_out_from_org_account.setOnClickListener{
-            dataViewModel.logoutUser()
+            JDBCConnector.closeConnection()
             val Intent = Intent(this, ChooseMarchActivity::class.java)
             startActivity(Intent)
         }

@@ -111,5 +111,3 @@ class ChangePassword : AppCompatActivity() {
     }
 }
 
-
-

@@ -87,7 +87,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".logic.organiser.ShowVolunteers"
+            android:name=".logic.organiser.ShowAndEditVolunteers"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -177,7 +177,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".logic.organiser.OrganisatorModifyEventMenu"
+            android:name=".logic.organiser.Organisatormain2"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -269,6 +269,14 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+        <activity
+            android:name=".logic.shared.ShowAndEditParticipantOLD"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+
         <activity
             android:name=".logic.shared.ShowAndEditParticipant"
             android:exported="false">
