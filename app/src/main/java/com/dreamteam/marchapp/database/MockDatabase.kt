@@ -1,7 +1,6 @@
 package com.dreamteam.marchapp.database
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.dreamteam.marchapp.database.dataclasses.*
 
@@ -92,10 +91,44 @@ class MockDatabase {
         allParticipants.postValue(allParticipants.value)
     }
 
+    fun updateParticipant(participant: Participant) {
+        val indexToUpdate = allParticipants.value?.indexOfFirst { existingParticipant ->
+            existingParticipant.accId == participant.accId}!!
+
+        allParticipants.value?.set(indexToUpdate, participant)
+        allParticipants.postValue(allParticipants.value)
+    }
+
     suspend fun addNewAccount(account: Account){
         allAccounts.value?.add(account)
         allAccounts.postValue(allAccounts.value)
     }
+
+    fun updateVolunteer(editedVolunteer: Volounteer) {
+        val indexToUpdate = allVolounteers.value?.indexOfFirst { existingVolunteer->
+            existingVolunteer.accountId == editedVolunteer.accountId}!!
+
+        allVolounteers.value?.set(indexToUpdate, editedVolunteer)
+        allVolounteers.postValue(allVolounteers.value)
+    }
+
+    fun updatePoint(editedPoint: CheckPoint) {
+        val indexToUpdate = checkPoints.value?.indexOfFirst { existingPoint->
+            existingPoint.id == editedPoint.id}!!
+
+        checkPoints.value?.set(indexToUpdate, editedPoint)
+        checkPoints.postValue(checkPoints.value)
+    }
+
+    fun deletePoint(point: Int){
+        //znajdz na liscie punkt o podanym id
+        val pointToDelete = checkPoints.value?.indexOfFirst { existingPoint->
+            existingPoint.id == point}!!
+
+        checkPoints.value?.removeAt(pointToDelete)
+        checkPoints.postValue(checkPoints.value)
+    }
+
 
     suspend fun addNewVolounteer(volounteer: Volounteer){
         allVolounteers.value?.add(volounteer)
@@ -133,5 +166,7 @@ class MockDatabase {
     fun logout() {
         loggedAcount.postValue(null)
     }
+
+
 
 }

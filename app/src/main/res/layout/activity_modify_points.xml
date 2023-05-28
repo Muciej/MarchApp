@@ -26,8 +26,8 @@
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="30dp"
         android:gravity="center"
-        android:text="@string/modify_stages"
-        android:textSize="40sp"
+        android:text="Modyfikuj punkty"
+        android:textSize="40dp"
         android:textStyle="bold" />
 
     <EditText
@@ -44,7 +44,7 @@
         android:background="@drawable/edit_text_background"
         android:drawablePadding="20dp"
         android:gravity="left"
-        android:hint="@string/enter_stage_name"
+        android:hint="Wpisz nazwę punktu"
         android:padding="20dp"
         android:textColor="@color/black"
         android:textColorHint="@color/black" />
@@ -63,7 +63,7 @@
         android:layout_marginRight="18dp"
         android:layout_marginBottom="20dp"
         android:background="@drawable/edit_text_background"
-        android:text="@string/confirm" />
+        android:text="Zatwierdź" />
 
     <EditText
         android:id="@+id/delPoint"
@@ -80,7 +80,7 @@
         android:background="@drawable/edit_text_background"
         android:drawablePadding="20dp"
         android:gravity="left"
-        android:hint="@string/delete_stage"
+        android:hint="Usuń punkt"
         android:padding="20dp"
         android:textColor="@color/black"
         android:textColorHint="@color/black" />
@@ -99,7 +99,8 @@
         android:layout_marginRight="18dp"
         android:layout_marginBottom="20dp"
         android:background="@drawable/edit_text_background"
-        android:text="@string/delete" />
+        android:text="Usuń" />
+
 
     <TextView
         android:id="@+id/textView"
@@ -108,7 +109,7 @@
         android:layout_below="@+id/delPoint"
         android:layout_marginStart="20dp"
         android:layout_marginTop="11dp"
-        android:text="@string/stage_list" />
+        android:text="Lista punktów" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/point_list"
@@ -118,5 +119,8 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp" />
+
+
+
 
 </RelativeLayout>

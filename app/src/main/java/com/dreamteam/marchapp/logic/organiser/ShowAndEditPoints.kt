@@ -1,6 +1,310 @@
 package com.dreamteam.marchapp.logic.organiser
 
 
+import android.content.Intent
+import android.graphics.Color
+import android.os.Bundle
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.style.ForegroundColorSpan
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.TextView
+import android.widget.Toast
+import com.dreamteam.marchapp.R
+import com.dreamteam.marchapp.database.dataclasses.CheckPoint
+import com.dreamteam.marchapp.logic.shared.ShowAndEditObject
+import de.codecrafters.tableview.model.TableColumnPxWidthModel
+import de.codecrafters.tableview.toolkit.SimpleTableHeaderAdapter
+import kotlinx.android.synthetic.main.dialog_edit_point.*
+import kotlinx.android.synthetic.main.dialog_edit_point.view.*
+import kotlinx.android.synthetic.main.dialog_edit_user.view.editButton
+import kotlinx.android.synthetic.main.dialog_zoom_data.view.backb
+
+
+class ShowAndEditPoints : ShowAndEditObject(){
+    private lateinit var pointsList: ArrayList<CheckPoint>
+
+
+    //TODO: ZMIENIĆ Z PEOPLE NA COŚ INNEGO
+    private fun pointUpdated(newPoints: ArrayList<CheckPoint>) {
+        pointsList = newPoints
+        peopleNames.clear()
+        peopleNames.add("wszyscy")
+        peopleNames.addAll(newPoints.map { "${it.name} | ${it.coords}" })
+        peopleNames.add("nie wybrano")
+
+        init_spinner_and_table()
+    }
+
+    override fun setDataViewModel() {
+        super.setDataViewModel()
+        dataViewModel.checkPoints.observe(this) { newPoints ->
+            pointUpdated(newPoints)
+        }
+    }
+
+
+    override fun setHeader() {
+        val adapterHead = SimpleTableHeaderAdapter(
+            this@ShowAndEditPoints,
+            "Id", "Online", "Nazwa", "Km", "Współrzędne"
+        )
+        tableView.headerAdapter = adapterHead
+        adapterHead.setTextSize(15)
+        adapterHead.setTextColor(Color.WHITE)
+    }
+
+    //tylko organizator ma do tego dostęp
+    override fun setAccesssLevel() {
+        binding.customSpinner.text = "Wybierz punkt"
+        binding.customSpinner.hint = "Wybierz punkt"
+        binding.ChooseVolonteersTextView.text= "Wybierz punkt"
+    }
+
+    override fun goBack()
+    {
+        var intent =  Intent(this, Organisatormain2::class.java)
+        startActivity(intent)
+    }
+
+
+    override fun selectData(name: String):MutableList<Array<String>>
+    {
+        val point: CheckPoint =
+            pointsList.first { it.name == name.split(" | ")[0]}
+
+        data.clear()
+        data.add(
+            arrayOf(
+                point.id.toString(),
+                point.online.toString(),
+                point.name,
+                point.dist.toString(),
+                point.coords)
+        )
+
+        return data
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val columnModel = TableColumnPxWidthModel(5, 200)
+        columnModel.setColumnWidth(0, 80)
+        columnModel.setColumnWidth(1, 200)
+        columnModel.setColumnWidth(2, 300)
+        columnModel.setColumnWidth(3, 130)
+        columnModel.setColumnWidth(4, 350)
+        tableView.columnModel = columnModel
+    }
+
+
+    override fun initData():MutableList<Array<String>>
+    {
+        data.clear()
+
+        pointsList.forEach { data.add(arrayOf(
+            it.id.toString(),
+            it.online.toString(),
+            it.name,
+            it.dist.toString(),
+            it.coords))}
+        return data
+    }
+
+
+    override fun checkIfPresentInDB(obj : String, field : String, id:Int) : Boolean {
+        if (field == "nazwa") return pointsList.any { point -> point.name == obj && point.id != id}
+        else if (field == "kilometr") return pointsList.any { point -> point.dist == obj.toInt() && point.id != id}
+        else if (field == "współrzędne_geograficzne") return pointsList.any { point -> point.coords == obj && point.id != id}
+
+        return false
+    }
+
+
+    override fun onDataClicked(rowIndex: Int, clickedData: Array<String>?) {
+
+        class MyCustomPointDialog: BaseDialogFragment() {
+            override fun onCreateView(
+                inflater: LayoutInflater,
+                container: ViewGroup?,
+                savedInstanceState: Bundle?
+            ): View? {
+
+                var rootView : View = inflater.inflate(R.layout.dialog_zoom_point, container, false)
+                rootView.backb.setOnClickListener { dismiss() }
+
+
+                val online = rootView.findViewById<TextView>(R.id.online)
+                val name = rootView.findViewById<TextView>(R.id.name)
+                val km = rootView.findViewById<TextView>(R.id.km)
+                val wsp = rootView.findViewById<TextView>(R.id.coordinates)
+
+                val onlineSpan = SpannableString(online?.text.toString() + (clickedData?.get(1)))
+                val nazwaSpan = SpannableString(name?.text.toString() + (clickedData?.get(2)))
+                val kmSpan = SpannableString(km?.text.toString() + (clickedData?.get(3)))
+                val wspSpan = SpannableString(wsp?.text.toString() + (clickedData?.get(4)))
+
+                onlineSpan.setSpan(ForegroundColorSpan(Color.BLUE), online.text.length, onlineSpan.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                nazwaSpan.setSpan(ForegroundColorSpan(Color.BLUE),name.text.length, nazwaSpan.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                kmSpan.setSpan(ForegroundColorSpan(Color.BLUE), km.text.length, kmSpan.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                wspSpan.setSpan(ForegroundColorSpan(Color.BLUE), wsp.text.length, wspSpan.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+                name.text = nazwaSpan
+                online.text = onlineSpan
+                km.text = kmSpan
+                wsp.text = wspSpan
+
+                return rootView
+            }
+        }
+
+        class MyCustomPointEditDialog: BaseDialogFragment() {
+
+            override fun onCreateView(
+                inflater: LayoutInflater,
+                container: ViewGroup?,
+                savedInstanceState: Bundle?
+            ): View? {
+
+                var rootView : View = inflater.inflate(R.layout.dialog_edit_point, container, false)
+                rootView.backb.setOnClickListener { dismiss() }
+
+
+                val name = rootView.findViewById<EditText>(R.id.edit_name)
+                val lastname = rootView.findViewById<EditText>(R.id.online_edit)
+                val start_nr = rootView.findViewById<EditText>(R.id.km_edit)
+                val pseudo = rootView.findViewById<EditText>(R.id.coordinates_edit)
+
+
+                rootView.editButton.setOnClickListener {
+
+                    val editedName = edit_name.text.toString()
+                    val editedOnline = online_edit.text.toString()
+                    val editedkm = km_edit.text.toString()
+                    val editedwsp = coordinates_edit.text.toString()
+
+                    val editedPointId: Int = clickedData!![0].toInt()
+
+                    val isCorrect = validateEditedData(editedName, editedOnline, editedkm, editedwsp, editedPointId.toString())
+
+                    if (isCorrect) {
+                        val editedPoint = CheckPoint(editedPointId, editedOnline.toBoolean(),editedName, editedkm.toInt(), editedwsp)
+                        dataViewModel.updatePoint(editedPoint)
+                        binding.customSpinner.text = ""
+                        dismiss()
+                    }
+                }
+
+
+                name.setText(clickedData?.get(2))
+                lastname.setText(clickedData?.get(1))
+                start_nr.setText(clickedData?.get(3))
+                pseudo.setText(clickedData?.get(4))
+
+                rootView.deleteButton.setOnClickListener {
+
+                    val pointId: Int = clickedData!![0].toInt()
+                    dataViewModel.deletePoint(pointId)
+                    binding.customSpinner.text = ""
+                    dismiss()
+
+                    //a jak usunać z innych tabel ?
+
+                    /*
+                    connector.prepareQuery("DELETE FROM wolontariusz_punkt WHERE id_punktu = ?")
+                    connector.setIntVar(rowToEdit, 1)
+                    try{connector.executeQuery()} catch (e: Exception){print("error")}
+                    connector.closeQuery()
+
+                    connector.prepareQuery("DELETE FROM punkty_online WHERE  id_punktu = ?")
+                    connector.setIntVar(rowToEdit, 1)
+                    try{connector.executeQuery()} catch (e: Exception){print("error")}
+                    connector.closeQuery()
+
+                    connector.prepareQuery("DELETE FROM punkty_kontrolne WHERE  id = ?")
+                    connector.setIntVar(rowToEdit, 1)
+                    try{connector.executeQuery()} catch (e: Exception){print("error")}
+                    connector.closeQuery()
+
+                     */
+                }
+
+                return rootView
+            }
+
+            override fun validateEditedData(vararg values: String): Boolean {
+
+                for (value in values) {
+                    if (value.isBlank()) {
+                        Toast.makeText(requireContext(), "Żadne z pól nie może być puste", Toast.LENGTH_SHORT).show()
+                        return false
+                    }
+                }
+
+                if (checkIfPresentInDB(values[0], "nazwa", values[4].toInt())) {
+                    showInfo("Punkt o podanej nazwie już istnieje w bazie!")
+                    return false
+                }
+
+                if (checkIfPresentInDB(values[2], "kilometr", values[4].toInt())) {
+                    showInfo("Punkt na podanym kilometrze już istnieje w bazie!")
+                    return false
+                }
+
+                if (checkIfPresentInDB(values[3], "współrzędne_geograficzne", values[4].toInt())) {
+                    showInfo("Punkt o podanych współrzędnych już istnieje w bazie!")
+                    return false
+                }
+
+                return true
+            }
+        }
+
+
+        val dialogFragment =
+            if (binding.editCheckbox.isChecked)
+            {
+                MyCustomPointEditDialog()
+            } else {
+                MyCustomPointDialog()
+            }
+
+
+        dialogFragment.arguments = Bundle().apply {
+            putStringArray("clickedData", clickedData)
+        }
+
+        dialogFragment.show(supportFragmentManager, if (binding.editCheckbox.isChecked) "CustomEditDialog" else "CustomDialog")
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*package com.dreamteam.marchapp.logic.organiser
+
+
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
@@ -70,7 +374,7 @@ class ShowAndEditPoints : AppCompatActivity(), TableDataClickListener<Array<Stri
 
         backBtn.setOnClickListener{
             lateinit var intent : Intent
-            intent = Intent(this, OrganisatorModifyEventMenu::class.java)
+            intent = Intent(this, Organisatormain2::class.java)
             startActivity(intent)
         }
 
@@ -420,6 +724,8 @@ class ShowAndEditPoints : AppCompatActivity(), TableDataClickListener<Array<Stri
     }
 
 
+
+ */
 
 
 

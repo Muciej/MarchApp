@@ -16,7 +16,6 @@
         android:layout_marginBottom="20dp"
         android:background="@drawable/ic_baseline_arrow_back_24"
         tools:ignore="SpeakableTextPresentCheck" />
-
     <TextView
         android:id="@+id/view_statistics"
         android:layout_width="match_parent"
@@ -26,8 +25,8 @@
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="30dp"
         android:gravity="center"
-        android:text="@string/see_statistics"
-        android:textSize="40sp"
+        android:text="Zobacz statystyki"
+        android:textSize="40dp"
         android:textStyle="bold" />
 
     <Button
@@ -41,7 +40,7 @@
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="15dp"
         android:background="@drawable/edit_text_background"
-        android:text="@string/statistics_for_stages" />
+        android:text="Statystyki dla punktów" />
 
     <Button
         android:id="@+id/overall_stats"
@@ -54,7 +53,7 @@
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="15dp"
         android:background="@drawable/edit_text_background"
-        android:text="@string/march_result" />
+        android:text="Wyniki zawodów" />
 
     <Button
         android:id="@+id/showOverallRes"
@@ -67,6 +66,10 @@
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
         android:background="@drawable/edit_text_background"
-        android:text="@string/main_statistics" />
+        android:text="Ogólne statystyki" />
+
+
+
+
 
 </RelativeLayout>

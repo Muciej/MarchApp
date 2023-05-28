@@ -16,7 +16,6 @@
         android:layout_marginBottom="20dp"
         android:background="@drawable/ic_baseline_arrow_back_24"
         tools:ignore="SpeakableTextPresentCheck" />
-
     <TextView
         android:id="@+id/view_statistics"
         android:layout_width="match_parent"
@@ -26,9 +25,10 @@
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="30dp"
         android:gravity="center"
-        android:text="@string/occupied_places"
-        android:textSize="30sp"
+        android:text="Zajęte miejsca"
+        android:textSize="30dp"
         android:textStyle="bold" />
+
 
     <ListView
         android:id="@+id/userlist"
@@ -39,5 +39,6 @@
         android:layout_marginTop="4dp"
         android:layout_height="wrap_content" >
     </ListView>
+
 
 </RelativeLayout>

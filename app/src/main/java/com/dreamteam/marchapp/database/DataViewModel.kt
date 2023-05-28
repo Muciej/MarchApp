@@ -42,6 +42,24 @@ class DataViewModel(application: Application) : AndroidViewModel(application){
         }
     }
 
+    fun updateParticipant(participant: Participant){
+        viewModelScope.launch(Dispatchers.IO){
+            dbObject.updateParticipant(participant)
+        }
+    }
+
+    fun updatePoint(editedPoint: CheckPoint) {
+        viewModelScope.launch(Dispatchers.IO){
+            dbObject.updatePoint(editedPoint)
+        }
+    }
+
+    fun deletePoint(pointToDelete: Int) {
+        viewModelScope.launch(Dispatchers.IO){
+            dbObject.deletePoint(pointToDelete)
+        }
+    }
+
     fun addNewVolounteer(volounteer: Volounteer){
         viewModelScope.launch(Dispatchers.IO){
             dbObject.addNewVolounteer(volounteer)
@@ -77,4 +95,12 @@ class DataViewModel(application: Application) : AndroidViewModel(application){
             dbObject.logout()
         }
     }
+
+    fun updateVolunteer(editedVolunteer: Volounteer) {
+        viewModelScope.launch(Dispatchers.IO){
+            dbObject.updateVolunteer(editedVolunteer)
+        }
+    }
+
+
 }

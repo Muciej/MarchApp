@@ -10,7 +10,7 @@
         android:textColor="@color/black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/data_edit_mode"
+        android:text="@string/edycja_danych"
         android:layout_gravity="center"
         android:textSize="25sp"
         android:textStyle="bold"/>
@@ -24,7 +24,7 @@
             android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/name"
+            android:text="@string/imie"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -55,7 +55,7 @@
             android:id="@+id/lastname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/lastname"
+            android:text="@string/nazwisko"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -71,7 +71,8 @@
             android:textColor="@color/black"
             android:paddingBottom="3dp"
             android:paddingTop="3dp"
-            android:paddingStart="10dp" />
+            android:paddingStart="10dp"
+             />
     </RelativeLayout>
 
     <RelativeLayout
@@ -83,7 +84,7 @@
             android:id="@+id/phone_no"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/contact_number"
+            android:text="@string/nr_telefonu"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -99,7 +100,8 @@
             android:background="@drawable/edit_text_background"
             android:textColor="@color/black"
             android:paddingStart="10dp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+             />
     </RelativeLayout>
 
     <RelativeLayout
@@ -111,7 +113,7 @@
             android:id="@+id/mail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/email"
+            android:text="@string/mail"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -127,7 +129,8 @@
             android:background="@drawable/edit_text_background"
             android:paddingStart="10dp"
             android:textStyle="bold"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            />
     </RelativeLayout>
 
     <GridLayout
@@ -139,7 +142,7 @@
             android:layout_marginStart="30dp"
             android:background="@drawable/edit_text_background"
             android:layout_marginTop="20dp"
-            android:text="@string/return_button" />
+            android:text="@string/powrot" />
 
         <Button
             android:id="@+id/editButton"
@@ -148,6 +151,8 @@
             android:layout_height="wrap_content"
             android:background="@drawable/edit_text_background"
             android:layout_marginTop="20dp"
-            android:text="@string/save_changes" />
+            android:text="@string/zapisz_zmiany" />
     </GridLayout>
+
+
 </LinearLayout>

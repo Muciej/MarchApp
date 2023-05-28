@@ -35,6 +35,8 @@
         android:background="@drawable/ic_baseline_arrow_back_24"
         tools:ignore="SpeakableTextPresentCheck" />
 
+    <!--line graph view where we will
+        be displaying our data-->
     <com.jjoe64.graphview.GraphView
         android:id="@+id/idGraphView"
         android:layout_width="match_parent"

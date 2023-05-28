@@ -12,8 +12,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="30dp"
         android:gravity="center"
-        android:text="@string/registration_of_volunteer"
-        android:textSize="20sp"
+        android:text="Rejestracja wolontariusza"
+        android:textSize="20dp"
         android:textStyle="bold" />
 
     <Button
@@ -38,7 +38,7 @@
         android:background="@drawable/edit_text_background"
         android:drawableLeft="@drawable/ic_baseline_person_24"
         android:drawablePadding="20dp"
-        android:hint="@string/name"
+        android:hint="Imie"
         android:padding="20dp"
         android:textColor="@color/black"
         android:textColorHint="@color/black" />
@@ -55,7 +55,7 @@
         android:background="@drawable/edit_text_background"
         android:drawableLeft="@drawable/ic_baseline_person_24"
         android:drawablePadding="20dp"
-        android:hint="@string/lastname"
+        android:hint="Nazwisko"
         android:padding="20dp"
         android:textColor="@color/black"
         android:textColorHint="@color/black" />
@@ -72,7 +72,7 @@
         android:background="@drawable/edit_text_background"
         android:drawableLeft="@drawable/ic_baseline_person_24"
         android:drawablePadding="20dp"
-        android:hint="@string/login"
+        android:hint="Login"
         android:padding="20dp"
         android:textColor="@color/black"
         android:textColorHint="@color/black" />
@@ -89,7 +89,7 @@
         android:background="@drawable/edit_text_background"
         android:drawableLeft="@drawable/ic_baseline_lock_person_24"
         android:drawablePadding="20dp"
-        android:hint="@string/password"
+        android:hint="Hasło"
         android:inputType="textPassword"
         android:padding="20dp"
         android:textColor="@color/black"
@@ -107,7 +107,7 @@
         android:background="@drawable/edit_text_background"
         android:drawableLeft="@drawable/ic_baseline_lock_person_24"
         android:drawablePadding="20dp"
-        android:hint="@string/repeat_password"
+        android:hint="Powtórz hasło"
         android:inputType="textPassword"
         android:padding="20dp"
         android:textColor="@color/black"
@@ -125,7 +125,7 @@
         android:background="@drawable/edit_text_background"
         android:drawableLeft="@drawable/ic_baseline_alternate_email_24"
         android:drawablePadding="20dp"
-        android:hint="@string/email"
+        android:hint="Email"
         android:padding="20dp"
         android:textColor="@color/black"
         android:textColorHint="@color/black" />
@@ -142,7 +142,7 @@
         android:background="@drawable/edit_text_background"
         android:drawableLeft="@drawable/ic_baseline_local_phone_24"
         android:drawablePadding="20dp"
-        android:hint="@string/contact_number"
+        android:hint="Numer kontaktowy"
         android:padding="20dp"
         android:textColor="@color/black"
         android:textColorHint="@color/black" />
@@ -158,5 +158,5 @@
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/edit_text_background"
-        android:text="@string/register_volunteer" />
+        android:text="Zarejestruj wolontariusza" />
 </RelativeLayout>

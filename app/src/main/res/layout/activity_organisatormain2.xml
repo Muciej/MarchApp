@@ -6,14 +6,22 @@
     android:layout_height="match_parent"
     tools:context=".logic.organiser.OrganisatorMain">
 
-
-
+    <Button
+        android:id="@+id/btnForward"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/ic_baseline_arrow_back_24"
+        tools:ignore="SpeakableTextPresentCheck" />
     <TextView
         android:id="@+id/ekran_organizatora"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="70dp"
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="30dp"
         android:gravity="center"
@@ -22,95 +30,70 @@
         android:textStyle="bold" />
 
     <Button
-        android:id="@+id/modify_event"
+        android:id="@+id/modify_points"
         android:layout_width="321dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/ekran_organizatora"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="15dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="40dp"
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="15dp"
         android:background="@drawable/edit_text_background"
-        android:text="Modyfikuj wydarzenie" />
+        android:text="Modyfikuj/usuń punkty trasy" />
 
     <Button
-        android:id="@+id/create_adm_acc"
+        android:id="@+id/add_points"
         android:layout_width="321dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/modify_event"
+        android:layout_below="@+id/modify_points"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/edit_text_background"
+        android:text="Dodaj punkt trasy" />
+
+    <Button
+        android:id="@+id/modify_tracks"
+        android:layout_width="321dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/add_points"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="15dp"
         android:layout_marginTop="18dp"
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="15dp"
         android:background="@drawable/edit_text_background"
-        android:text="Stwórz konto administratora" />
+        android:text="Modyfikuj trasę" />
 
     <Button
-        android:id="@+id/view_statistics"
+        android:id="@+id/make_backup"
         android:layout_width="321dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/create_adm_acc"
+        android:layout_below="@+id/modify_tracks"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="15dp"
         android:layout_marginTop="18dp"
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="15dp"
         android:background="@drawable/edit_text_background"
-        android:text="Zobacz statystyki" />
+        android:text="Zrób backup bazy danych" />
 
     <Button
-        android:id="@+id/volunteers"
+        android:id="@+id/modify_par_data"
         android:layout_width="321dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/view_statistics"
+        android:layout_below="@+id/make_backup"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="20dp"
         android:layout_marginTop="18dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/edit_text_background"
-        android:text="Wolontariusze" />
+        android:text="Edytuj wymagane dane uczestników" />
 
-    <Button
-        android:id="@+id/participant"
-        android:layout_width="321dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/volunteers"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="18dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/edit_text_background"
-        android:text="Uczestnicy" />
-
-    <Button
-        android:id="@+id/change_org_Pass"
-        android:layout_width="321dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/participant"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="18dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginBottom="15dp"
-        android:background="@drawable/edit_text_background"
-        android:text="Zmień hasło" />
-
-    <Button
-        android:id="@+id/log_out_from_org_account"
-        android:layout_width="321dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/change_org_Pass"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="18dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginBottom="15dp"
-        android:background="@drawable/edit_text_background"
-        android:text="Wyloguj się" />
 
 
 </RelativeLayout>

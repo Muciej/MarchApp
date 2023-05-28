@@ -17,7 +17,7 @@ class ModifyTracks : AppCompatActivity() {
         val assignPoint = findViewById<Button>(R.id.assign_point)
 
         btnBack.setOnClickListener{
-            val Intent = Intent(this, OrganisatorModifyEventMenu::class.java)
+            val Intent = Intent(this, Organisatormain2::class.java)
             startActivity(Intent)
         }
 

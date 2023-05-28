@@ -10,7 +10,7 @@
         android:textColor="@color/black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/stage_data"
+        android:text="@string/dane_punktu"
         android:layout_gravity="center"
         android:textSize="25sp"
         android:textStyle="bold"/>
@@ -29,17 +29,19 @@
         android:textColor="@color/black"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/stage_name_colon"
+        android:text="@string/nazwa"
         android:layout_marginTop="10dp"
         android:id="@+id/name"
         android:textSize="20sp"
         android:textStyle="bold"/>
 
+
+
     <TextView
         android:textColor="@color/black"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/distance_from_origin_colon"
+        android:text="@string/kilometr"
         android:id="@+id/km"
         android:layout_marginTop="10dp"
         android:textSize="20sp"
@@ -49,7 +51,7 @@
         android:textColor="@color/black"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/coordinates_colon"
+        android:text="@string/wspolrzedne"
         android:id="@+id/coordinates"
         android:layout_marginTop="10dp"
         android:textSize="20sp"
@@ -62,6 +64,7 @@
         android:layout_gravity="center"
         android:background="@drawable/edit_text_background"
         android:layout_marginTop="20dp"
-        android:text="@string/return_button" />
+        android:text="@string/powrot" />
+
 
 </LinearLayout>

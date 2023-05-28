@@ -26,8 +26,8 @@
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="30dp"
         android:gravity="center"
-        android:text="@string/create_backup_of_database"
-        android:textSize="40sp"
+        android:text="Stwórz backup bazy danych"
+        android:textSize="40dp"
         android:textStyle="bold" />
 
     <Button
@@ -41,7 +41,7 @@
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="15dp"
         android:background="@drawable/edit_text_background"
-        android:text="@string/create_backup" />
+        android:text="Stwórz backup" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -59,6 +59,7 @@
         android:layout_below="@+id/progressBar"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="70dp"
-        android:text="@string/backup_succesfully_done" />
+        android:text="Backup successfully done" />
+
 
 </RelativeLayout>
