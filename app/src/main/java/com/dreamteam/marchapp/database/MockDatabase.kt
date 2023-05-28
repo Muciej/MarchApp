@@ -104,6 +104,7 @@ class MockDatabase {
         allAccounts.postValue(allAccounts.value)
     }
 
+
     fun updateVolunteer(editedVolunteer: Volounteer) {
         val indexToUpdate = allVolounteers.value?.indexOfFirst { existingVolunteer->
             existingVolunteer.accountId == editedVolunteer.accountId}!!
@@ -128,7 +129,6 @@ class MockDatabase {
         checkPoints.value?.removeAt(pointToDelete)
         checkPoints.postValue(checkPoints.value)
     }
-
 
     suspend fun addNewVolounteer(volounteer: Volounteer){
         allVolounteers.value?.add(volounteer)
@@ -159,6 +159,10 @@ class MockDatabase {
         }
     }
 
+    fun changeUserPassword(userId: Int, newPassword: String) {
+       //TODO: Implement
+    }
+
     fun chooseEvent(event: Event?){
         loggedEvent.postValue(event)
     }
@@ -166,7 +170,4 @@ class MockDatabase {
     fun logout() {
         loggedAcount.postValue(null)
     }
-
-
-
 }
