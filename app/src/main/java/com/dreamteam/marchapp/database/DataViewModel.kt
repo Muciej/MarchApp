@@ -60,6 +60,18 @@ class DataViewModel(application: Application) : AndroidViewModel(application){
         }
     }
 
+    fun existsCheckPointByName(name: String): Boolean? {
+        return dbObject.checkPoints.value?.any{ checkPoint -> checkPoint.name == name}
+    }
+
+    fun existsCheckPointByKm(km: Int): Boolean? {
+        return dbObject.checkPoints.value?.any{ checkPoint -> checkPoint.dist == km}
+    }
+
+    fun existsCheckPointByCords(cords: String): Boolean? {
+        return dbObject.checkPoints.value?.any{ checkPoint -> checkPoint.coords == cords}
+    }
+
     fun loginUser(login: String, password: String){
         viewModelScope.launch(Dispatchers.IO) {
             dbObject.loginUser(login, password)
@@ -83,4 +95,6 @@ class DataViewModel(application: Application) : AndroidViewModel(application){
             dbObject.logout()
         }
     }
+
+
 }
