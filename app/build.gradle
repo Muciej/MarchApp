@@ -61,5 +61,7 @@ dependencies {
     implementation 'com.google.zxing:core:3.3.2'
     implementation 'com.github.androidmads:QRGenerator:1.0.1'
     implementation 'com.github.yuriy-budiyev:code-scanner:2.3.2'
+    implementation 'com.microsoft.sqlserver:mssql-jdbc:9.2.1.jre11'
+
 
 }

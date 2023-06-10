@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="SqlDialectMappings">
+    <file url="file://$PROJECT_DIR$/AzureDBInitCommands/baza_biegow_przelajowych_init.sql" dialect="AZURE" />
+    <file url="file://$PROJECT_DIR$/AzureDBInitCommands/fill_test_data.sql" dialect="AZURE" />
+    <file url="file://$PROJECT_DIR$/AzureDBInitCommands/test_event_database_init.sql" dialect="AZURE" />
     <file url="file://$PROJECT_DIR$/database_dumps_mysql/baza_marszow.sql" dialect="MariaDB" />
     <file url="file://$PROJECT_DIR$/init_commands/baza_biegow_przelajowych_init.sql" dialect="MariaDB" />
     <file url="file://$PROJECT_DIR$/init_commands/database_test_accounts_init.sql" dialect="GenericSQL" />
