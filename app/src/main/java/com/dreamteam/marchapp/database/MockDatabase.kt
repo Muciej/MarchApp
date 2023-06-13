@@ -85,6 +85,8 @@ class MockDatabase {
         tempPart.add(Participant(4, 100, "Uczes", "Uczestnicki", "Ucznen", "wef342"))
         tempPart.add(Participant(10, 101, "Wiktoria", "Paź", "WikPaź", "we23f2"))
         allParticipants.postValue(tempPart)
+
+        participantsCheckpoints.postValue(ArrayList())
     }
 
     suspend fun addNewParticipant(participant: Participant){
@@ -191,5 +193,6 @@ class MockDatabase {
         if( !hasAlreadyReached && participant != null && pointObj != null){
             participantsCheckpoints.value!!.add(Triple(participant, pointObj, currentDate))
         }
+        participantsCheckpoints.postValue(participantsCheckpoints.value)
     }
 }
