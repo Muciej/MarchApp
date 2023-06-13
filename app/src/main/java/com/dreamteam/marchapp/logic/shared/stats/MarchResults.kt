@@ -10,7 +10,7 @@ import android.widget.*
 import com.dreamteam.marchapp.R
 import com.dreamteam.marchapp.logic.shared.ViewSt
 
-// w tej klasie ogolne wyniki marszu dla kazdej z kategorii
+// w tej klasie ogolne wyniki marszu dla kazdej z kategorii OKEJ
 class MarchResults : AppCompatActivity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
