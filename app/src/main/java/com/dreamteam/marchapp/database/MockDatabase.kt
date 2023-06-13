@@ -30,6 +30,7 @@ class MockDatabase {
     val allAdmins: MutableLiveData<ArrayList<Administrator>> = MutableLiveData()
     val allParticipants: MutableLiveData<ArrayList<Participant>> = MutableLiveData()
     val checkPoints: MutableLiveData<ArrayList<CheckPoint>> = MutableLiveData()
+    val participantsCheckpoints: MutableLiveData<ArrayList<Triple<Participant, CheckPoint, String>>> = MutableLiveData()
 
     init {
         loggedAcount.postValue(null)
@@ -160,7 +161,11 @@ class MockDatabase {
     }
 
     fun changeUserPassword(userId: Int, newPassword: String) {
-       //TODO: Implement
+       for(account in allAccounts.value!!){
+           if(account.id == userId){
+               //w mocku nie ma haseł
+           }
+       }
     }
 
     fun chooseEvent(event: Event?){
@@ -169,5 +174,22 @@ class MockDatabase {
 
     fun logout() {
         loggedAcount.postValue(null)
+    }
+
+    fun markPointReached(pointId: Int?, participant: Participant?, currentDate: String) {
+        var pointObj: CheckPoint? = null
+        for(point in checkPoints.value!!){
+            if(point.id == pointId)
+                pointObj = point
+        }
+        var hasAlreadyReached = false
+        for(triple in participantsCheckpoints.value!!){
+            if(triple.first == participant && triple.second.id == pointId)
+                hasAlreadyReached = true
+        }
+
+        if( !hasAlreadyReached && participant != null && pointObj != null){
+            participantsCheckpoints.value!!.add(Triple(participant, pointObj, currentDate))
+        }
     }
 }

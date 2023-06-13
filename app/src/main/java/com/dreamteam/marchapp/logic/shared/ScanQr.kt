@@ -10,30 +10,32 @@ import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.os.Build
 import androidx.annotation.RequiresApi
-import com.dreamteam.marchapp.database.DBConnector
-import com.dreamteam.marchapp.database.JDBCConnector
+import androidx.lifecycle.ViewModelProvider
+import com.dreamteam.marchapp.database.DataViewModel
+import androidx.lifecycle.Observer
+import com.dreamteam.marchapp.database.dataclasses.CheckPoint
+import com.dreamteam.marchapp.database.dataclasses.Participant
+import com.dreamteam.marchapp.database.dataclasses.Volounteer
 import java.text.SimpleDateFormat
 import java.util.*
 
 class ScanQr : AppCompatActivity() {
 
-    var connector: DBConnector = JDBCConnector
+//    var connector: DBConnector = JDBCConnector
     private lateinit var codeScanner: CodeScanner
+    private lateinit var dataViewModel: DataViewModel
+    private var volunteer: Volounteer? = null
+    private var decodedQR: String? = null
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        connector.startConnection()
-
-        /**
-         * currentUserID - it's id of 'volunteer' obtained from 'personel' table by using 'wolontariusze_info_view'
-         * pointID - it's id of point which is related to 'volunteer'
-         */
-        var CurrentUserID = connector.getCurrentUserID()
-        connector.prepareQuery("select* from wolontariusze_info_view where id_konta like '${CurrentUserID}' ")
-        connector.executeQuery()
-        var pointID = Integer.parseInt(connector.getCol(4)[0])
-        connector.closeQuery()
+        dataViewModel = ViewModelProvider(this)[DataViewModel::class.java]
+        dataViewModel.loggedAcount.observe(this, Observer {
+                loggedAccount -> {
+                volunteer = dataViewModel.getVolounteer(loggedAccount)
+            }
+        })
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -58,74 +60,9 @@ class ScanQr : AppCompatActivity() {
                 // Callbacks and DB operations on user account
                 codeScanner.decodeCallback = DecodeCallback {
                     runOnUiThread {
-                        var isInDatabase = true
-
-                        // if qr code linked to user exists try to get info otherwise exception that doesnt exists
-                        connector.startConnection()
-                        connector.prepareQuery("SELECT * FROM uczestnicy WHERE kod_qr LIKE '${it.text}'; ")
-                        connector.executeQuery()
-                        try {
-                            connector.getAnswer()
-                        } catch(e: Exception){
-                            isInDatabase = false
-                        }
-
-                        /**
-                         * if user has qr code linked then add to uczestnik_punkt:
-                         * startID - start ID which is linked with user
-                         * pointID - id of the point which is connected with volunteer
-                         * current android system date in sql 'datetime' type format -> YYYY-MM-DD HH:mm:ss
-                         */
-                        if(isInDatabase) {
-                            Toast.makeText(this, "Scan result correct, id: ${it.text}", Toast.LENGTH_LONG).show()
-
-                            connector.closeQuery()
-                            try{
-                                connector.prepareQuery("SELECT * FROM uczestnicy WHERE kod_qr LIKE '${it.text}'; ")
-                                connector.executeQuery()
-                            } catch (e : Exception){
-                                Toast.makeText(this, "Błąd przy wyszukiwaniu użytkownika o danym ID z kodu QR", Toast.LENGTH_LONG).show()
-                            }
-
-                            // get startID from query above
-                            var startID = Integer.parseInt(connector.getCol(1)[0])
-                            connector.closeQuery()
-
-                            // get sys date
-                            var date = getCurrentDate()
-
-                            // check whether this user was scanned on this point before
-                            connector.prepareQuery("select * from uczestnik_punkt where id_uczestnika = ? and id_punktu = ? ;")
-                            connector.setIntVar(startID, 1)
-                            connector.setIntVar(pointID, 2)
-                            var scanned = true
-                            try {
-                                connector.executeQuery()
-                                connector.getAnswer()
-                            } catch (e : Exception){
-                                scanned = false
-                            }
-
-                            if(scanned){
-                                Toast.makeText(this, "Użytkownik o id $startID już odwiedził ten punkt kontrolny", Toast.LENGTH_LONG).show()
-                            } else {
-                                // inserting informations into 'uczestnik_punkt' tabel
-                                try{
-                                    connector.prepareQuery("insert into uczestnik_punkt(id_uczestnika, id_punktu, data) values (${startID}, ${pointID}, '${date}' ) ")
-                                    connector.executeQuery()
-                                    connector.closeQuery()
-                                } catch (e : Exception) {
-                                    Toast.makeText(
-                                        this,
-                                        "Błąd przy aktualizowaniu bazy danych",
-                                        Toast.LENGTH_LONG
-                                    ).show()
-                                }
-                            }
-
-                        } else {
-                            Toast.makeText(this, "No match in database, ? ${it.text}", Toast.LENGTH_LONG).show()
-                        }
+                        Toast.makeText(this, "Scan result correct, id: ${it.text}", Toast.LENGTH_LONG).show()
+                        decodedQR = it.text
+                        qrCheckCallback(dataViewModel.getParticipantByQR(decodedQR))
                     }
                 }
                 codeScanner.errorCallback = ErrorCallback { // or ErrorCallback.SUPPRESS
@@ -139,7 +76,11 @@ class ScanQr : AppCompatActivity() {
                 }
             }
         }
-        connector.closeConnection()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    fun qrCheckCallback(participant: Participant?){
+        dataViewModel.markPointReached(volunteer?.pointId, participant, getCurrentDate())
     }
 
     override fun onResume() {

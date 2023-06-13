@@ -1,6 +1,7 @@
 package com.dreamteam.marchapp.database
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -117,6 +118,40 @@ class DataViewModel(application: Application) : AndroidViewModel(application){
     fun updateVolunteer(editedVolunteer: Volounteer) {
         viewModelScope.launch(Dispatchers.IO){
             dbObject.updateVolunteer(editedVolunteer)
+        }
+    }
+
+    fun getVolounteer(account: Account?) : Volounteer?{
+        if(account == null || allVolounteers.value == null){
+            Log.i("DataViewModel", "Null volounteer list or account")
+            return null
+        }
+        for (volounteer in allVolounteers.value!!){
+            if( volounteer.accountId == account.id){
+                return volounteer
+            }
+
+        }
+        return null
+    }
+
+    fun getParticipantByQR(qr: String?) : Participant?{
+        if(qr == null || allParticipants.value == null){
+            Log.i("DataViewModel", "Null participant list or qr")
+            return null
+        }
+        for (participant in allParticipants.value!!){
+            if(participant.qrCodeData == qr){
+                return participant
+            }
+
+        }
+        return null
+    }
+
+    fun markPointReached(pointId: Int?, participant: Participant?, currentDate: String) {
+        viewModelScope.launch(Dispatchers.IO){
+            dbObject.markPointReached(pointId, participant, currentDate);
         }
     }
 }

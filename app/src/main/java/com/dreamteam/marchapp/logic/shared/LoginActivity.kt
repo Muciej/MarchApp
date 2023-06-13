@@ -11,7 +11,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.dreamteam.marchapp.R
 import com.dreamteam.marchapp.database.DataViewModel
-import com.dreamteam.marchapp.database.JDBCConnector
 import com.dreamteam.marchapp.database.dataclasses.Account
 import com.dreamteam.marchapp.database.dataclasses.Roles
 import com.dreamteam.marchapp.logic.organiser.OrganisatorMain
